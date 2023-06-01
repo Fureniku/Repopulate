@@ -1,0 +1,220 @@
+{
+  "main": {
+    "id": "ba789a46ee8ac3be",
+    "type": "split",
+    "children": [
+      {
+        "id": "62b3b5d984642a32",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b19d768195e88eb5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Story.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "fe903100477635e0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Gameplay/Solar Exploration.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "de6bc892f4699108",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "The Genesis.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "228d2e2a173a451e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Gameplay/Resources & Resource Mechanics/Resources.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 2
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "8991dfc532203914",
+    "type": "split",
+    "children": [
+      {
+        "id": "2dc016739ab1f9ae",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "bb947c6576be991d",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "a8fd40f67a0ef2c6",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "fc73022fa7247d14",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "99b654b1d6f2f32a",
+    "type": "split",
+    "children": [
+      {
+        "id": "8b3721c56efe1845",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "27e842ec6dd44e5a",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "The Genesis.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "93e6018768bf518f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "The Genesis.md",
+                "linksCollapsed": true,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "bb9cb86b2f778cdd",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "a15a635500fa240d",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "The Genesis.md"
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "de6bc892f4699108",
+  "lastOpenFiles": [
+    "Core GDD.md",
+    "The Genesis.md",
+    "Controls.md",
+    "Gameplay/Resources & Resource Mechanics/Items.md",
+    "Gameplay/Resources & Resource Mechanics/Resources.md",
+    "Gameplay/Station Modules.md",
+    "Gameplay/External Station Management.md",
+    "Gameplay/Internal Station Management.md",
+    "Gameplay/Building Grid.md",
+    "Aliens.md",
+    "Gameplay/Solar Exploration.md",
+    "Art.md",
+    "Gameplay.md",
+    "Music SFX.md",
+    "Story.md",
+    "Naming Conventions.md",
+    "Release, Monetisation etc.md",
+    "Gameplay/Connections.md",
+    "Gameplay/Breeding Programs.md",
+    "Gameplay/Colonisation.md",
+    "Gameplay/Resource Gathering (Space).md",
+    "Gameplay/Resource Gathering (Planet).md",
+    "Gameplay/Galactic Exploration.md",
+    "Gameplay/Resources & Resource Mechanics/Carbon Nanotubes.md",
+    "Gameplay/Resources & Resource Mechanics/Metal.md",
+    "Gameplay/Resources & Resource Mechanics/Water.md",
+    "Gameplay/Resources & Resource Mechanics",
+    "Gameplay",
+    "Music",
+    "Untitled.canvas"
+  ]
+}

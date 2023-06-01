@@ -1,0 +1,5 @@
+Oxygen is the primary gas that aliens breathe, much like humans. Oxygen exists as a constant value on the ship, compromised of adding together all the values from oxygen creating items, and then reducing by everything that consumes oxygen. So long as the remaining value is positive, everything is OK.
+
+Oxygen is a *constant* resource, meaning it cannot be stored, stockpiled etc. It exists simply as a value.
+
+When Oxygen gets below zero, meaning the level of oxygen on the ship is decreasing faster than it is being produced, the player will have some time to rectify the problem. A slight oxygen deficit will have little impact, but a severe one will begin to kill living creatures. This does of course have a natural self balance - once some creatures die, less things are consuming oxygen, and the value may stabilise and be enough for anything still alive.

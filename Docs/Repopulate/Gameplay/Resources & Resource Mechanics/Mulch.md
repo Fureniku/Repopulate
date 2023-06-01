@@ -1,0 +1,1 @@
+Mulch is a resource used in food production, and comes from waste on board the ship. Most waste generated from the ships activity (i.e. aliens existing) can be turned into mulch.

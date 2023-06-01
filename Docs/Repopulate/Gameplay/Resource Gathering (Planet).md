@@ -1,0 +1,3 @@
+[Resource](Resources) gathering in the earlier part of the game will depend on what resource you require. However, in most cases players can get resources by doing a Resupply Request. This basically sends a request to the planet, who will send up a supply ship to the station with the resources asked for. This process takes time, and only one request can be active at a time - but the player can choose the distribution of resources. For example, they could request a shuttle only containing food, or one with 50% food, 40% metal and 10% water. 
+
+Once the resupply shuttle has delivered and returned to the planet, a new request can be made. The entire resupply process should take a few in-game days, which translates to 10-20 minutes playtime.

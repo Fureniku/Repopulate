@@ -1,0 +1,3 @@
+Energy, like Oxygen, is a *constant* resource compromised of generators and consumers. However, energy can be stored as a surplus.
+
+When the energy level of the station drops below zero (more consumption than generation), surplus from batteries will be consumed. Once this is gone, the station will lose power with only essential systems remaining online. This means various production systems and comforts will become unavailable until the problem is resolved.

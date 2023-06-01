@@ -1,0 +1,3 @@
+Wherever possible, [[Items]], [[Resources]] and anything else should have as complex and convoluted names as possible. For example, instead of water in game it would be referred to as dihydrogen monoxide.
+
+This should just be a running joke throughout the game that the aliens speak with a very complex language, a reference to [Nathan Pyle's Strange Planet](https://www.facebook.com/nathanwpyle2) comic series.

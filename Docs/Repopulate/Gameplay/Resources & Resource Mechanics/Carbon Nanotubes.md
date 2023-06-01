@@ -1,0 +1,1 @@
+Carbon Nanotubes work very similarly to [[Metal]]. It also exists in two states; raw Carbon, and the refined Carbon Nanotubes. It is a crafting ingredient, second most used behind Refined Metal. Also like metal, the refined version is available through earlier Resupply Missions, while later game requires you to mine your own Carbon.

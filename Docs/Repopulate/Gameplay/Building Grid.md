@@ -1,0 +1,3 @@
+The building grid defines how you can place objects into the game. Each building section effectively has its own unique grid - modules have a grid filling the internal space, the diagonally-placed modules have their grid also rotated by 45 degrees, and the main ring areas have a patchy grid; you can place things near the wall, but walkways exist towards the centre which cannot be used.
+
+The grid is used both for [[Items]], and [[Connections]]. Items define how much space they use in standard rotation, and this is automatically adjusted when rotated. Connections exist as 1x1 grid entries, which connect together to form their paths.
