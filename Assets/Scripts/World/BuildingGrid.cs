@@ -2,11 +2,11 @@ using System;
 using UnityEngine;
 
 public class BuildingGrid : MonoBehaviour {
-    public Vector3Int gridSize;
-    public GameObject[] blockPrefabs; // Prefabs for different block types
+    [SerializeField] private Vector3Int gridSize;
+    [SerializeField] private GameObject[] blockPrefabs; // Prefabs for different block types
 
     private bool[,,] gridSpaces; // Represents the availability of each grid space
-    private bool activated = false; // Don't try and use gridspace stuff for in editor gizmos
+    private bool activated; // Don't try and use gridspace stuff for in editor gizmos
 
     private void Awake() {
         gridSpaces = new bool[gridSize.x, gridSize.y, gridSize.z];
@@ -128,15 +128,66 @@ public class BuildingGrid : MonoBehaviour {
                 {
                     Vector3 start = transform.position + new Vector3(x, y, z);
                     Gizmos.color = activated && gridSpaces[x, y, z] ? Color.red : Color.gray;
-                    Gizmos.DrawWireCube(start + Vector3.one * 0.5f, Vector3.one);
+                    DrawRotatedCube(transform.position, new Vector3(x, y, z));
 
-                    if (activated && gridSpaces[x, y, z])
+                    /*if (activated && gridSpaces[x, y, z])
                     {
                         Gizmos.color = Color.red;
                         Gizmos.DrawWireCube(start + Vector3.one * 0.5f, Vector3.one * 1.1f);
-                    }
+                    }*/
                 }
             }
         }
+    }
+
+    private void DrawRotatedCube(Vector3 origin, Vector3 offset) {
+        Vector3 start = origin + offset;
+        Vector3 point1 = RotatePointAroundPivot(start, origin);
+        Vector3 point2 = RotatePointAroundPivot(start + Vector3.forward, origin);
+        Vector3 point3 = RotatePointAroundPivot(start + Vector3.right, origin);
+        Vector3 point4 = RotatePointAroundPivot(new Vector3(start.x + 1, start.y, start.z + 1), origin);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(point1, point2);
+        Gizmos.DrawLine(point1, point3);
+        Gizmos.DrawLine(point2, point4);
+        Gizmos.DrawLine(point3, point4);
+
+        Vector3 point5 = point1 + Vector3.up;
+        Vector3 point6 = point2 + Vector3.up;
+        Vector3 point7 = point3 + Vector3.up;
+        Vector3 point8 = point4 + Vector3.up;
+        
+        Gizmos.DrawLine(point5, point6);
+        Gizmos.DrawLine(point5, point7);
+        Gizmos.DrawLine(point6, point8);
+        Gizmos.DrawLine(point7, point8);
+        
+        Gizmos.DrawLine(point1, point5);
+        Gizmos.DrawLine(point2, point6);
+        Gizmos.DrawLine(point3, point7);
+        Gizmos.DrawLine(point4, point8);
+    }
+
+    private Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot) {
+        Vector3 axis = new Vector3(0, 1, 0);
+        float angle = transform.parent.eulerAngles.y;
+        Vector3 direction = point - pivot;
+        float sinAngle = Mathf.Sin(angle * Mathf.Deg2Rad);
+        float cosAngle = Mathf.Cos(angle * Mathf.Deg2Rad);
+
+        float newX = direction.x * (cosAngle + axis.x * axis.x * (1 - cosAngle))
+                     + direction.y * (axis.x * axis.y * (1 - cosAngle) - axis.z * sinAngle)
+                     + direction.z * (axis.x * axis.z * (1 - cosAngle) + axis.y * sinAngle);
+
+        float newY = direction.x * (axis.y * axis.x * (1 - cosAngle) + axis.z * sinAngle)
+                     + direction.y * (cosAngle + axis.y * axis.y * (1 - cosAngle))
+                     + direction.z * (axis.y * axis.z * (1 - cosAngle) - axis.x * sinAngle);
+
+        float newZ = direction.x * (axis.z * axis.x * (1 - cosAngle) - axis.y * sinAngle)
+                     + direction.y * (axis.z * axis.y * (1 - cosAngle) + axis.x * sinAngle)
+                     + direction.z * (cosAngle + axis.z * axis.z * (1 - cosAngle));
+
+        return pivot + new Vector3(newX, newY, newZ);
     }
 }
