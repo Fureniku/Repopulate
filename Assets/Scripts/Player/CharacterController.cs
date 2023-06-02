@@ -113,10 +113,12 @@ public class CharacterController : MonoBehaviour {
         Collider[] colliders = Physics.OverlapSphere(transform.position, capsuleCollider.radius);
         foreach (Collider collider in colliders)
         {
+            Debug.Log("Checking a collider");
             if (collider.CompareTag("BuildingGrid"))
             {
+                Debug.Log("its a grid");
                 // The character is inside a BuildingGrid collider
-                BuildingGrid targetGrid = collider.GetComponent<BuildingGrid>();
+                BuildingGrid targetGrid = collider.transform.parent.GetComponent<BuildingGrid>();
                 if (targetGrid != null)
                 {
                     PlaceBlock(targetGrid);
@@ -127,7 +129,7 @@ public class CharacterController : MonoBehaviour {
         
         
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
-            BuildingGrid targetGrid = hit.collider.GetComponent<BuildingGrid>();
+            BuildingGrid targetGrid = hit.transform.parent.GetComponent<BuildingGrid>();
 
             if (targetGrid != null && blockPrefab != null) {
                 Debug.Log($"Found a grid! Name: {targetGrid.name}, exact hit: {hit.point}");
@@ -143,7 +145,12 @@ public class CharacterController : MonoBehaviour {
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, ~LayerMask.GetMask("BuildingGrid"))) {
             
             Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
+            Vector3 calculatedOffset = Vector3.Scale(hit.transform.InverseTransformPoint(hit.point), new Vector3(0.06f, 0.03f, 0.12f)) + new Vector3(5, 2, 6);
+            Vector3Int finalPos = new Vector3Int((int)Mathf.Floor(calculatedOffset.x),(int)Mathf.Floor(calculatedOffset.y-0.5f),(int)Mathf.Floor(calculatedOffset.z));
             Debug.Log($"GridPos: {gridPosition.x}, {gridPosition.y}, {gridPosition.z}, name of hit object: {hit.transform.name}, exact hit: {hit.point}");
+            Debug.Log($"                            Local hit: {hit.transform.InverseTransformPoint(hit.point)}");
+            Debug.Log($"                            after scale mod: {calculatedOffset}");
+            Debug.Log($"                            final pos: {targetGrid.ClampVector(finalPos)}");
 
 
 
@@ -161,7 +168,7 @@ public class CharacterController : MonoBehaviour {
             }
 
             // Place the block
-            targetGrid.PlaceBlock(hit.point, blockPrefab);
+            targetGrid.PlaceBlock(targetGrid.ClampVector(finalPos), blockPrefab);
         }
     }
     

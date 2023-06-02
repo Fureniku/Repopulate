@@ -4,6 +4,7 @@ using UnityEngine;
 public class BuildingGrid : MonoBehaviour {
     [SerializeField] private Vector3Int gridSize;
     [SerializeField] private GameObject[] blockPrefabs; // Prefabs for different block types
+    [SerializeField] private BoxCollider box;
 
     private bool[,,] gridSpaces; // Represents the availability of each grid space
     private bool activated; // Don't try and use gridspace stuff for in editor gizmos
@@ -12,14 +13,14 @@ public class BuildingGrid : MonoBehaviour {
         gridSpaces = new bool[gridSize.x, gridSize.y, gridSize.z];
         activated = true;
         PlaceMultiGridBlock(new Vector3(2, 2, 3), new Vector3Int(1,2,1), blockPrefabs[1]);
-        BoxCollider box = GetComponent<BoxCollider>();
 
-        box.center = gridSize / 2 + (Vector3.one / 2);
+        box.center = (Vector3) gridSize / 2.0f;
         box.size = gridSize;
         box.enabled = true;
     }
 
     public Vector3Int GetHitSpace(Vector3 hit) {
+        Debug.Log($"Raw hit data: {hit}");
         Vector3 startPoint = hit - transform.position;
         Vector3Int hitSpace = IntFromVec3(startPoint);
 
@@ -76,12 +77,18 @@ public class BuildingGrid : MonoBehaviour {
         }
     }
 
-    public void PlaceBlock(Vector3 position, GameObject blockPrefab) {
-        Vector3Int gridSpace = GetHitSpace(position);
+    public Vector3Int ClampVector(Vector3Int vectorIn) {
+        int x = (int) Math.Clamp(vectorIn.x, 0, box.size.x-1);
+        int y = (int) Math.Clamp(vectorIn.y, 0, box.size.y-1);
+        int z = (int) Math.Clamp(vectorIn.z, 0, box.size.z-1);
 
+        return new Vector3Int(x, y, z);
+    }
+
+    public void PlaceBlock(Vector3Int gridSpace, GameObject blockPrefab) {
         // Check if the block's grid space is available
         if (CheckGridSpaceAvailability(gridSpace, Vector3Int.one)) {
-            GameObject newBlock = Instantiate(blockPrefab, transform.position + gridSpace, Quaternion.identity);
+            GameObject newBlock = Instantiate(blockPrefab, transform.position + transform.parent.rotation * gridSpace, transform.parent.rotation);
             newBlock.transform.SetParent(transform);
 
             // Occupy the grid space
