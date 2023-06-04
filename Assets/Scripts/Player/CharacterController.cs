@@ -30,6 +30,11 @@ public class CharacterController : MonoBehaviour {
 
     [SerializeField] private GameObject blockPrefab;
 
+    [SerializeField] private GameObject heldItem;
+
+    [SerializeField] private Material previewMaterialValid;
+    [SerializeField] private Material previewMaterialInvalid;
+
     private float xRotation = 0.0f;
 
     private int currentDroidId = 0;
@@ -48,6 +53,8 @@ public class CharacterController : MonoBehaviour {
         rigidbody = parent.GetComponent<Rigidbody>();
         capsuleCollider = parent.GetComponent<CapsuleCollider>();
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        heldItem = Instantiate(blockPrefab);
+        heldItem.GetComponent<PlaceableObject>().UpdateMaterials(previewMaterialValid);
     }
 
     private void SwitchDroid() {
@@ -94,6 +101,8 @@ public class CharacterController : MonoBehaviour {
         if (Input.GetMouseButtonDown(1)) {
             PlaceSelection();
         }
+        
+        UpdatePreview();
     }
 
     private void FixedUpdate() {
@@ -106,34 +115,27 @@ public class CharacterController : MonoBehaviour {
         ProcessActions();
     }
 
+    void UpdatePreview() {
+        Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
+            BuildingGrid targetGrid = hit.transform.parent.GetComponent<BuildingGrid>();
+            Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
+            heldItem.transform.position = hit.transform.position + gridPosition;
+            heldItem.transform.eulerAngles = hit.transform.eulerAngles;
+            bool validSlot = targetGrid.CheckGridSpaceAvailability(gridPosition, Vector3Int.one);
+            heldItem.GetComponent<PlaceableObject>().UpdateMaterials(validSlot ? previewMaterialValid : previewMaterialInvalid);
+        }
+    }
+    
+
     void PlaceSelection() {
         Debug.Log("Placing selection");
         Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
-        
-        Collider[] colliders = Physics.OverlapSphere(transform.position, capsuleCollider.radius);
-        foreach (Collider collider in colliders)
-        {
-            Debug.Log("Checking a collider");
-            if (collider.CompareTag("BuildingGrid"))
-            {
-                Debug.Log("its a grid");
-                // The character is inside a BuildingGrid collider
-                BuildingGrid targetGrid = collider.transform.parent.GetComponent<BuildingGrid>();
-                if (targetGrid != null)
-                {
-                    PlaceBlock(targetGrid);
-                    return;
-                }
-            }
-        }
-        
         
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
             BuildingGrid targetGrid = hit.transform.parent.GetComponent<BuildingGrid>();
 
             if (targetGrid != null && blockPrefab != null) {
-                Debug.Log($"Found a grid! Name: {targetGrid.name}, exact hit: {hit.point}");
-                // Pass the target grid to the updated PlaceBlock method
                 PlaceBlock(targetGrid);
             }
         }
@@ -142,20 +144,15 @@ public class CharacterController : MonoBehaviour {
     private void PlaceBlock(BuildingGrid targetGrid)
     {
         Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, ~LayerMask.GetMask("BuildingGrid"))) {
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
             
             Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
             Vector3 calculatedOffset = Vector3.Scale(hit.transform.InverseTransformPoint(hit.point), new Vector3(0.06f, 0.03f, 0.12f)) + new Vector3(5, 2, 6);
             Vector3Int finalPos = new Vector3Int((int)Mathf.Floor(calculatedOffset.x),(int)Mathf.Floor(calculatedOffset.y-0.5f),(int)Mathf.Floor(calculatedOffset.z));
             Debug.Log($"GridPos: {gridPosition.x}, {gridPosition.y}, {gridPosition.z}, name of hit object: {hit.transform.name}, exact hit: {hit.point}");
-            Debug.Log($"                            Local hit: {hit.transform.InverseTransformPoint(hit.point)}");
-            Debug.Log($"                            after scale mod: {calculatedOffset}");
-            Debug.Log($"                            final pos: {targetGrid.ClampVector(finalPos)}");
-
-
 
             // Check if there's already a block at the target grid position
-            bool isOccupied = targetGrid.CheckGridSpaceAvailability(targetGrid.IntFromVec3(gridPosition), Vector3Int.one);
+            bool isOccupied = targetGrid.CheckGridSpaceAvailability(gridPosition, Vector3Int.one);
 
             // Check if there's an adjacent block in any direction
             //bool hasAdjacentBlock = targetGrid.HasAdjacentBlock(gridPosition);
@@ -168,7 +165,7 @@ public class CharacterController : MonoBehaviour {
             }
 
             // Place the block
-            targetGrid.PlaceBlock(targetGrid.ClampVector(finalPos), blockPrefab);
+            targetGrid.PlaceBlock(gridPosition, blockPrefab);
         }
     }
     

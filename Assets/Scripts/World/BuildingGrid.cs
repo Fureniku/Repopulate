@@ -9,29 +9,36 @@ public class BuildingGrid : MonoBehaviour {
     private bool[,,] gridSpaces; // Represents the availability of each grid space
     private bool activated; // Don't try and use gridspace stuff for in editor gizmos
 
+    [SerializeField] private Vector3Int[] preOccupiedSlots;
+
     private void Awake() {
         gridSpaces = new bool[gridSize.x, gridSize.y, gridSize.z];
         activated = true;
         PlaceMultiGridBlock(new Vector3(2, 2, 3), new Vector3Int(1,2,1), blockPrefabs[1]);
 
-        box.center = (Vector3) gridSize / 2.0f;
-        box.size = gridSize;
+        //box.center = (Vector3) gridSize / 2.0f;
+        //box.size = gridSize;
         box.enabled = true;
+
+        for (int i = 0; i < preOccupiedSlots.Length; i++) {
+            Vector3Int s = preOccupiedSlots[i];
+            gridSpaces[s.x, s.y, s.z] = true;
+        }
     }
 
     public Vector3Int GetHitSpace(Vector3 hit) {
-        Debug.Log($"Raw hit data: {hit}");
         Vector3 startPoint = hit - transform.position;
         Vector3Int hitSpace = IntFromVec3(startPoint);
 
         int clampX = Math.Clamp(hitSpace.x, 0, gridSize.x-1);
         int clampY = Math.Clamp(hitSpace.y, 0, gridSize.y-1);
         int clampZ = Math.Clamp(hitSpace.z, 0, gridSize.z-1);
-
-        Vector3Int clamped = new Vector3Int(clampX, clampY, clampZ);
-        Debug.Log($"Hit space: {IntFromVec3(clamped)}");
         
-        return IntFromVec3(clamped);
+        Vector3Int clamped = new Vector3Int(clampX, clampY, clampZ);
+        
+        Debug.Log($"Clamping {hit} to {clamped}");
+        
+        return clamped;
     }
 
     public Vector3Int IntFromVec3(Vector3 vec3) {
@@ -79,7 +86,7 @@ public class BuildingGrid : MonoBehaviour {
 
     public Vector3Int ClampVector(Vector3Int vectorIn) {
         int x = (int) Math.Clamp(vectorIn.x, 0, box.size.x-1);
-        int y = (int) Math.Clamp(vectorIn.y, 0, box.size.y-1);
+        int y = (int) Math.Clamp(vectorIn.y, 0, box.size.y);
         int z = (int) Math.Clamp(vectorIn.z, 0, box.size.z-1);
 
         return new Vector3Int(x, y, z);
