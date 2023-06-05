@@ -4,8 +4,7 @@ using UnityEngine.UIElements;
 
 public class CharacterController : MonoBehaviour {
 
-    //This class is just lifted directly from another project of my own, with some parts removed.
-    
+    [Header("Player controller settings")]
     [Tooltip("Maximum slope the character can jump on")]
     [Range(5f, 60f)]
     [SerializeField] private float slopeLimit = 45f;
@@ -24,36 +23,44 @@ public class CharacterController : MonoBehaviour {
 
     [SerializeField] private float mouseSensitivity = 100.0f;
 
+    [Header("Gameplay stuff")]
+    [SerializeField] private ScrollBarHandler scrollBarHandler;
     [SerializeField] private List<GameObject> droidList;
 
     [SerializeField] private KeyCode SwitchDroidKey;
 
-    [SerializeField] private GameObject blockPrefab;
+    [SerializeField] private GameObject[] blockPrefab;
 
     [SerializeField] private GameObject heldItem;
 
     [SerializeField] private Material previewMaterialValid;
     [SerializeField] private Material previewMaterialInvalid;
 
+    private bool canPlaceNow = true; //Updated with the preview, changes the material shading and also allows/disallows placement.
     private float xRotation = 0.0f;
-
     private int currentDroidId = 0;
 
-    public bool IsGrounded { get; private set; }
-    public float forwardInput { get; private set; }
-    public float strafeInput { get; private set; }
-    public bool jumpInput { get; private set; }
-    public bool sprintInput { get; private set; }
+    private bool IsGrounded { get; set; }
+    private float forwardInput { get; set; }
+    private float strafeInput { get; set; }
+    private bool jumpInput { get; set; }
+    private bool sprintInput { get; set; }
     
-    new private Rigidbody rigidbody;
+    private Rigidbody rigidbody;
     private CapsuleCollider capsuleCollider;
+
+    public void UpdateSelection() {
+        DestroyImmediate(heldItem);
+        heldItem = Instantiate(blockPrefab[scrollBarHandler.GetSelectedSlot()]);
+        heldItem.GetComponent<PlaceableObject>().UpdateMaterials(previewMaterialValid);
+    }
 
     private void Awake() {
         Transform parent = transform.parent;
         rigidbody = parent.GetComponent<Rigidbody>();
         capsuleCollider = parent.GetComponent<CapsuleCollider>();
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-        heldItem = Instantiate(blockPrefab);
+        heldItem = Instantiate(blockPrefab[scrollBarHandler.GetSelectedSlot()]);
         heldItem.GetComponent<PlaceableObject>().UpdateMaterials(previewMaterialValid);
     }
 
@@ -78,21 +85,16 @@ public class CharacterController : MonoBehaviour {
             fpCam.gameObject.SetActive(!fpCam.gameObject.activeSelf);
         }
         
-        float mouseX = 0;
-        float mouseY = 0;
-        
-        if (fpCam.gameObject.activeSelf) {
-            mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-            mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-        } else {
-            mouseX = Input.GetAxis("Horizontal") * mouseSensitivity * Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.F3)) {
+            if (UnityEngine.Cursor.lockState == CursorLockMode.Locked) {
+                UnityEngine.Cursor.lockState = CursorLockMode.None;
+            }
+            else {
+                UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            }
         }
         
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-        fpCam.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        transform.Rotate(Vector3.up * mouseX);
+        HandleCamera();
 
         if (Input.GetKeyDown(SwitchDroidKey)) {
             SwitchDroid();
@@ -115,28 +117,59 @@ public class CharacterController : MonoBehaviour {
         ProcessActions();
     }
 
+    private void HandleCamera() {
+        if (UnityEngine.Cursor.lockState == CursorLockMode.Locked) {
+            float mouseX = 0;
+            float mouseY = 0;
+        
+            if (fpCam.gameObject.activeSelf) {
+                mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+                mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+            } else {
+                mouseX = Input.GetAxis("Horizontal") * mouseSensitivity * Time.deltaTime;
+            }
+        
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+            fpCam.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            transform.Rotate(Vector3.up * mouseX);
+        }
+    }
+
     void UpdatePreview() {
         Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
-            BuildingGrid targetGrid = hit.transform.parent.GetComponent<BuildingGrid>();
+            BuildingGrid targetGrid;
+            PlaceableObject placeable = heldItem.GetComponent<PlaceableObject>();
+            if (hit.transform.parent.GetComponent<PlaceableObject>() != null) {
+                targetGrid = hit.transform.parent.GetComponent<PlaceableObject>().GetParentGrid();
+            } else {
+                targetGrid = hit.transform.parent.GetComponent<BuildingGrid>();
+            }
             Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
             heldItem.transform.position = hit.transform.position + gridPosition;
             heldItem.transform.eulerAngles = hit.transform.eulerAngles;
-            bool validSlot = targetGrid.CheckGridSpaceAvailability(gridPosition, Vector3Int.one);
-            heldItem.GetComponent<PlaceableObject>().UpdateMaterials(validSlot ? previewMaterialValid : previewMaterialInvalid);
+            canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeable.GetSize());
+
+            if (placeable.MustBeGrounded() && gridPosition.y > 0) {
+                canPlaceNow = false;
+            }
+            
+            placeable.UpdateMaterials(canPlaceNow ? previewMaterialValid : previewMaterialInvalid);
         }
     }
     
 
     void PlaceSelection() {
-        Debug.Log("Placing selection");
-        Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
-        
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
-            BuildingGrid targetGrid = hit.transform.parent.GetComponent<BuildingGrid>();
-
-            if (targetGrid != null && blockPrefab != null) {
-                PlaceBlock(targetGrid);
+        if (canPlaceNow) {
+            Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
+                BuildingGrid targetGrid = hit.transform.parent.GetComponent<BuildingGrid>();
+    
+                if (targetGrid != null && blockPrefab != null) {
+                    PlaceBlock(targetGrid);
+                }
             }
         }
     }
@@ -165,7 +198,7 @@ public class CharacterController : MonoBehaviour {
             }
 
             // Place the block
-            targetGrid.PlaceBlock(gridPosition, blockPrefab);
+            targetGrid.PlaceBlock(gridPosition, blockPrefab[scrollBarHandler.GetSelectedSlot()]);
         }
     }
     

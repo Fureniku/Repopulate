@@ -4,6 +4,7 @@ public class ScrollBarHandler : MonoBehaviour {
 
     [SerializeField] private GameObject[] slots;
     [SerializeField] private GameObject selectionBox;
+    [SerializeField] private CharacterController characterController;
 
     private int selectedId = 0;
 
@@ -11,9 +12,9 @@ public class ScrollBarHandler : MonoBehaviour {
         float mouseScroll = Input.mouseScrollDelta.y;
 
         if (mouseScroll > 0) {
-            ScrollUp();
+            SelectSlot(selectedId-1);
         } else if (mouseScroll < 0) {
-            ScrollDown();
+            SelectSlot(selectedId+1);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1)) { SelectSlot(0); }
@@ -27,26 +28,6 @@ public class ScrollBarHandler : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Alpha9)) { SelectSlot(8); }
     }
 
-    public void ScrollUp() {
-        if (selectedId > 0) {
-            selectedId--;
-        }
-        else {
-            selectedId = slots.Length-1;
-        }
-        UpdateSelectionBox();
-    }
-
-    public void ScrollDown() {
-        if (selectedId < slots.Length-1) {
-            selectedId++;
-        }
-        else {
-            selectedId = 0;
-        }
-        UpdateSelectionBox();
-    }
-
     public void SelectSlot(int id) {
         if (id >= 0 && id <= slots.Length) {
             selectedId = id;
@@ -57,9 +38,15 @@ public class ScrollBarHandler : MonoBehaviour {
         else {
             selectedId = slots.Length;
         }
+        UpdateSelectionBox();
     }
 
     private void UpdateSelectionBox() {
         selectionBox.transform.SetParent(slots[selectedId].transform, false);
+        characterController.UpdateSelection();
+    }
+
+    public int GetSelectedSlot() {
+        return selectedId;
     }
 }

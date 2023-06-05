@@ -36,8 +36,6 @@ public class BuildingGrid : MonoBehaviour {
         
         Vector3Int clamped = new Vector3Int(clampX, clampY, clampZ);
         
-        Debug.Log($"Clamping {hit} to {clamped}");
-        
         return clamped;
     }
 
@@ -97,9 +95,11 @@ public class BuildingGrid : MonoBehaviour {
         if (CheckGridSpaceAvailability(gridSpace, Vector3Int.one)) {
             GameObject newBlock = Instantiate(blockPrefab, transform.position + transform.parent.rotation * gridSpace, transform.parent.rotation);
             newBlock.transform.SetParent(transform);
+            newBlock.GetComponent<PlaceableObject>().Place(this);
+            
 
             // Occupy the grid space
-            OccupyGridSpaces(gridSpace, Vector3Int.one);
+            OccupyGridSpaces(gridSpace, newBlock.GetComponent<PlaceableObject>().GetSize());
         }
         else {
             Debug.Log($"Invalid or occupied space {gridSpace}");
