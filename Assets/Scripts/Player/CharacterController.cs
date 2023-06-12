@@ -32,6 +32,7 @@ public class CharacterController : MonoBehaviour {
     [SerializeField] private GameObject[] blockPrefab;
 
     [SerializeField] private GameObject heldItem;
+    [SerializeField] private float heldRotation = 0;
 
     [SerializeField] private Material previewMaterialValid;
     [SerializeField] private Material previewMaterialInvalid;
@@ -93,7 +94,11 @@ public class CharacterController : MonoBehaviour {
                 UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             }
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.R)) {
+            HandleRotation();
+        }
+
         HandleCamera();
 
         if (Input.GetKeyDown(SwitchDroidKey)) {
@@ -105,6 +110,11 @@ public class CharacterController : MonoBehaviour {
         }
         
         UpdatePreview();
+    }
+
+    private void HandleRotation() {
+        heldRotation += 90f;
+        if (heldRotation > 360) heldRotation -= 360f;
     }
 
     private void FixedUpdate() {
@@ -138,6 +148,9 @@ public class CharacterController : MonoBehaviour {
     }
 
     void UpdatePreview() {
+        if (heldItem == null) {
+            return;
+        }
         Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
             BuildingGrid targetGrid;
@@ -148,8 +161,11 @@ public class CharacterController : MonoBehaviour {
                 targetGrid = hit.transform.parent.GetComponent<BuildingGrid>();
             }
             Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
+            heldItem.transform.position = Vector3.one / 2;
+            Vector3 rotation = hit.transform.eulerAngles;
+            rotation.y += heldRotation;
+            heldItem.transform.eulerAngles = rotation;
             heldItem.transform.position = hit.transform.position + gridPosition;
-            heldItem.transform.eulerAngles = hit.transform.eulerAngles;
             canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeable.GetSize());
 
             if (placeable.MustBeGrounded() && gridPosition.y > 0) {
