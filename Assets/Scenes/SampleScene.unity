@@ -1386,6 +1386,7 @@ MonoBehaviour:
   - {fileID: 7132410254755422983, guid: 4e94948dbaba9b94eacfc6de79560d7e, type: 3}
   - {fileID: 3330992724306575114, guid: e10e18e519235e843ac9ecc6186559f6, type: 3}
   - {fileID: 2187904420691561022, guid: de50d4440f438cb4a9fd1c6d3010cf78, type: 3}
+  - {fileID: 6855721786531555465, guid: 717c90983cd72fe49b1d910a311f184a, type: 3}
   heldItem: {fileID: 0}
   heldRotation: 0
   previewMaterialValid: {fileID: 2100000, guid: 3a552eea9c2512844a8d1bb9aa79c67e, type: 2}

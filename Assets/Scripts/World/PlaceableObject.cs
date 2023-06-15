@@ -48,11 +48,6 @@ public class PlaceableObject : MonoBehaviour {
         lastMat = mat;
     }
 
-    public void Rotate(float angle) {
-        Vector3 old = rotationOrigin.transform.eulerAngles;
-        rotationOrigin.transform.eulerAngles = new Vector3(old.x, old.y + angle, old.z);
-    }
-
     public void SetRotation(float angle) {
         Vector3 old = rotationOrigin.transform.eulerAngles;
         rotationOrigin.transform.eulerAngles = new Vector3(old.x, angle, old.z);
