@@ -143,3 +143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 1, y: 1, z: 1}
+  mustBeGrounded: 0
+  wallMount: 0
+  rotationOrigin: {fileID: 4180974789263346442}
+  visibleObjects: []

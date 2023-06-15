@@ -48,6 +48,8 @@ MonoBehaviour:
   size: {x: 4, y: 2, z: 2}
   mustBeGrounded: 1
   wallMount: 0
+  rotationOrigin: {fileID: 3330992724306575114}
+  visibleObjects: []
 --- !u!1 &5058287274878027966
 GameObject:
   m_ObjectHideFlags: 0

@@ -161,10 +161,7 @@ public class CharacterController : MonoBehaviour {
                 targetGrid = hit.transform.parent.GetComponent<BuildingGrid>();
             }
             Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
-            heldItem.transform.position = Vector3.one / 2;
-            Vector3 rotation = hit.transform.eulerAngles;
-            rotation.y += heldRotation;
-            heldItem.transform.eulerAngles = rotation;
+            placeable.SetRotation(heldRotation);
             heldItem.transform.position = hit.transform.position + gridPosition;
             canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeable.GetSize());
 
