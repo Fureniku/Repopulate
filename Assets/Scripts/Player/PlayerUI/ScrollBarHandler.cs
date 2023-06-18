@@ -29,13 +29,15 @@ public class ScrollBarHandler : MonoBehaviour {
     }
 
     public void SelectSlot(int id) {
-        if (id >= 0 && id <= slots.Length) {
-            selectedId = id;
-        }
-        else if (id < 0) {
+        if (id == slots.Length + 1) {
             selectedId = 0;
-        }
-        else {
+        } else if (id == -1) {
+            selectedId = slots.Length;
+        } else if (id >= 0 && id <= slots.Length) {
+            selectedId = id;
+        } else if (id < 0) {
+            selectedId = 0;
+        } else {
             selectedId = slots.Length;
         }
         UpdateSelectionBox();

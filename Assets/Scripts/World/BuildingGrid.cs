@@ -2,8 +2,8 @@ using System;
 using UnityEngine;
 
 public class BuildingGrid : MonoBehaviour {
+    
     [SerializeField] private Vector3Int gridSize;
-    [SerializeField] private GameObject[] blockPrefabs; // Prefabs for different block types
     [SerializeField] private BoxCollider box;
 
     private bool[,,] gridSpaces; // Represents the availability of each grid space
@@ -14,10 +14,6 @@ public class BuildingGrid : MonoBehaviour {
     private void Awake() {
         gridSpaces = new bool[gridSize.x, gridSize.y, gridSize.z];
         activated = true;
-        PlaceMultiGridBlock(new Vector3(2, 2, 3), new Vector3Int(1,2,1), blockPrefabs[1]);
-
-        //box.center = (Vector3) gridSize / 2.0f;
-        //box.size = gridSize;
         box.enabled = true;
 
         for (int i = 0; i < preOccupiedSlots.Length; i++) {

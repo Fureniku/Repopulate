@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "48bb38b2409bca4d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Code Plans/Module Creation & Interaction.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Gameplay/Station Modules.md",
+                "file": "Code Plans/Module Creation & Interaction.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Gameplay/Station Modules.md",
+                "file": "Code Plans/Module Creation & Interaction.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Gameplay/Station Modules.md"
+                "file": "Code Plans/Module Creation & Interaction.md"
               }
             }
           }
@@ -147,8 +160,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "96852a28f6e9e70a",
+  "active": "48bb38b2409bca4d",
   "lastOpenFiles": [
+    "Gameplay/Breeding Programs.md",
+    "Code Plans/Module Creation & Interaction.md",
+    "Code Plans",
     "Gameplay/Resources & Resource Mechanics/Items.md",
     "Gameplay/Internal Station Management.md",
     "Gameplay/Station Modules.md",
@@ -168,13 +184,11 @@
     "Naming Conventions.md",
     "Release, Monetisation etc.md",
     "Gameplay/Connections.md",
-    "Gameplay/Breeding Programs.md",
     "Gameplay/Colonisation.md",
     "Gameplay/Resource Gathering (Space).md",
     "Gameplay/Resource Gathering (Planet).md",
     "Gameplay/Galactic Exploration.md",
     "Gameplay/Resources & Resource Mechanics/Carbon Nanotubes.md",
-    "Gameplay/Resources & Resource Mechanics/Metal.md",
     "Gameplay/Resources & Resource Mechanics",
     "Gameplay",
     "Music",

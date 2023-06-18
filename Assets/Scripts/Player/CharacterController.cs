@@ -25,6 +25,7 @@ public class CharacterController : MonoBehaviour {
 
     [Header("Gameplay stuff")]
     [SerializeField] private ScrollBarHandler scrollBarHandler;
+    [SerializeField] private UIController uiController;
     [SerializeField] private List<GameObject> droidList;
 
     [SerializeField] private KeyCode SwitchDroidKey;
@@ -37,6 +38,7 @@ public class CharacterController : MonoBehaviour {
     [SerializeField] private Material previewMaterialValid;
     [SerializeField] private Material previewMaterialInvalid;
 
+    private bool isPlayerActive = true; //True when player is active and can move, false when in a UI or similar.
     private bool canPlaceNow = true; //Updated with the preview, changes the material shading and also allows/disallows placement.
     private float xRotation = 0.0f;
     private int currentDroidId = 0;
@@ -82,34 +84,43 @@ public class CharacterController : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.F2)) {
-            fpCam.gameObject.SetActive(!fpCam.gameObject.activeSelf);
+        if (Input.GetKeyDown(KeyCode.F3)) {
+            SetPlayerActive(!isPlayerActive);
+        }
+
+        if (isPlayerActive) {
+            if (Input.GetKeyDown(KeyCode.R)) {
+                HandleRotation();
+            }
+
+            HandleCamera();
+
+            if (Input.GetKeyDown(SwitchDroidKey)) {
+                SwitchDroid();
+            }
         }
         
-        if (Input.GetKeyDown(KeyCode.F3)) {
-            if (UnityEngine.Cursor.lockState == CursorLockMode.Locked) {
-                UnityEngine.Cursor.lockState = CursorLockMode.None;
-            }
-            else {
-                UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.R)) {
-            HandleRotation();
-        }
-
-        HandleCamera();
-
-        if (Input.GetKeyDown(SwitchDroidKey)) {
-            SwitchDroid();
-        }
         
         if (Input.GetMouseButtonDown(1)) {
-            PlaceSelection();
+            HandleRightClick();
+            //PlaceSelection();
         }
         
         UpdatePreview();
+    }
+
+    private void SetPlayerActive(bool active) {
+        UnityEngine.Cursor.lockState = active ? CursorLockMode.Locked : CursorLockMode.None;
+        isPlayerActive = active;
+    }
+
+    private void HandleRightClick() {
+        Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Interactable"))) {
+            uiController.OpenNewUI();
+            uiController.SetInteractedObject(hit.transform.gameObject);
+            SetPlayerActive(false);
+        }
     }
 
     private void HandleRotation() {
