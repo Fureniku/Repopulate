@@ -31,7 +31,9 @@ public class DoorController : MonoBehaviour
 
     public void CreateModule(GameObject module) {
         Transform t = transform;
-        mountedObject = Instantiate(module, t.position + mountPoint, Quaternion.Euler(t.rotation.x, t.rotation.y + mountRotation, t.rotation.z), t);
+        Vector3 rot = t.eulerAngles;
+        mountedObject = Instantiate(module, t.position + mountPoint, Quaternion.Euler(rot.x, rot.y + mountRotation, rot.z), t);
+        mountedObject.GetComponent<ModuleController>().RegisterStationDoor(this);
     }
 	
     void OnDrawGizmosSelected() {

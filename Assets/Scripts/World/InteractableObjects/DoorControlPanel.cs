@@ -22,7 +22,6 @@ public class DoorControlPanel : InteractableObject {
 
 	private void OnMouseOver() {
 		if (Input.GetMouseButtonDown(1)) {
-			Debug.Log("Right click?");
 			uiController.OpenNewUI();
 			uiController.SetInteractedObject(this);
 		}
