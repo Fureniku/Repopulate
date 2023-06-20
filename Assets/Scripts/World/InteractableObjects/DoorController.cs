@@ -9,6 +9,7 @@ public class DoorController : MonoBehaviour
     private Animator anim;
 
     [SerializeField] private Vector3 mountPoint;
+    [SerializeField] private float mountRotation;
     [SerializeField] private GameObject mountedObject;
 
     void Awake() {
@@ -30,7 +31,7 @@ public class DoorController : MonoBehaviour
 
     public void CreateModule(GameObject module) {
         Transform t = transform;
-        mountedObject = Instantiate(module, t.position + mountPoint, t.rotation, t);
+        mountedObject = Instantiate(module, t.position + mountPoint, Quaternion.Euler(t.rotation.x, t.rotation.y + mountRotation, t.rotation.z), t);
     }
 	
     void OnDrawGizmosSelected() {

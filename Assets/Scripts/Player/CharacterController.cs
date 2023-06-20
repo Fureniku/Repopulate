@@ -102,25 +102,15 @@ public class CharacterController : MonoBehaviour {
         
         
         if (Input.GetMouseButtonDown(1)) {
-            HandleRightClick();
-            //PlaceSelection();
+            PlaceSelection();
         }
         
         UpdatePreview();
     }
 
-    private void SetPlayerActive(bool active) {
+    public void SetPlayerActive(bool active) {
         UnityEngine.Cursor.lockState = active ? CursorLockMode.Locked : CursorLockMode.None;
         isPlayerActive = active;
-    }
-
-    private void HandleRightClick() {
-        Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Interactable"))) {
-            uiController.OpenNewUI();
-            uiController.SetInteractedObject(hit.transform.gameObject);
-            SetPlayerActive(false);
-        }
     }
 
     private void HandleRotation() {
@@ -172,8 +162,9 @@ public class CharacterController : MonoBehaviour {
                 targetGrid = hit.transform.parent.GetComponent<BuildingGrid>();
             }
             Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
-            placeable.SetRotation(heldRotation);
-            heldItem.transform.position = hit.transform.position + gridPosition;
+            placeable.SetRotation(heldRotation + targetGrid.transform.rotation.y);
+            heldItem.transform.rotation = targetGrid.GetPreviewRotation();
+            heldItem.transform.position = targetGrid.GetPreviewPosition(gridPosition);
             canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeable.GetSize());
 
             if (placeable.MustBeGrounded() && gridPosition.y > 0) {
@@ -204,8 +195,6 @@ public class CharacterController : MonoBehaviour {
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
             
             Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
-            Vector3 calculatedOffset = Vector3.Scale(hit.transform.InverseTransformPoint(hit.point), new Vector3(0.06f, 0.03f, 0.12f)) + new Vector3(5, 2, 6);
-            Vector3Int finalPos = new Vector3Int((int)Mathf.Floor(calculatedOffset.x),(int)Mathf.Floor(calculatedOffset.y-0.5f),(int)Mathf.Floor(calculatedOffset.z));
             Debug.Log($"GridPos: {gridPosition.x}, {gridPosition.y}, {gridPosition.z}, name of hit object: {hit.transform.name}, exact hit: {hit.point}");
 
             // Check if there's already a block at the target grid position

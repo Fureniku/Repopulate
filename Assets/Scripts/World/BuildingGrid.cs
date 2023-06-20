@@ -4,7 +4,6 @@ using UnityEngine;
 public class BuildingGrid : MonoBehaviour {
     
     [SerializeField] private Vector3Int gridSize;
-    [SerializeField] private BoxCollider box;
 
     private bool[,,] gridSpaces; // Represents the availability of each grid space
     private bool activated; // Don't try and use gridspace stuff for in editor gizmos
@@ -14,7 +13,6 @@ public class BuildingGrid : MonoBehaviour {
     private void Awake() {
         gridSpaces = new bool[gridSize.x, gridSize.y, gridSize.z];
         activated = true;
-        box.enabled = true;
 
         for (int i = 0; i < preOccupiedSlots.Length; i++) {
             Vector3Int s = preOccupiedSlots[i];
@@ -23,8 +21,9 @@ public class BuildingGrid : MonoBehaviour {
     }
 
     public Vector3Int GetHitSpace(Vector3 hit) {
+        Vector3 hitPositionLocal = transform.InverseTransformPoint(hit);
         Vector3 startPoint = hit - transform.position;
-        Vector3Int hitSpace = IntFromVec3(startPoint);
+        Vector3Int hitSpace = IntFromVec3(hitPositionLocal);
 
         int clampX = Math.Clamp(hitSpace.x, 0, gridSize.x-1);
         int clampY = Math.Clamp(hitSpace.y, 0, gridSize.y-1);
@@ -33,6 +32,14 @@ public class BuildingGrid : MonoBehaviour {
         Vector3Int clamped = new Vector3Int(clampX, clampY, clampZ);
         
         return clamped;
+    }
+
+    public Vector3 GetPreviewPosition(Vector3Int gridSpace) {
+        return transform.position + transform.parent.rotation * gridSpace;
+    }
+
+    public Quaternion GetPreviewRotation() {
+        return transform.parent.rotation;
     }
 
     public Vector3Int IntFromVec3(Vector3 vec3) {
@@ -76,14 +83,6 @@ public class BuildingGrid : MonoBehaviour {
                 }
             }
         }
-    }
-
-    public Vector3Int ClampVector(Vector3Int vectorIn) {
-        int x = (int) Math.Clamp(vectorIn.x, 0, box.size.x-1);
-        int y = (int) Math.Clamp(vectorIn.y, 0, box.size.y);
-        int z = (int) Math.Clamp(vectorIn.z, 0, box.size.z-1);
-
-        return new Vector3Int(x, y, z);
     }
 
     public void PlaceBlock(Vector3Int gridSpace, GameObject blockPrefab) {
