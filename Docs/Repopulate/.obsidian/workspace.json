@@ -30,9 +30,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "5c0ef6d2b6104572",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Gameplay/Resources & Resource Mechanics/Oxygen.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -98,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Code Plans/Module Creation & Interaction.md",
+                "file": "Gameplay/Resources & Resource Mechanics/Oxygen.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Code Plans/Module Creation & Interaction.md",
+                "file": "Gameplay/Resources & Resource Mechanics/Oxygen.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Code Plans/Module Creation & Interaction.md"
+                "file": "Gameplay/Resources & Resource Mechanics/Oxygen.md"
               }
             }
           }
@@ -160,7 +172,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "48bb38b2409bca4d",
+  "active": "5c0ef6d2b6104572",
   "lastOpenFiles": [
     "Gameplay/Breeding Programs.md",
     "Code Plans/Module Creation & Interaction.md",

@@ -8,6 +8,9 @@ public class ModuleController : MonoBehaviour, UIFillable {
     [SerializeField] private int buildTime;
     [SerializeField] private DoorController innerDoorController;
     [SerializeField] private DoorController stationDoorController;
+    [SerializeField] private BuildingGrid grid;
+    
+    private float oxygenPressure;
 
     private int currentBuilt;
     
@@ -30,5 +33,19 @@ public class ModuleController : MonoBehaviour, UIFillable {
     
     public float GetProgress() {
         return currentBuilt / (float) buildTime;
+    }
+
+    public float GetProducedOxygen() {
+        List<GameObject> objects = grid.GetAllAttachedObjects();
+        oxygenPressure = 0;
+
+        for (int i = 0; i < objects.Count; i++) {
+            OxygenProducer oxygen = objects[i].GetComponent<OxygenProducer>();
+            if (oxygen != null) {
+                oxygenPressure += oxygen.GetProducedAmount();
+            }
+        }
+        
+        return oxygenPressure;
     }
 }

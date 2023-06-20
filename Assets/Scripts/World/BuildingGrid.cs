@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingGrid : MonoBehaviour {
@@ -6,13 +7,11 @@ public class BuildingGrid : MonoBehaviour {
     [SerializeField] private Vector3Int gridSize;
 
     private bool[,,] gridSpaces; // Represents the availability of each grid space
-    private bool activated; // Don't try and use gridspace stuff for in editor gizmos
 
     [SerializeField] private Vector3Int[] preOccupiedSlots;
 
     private void Awake() {
         gridSpaces = new bool[gridSize.x, gridSize.y, gridSize.z];
-        activated = true;
 
         for (int i = 0; i < preOccupiedSlots.Length; i++) {
             Vector3Int s = preOccupiedSlots[i];
@@ -20,9 +19,29 @@ public class BuildingGrid : MonoBehaviour {
         }
     }
 
+    public List<GameObject> GetAllAttachedObjects() {
+        List<GameObject> objects = new List<GameObject>();
+
+        for (int i = 0; i < transform.childCount; i++) {
+            GameObject child = transform.GetChild(i).gameObject;
+            if (child.CompareTag("PlaceableObject")) {
+                objects.Add(child);
+            }
+        }
+
+        for (int i = 0; i < objects.Count; i++) {
+            Debug.Log("Checking attached object list. Found entry: " + objects[i].name);
+        }
+
+        return objects;
+    }
+
+    private void OnGridChanged() { //TODO add event call later
+        GetAllAttachedObjects();
+    }
+
     public Vector3Int GetHitSpace(Vector3 hit) {
         Vector3 hitPositionLocal = transform.InverseTransformPoint(hit);
-        Vector3 startPoint = hit - transform.position;
         Vector3Int hitSpace = IntFromVec3(hitPositionLocal);
 
         int clampX = Math.Clamp(hitSpace.x, 0, gridSize.x-1);
@@ -95,6 +114,7 @@ public class BuildingGrid : MonoBehaviour {
 
             // Occupy the grid space
             OccupyGridSpaces(gridSpace, newBlock.GetComponent<PlaceableObject>().GetSize());
+            OnGridChanged();
         }
         else {
             Debug.Log($"Invalid or occupied space {gridSpace}");
@@ -113,6 +133,7 @@ public class BuildingGrid : MonoBehaviour {
 
             // Occupy the required grid spaces
             OccupyGridSpaces(startGridSpace, size);
+            OnGridChanged();
         }
     }
 
@@ -125,25 +146,14 @@ public class BuildingGrid : MonoBehaviour {
         ReleaseGridSpaces(startGridSpace, Vector3Int.one);
 
         Destroy(block);
+        OnGridChanged();
     }
 
     private void OnDrawGizmos() {
-        // Draw the grid cubes
-        for (int x = 0; x < gridSize.x; x++)
-        {
-            for (int y = 0; y < gridSize.y; y++)
-            {
-                for (int z = 0; z < gridSize.z; z++)
-                {
-                    Vector3 start = transform.position + new Vector3(x, y, z);
-                    Gizmos.color = activated && gridSpaces[x, y, z] ? Color.red : Color.gray;
+        for (int x = 0; x < gridSize.x; x++) {
+            for (int y = 0; y < gridSize.y; y++) {
+                for (int z = 0; z < gridSize.z; z++) {
                     DrawRotatedCube(transform.position, new Vector3(x, y, z));
-
-                    /*if (activated && gridSpaces[x, y, z])
-                    {
-                        Gizmos.color = Color.red;
-                        Gizmos.DrawWireCube(start + Vector3.one * 0.5f, Vector3.one * 1.1f);
-                    }*/
                 }
             }
         }
