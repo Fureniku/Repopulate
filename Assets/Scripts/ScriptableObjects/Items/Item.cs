@@ -20,6 +20,9 @@ public class Item : ScriptableObject {
 	[SerializeField] private Sprite icon;
 
 	public GameObject Get() {
+		if (prefab == null) {
+			return new GameObject();
+		}
 		return prefab.gameObject;
 	}
 

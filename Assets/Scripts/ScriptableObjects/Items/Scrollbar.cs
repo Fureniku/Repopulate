@@ -6,10 +6,12 @@ using UnityEngine;
 public class Scrollbar : ScriptableObject {
 
 	[SerializeField] private Item[] slots = new Item[9];
-	[SerializeField] private int currentSlot;
+	[SerializeField] private int currentSlot = 0;
 	private readonly int maxSlots = 8; //Zero-based
 
 	public Item GetHeldItem() {
+		Debug.Log("Getting item in slot " + currentSlot);
+		Debug.Log("Item is " + slots[currentSlot].Get().name);
 		return slots[currentSlot];
 	}
 

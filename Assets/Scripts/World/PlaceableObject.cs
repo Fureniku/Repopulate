@@ -12,6 +12,8 @@ public class PlaceableObject : MonoBehaviour {
     [SerializeField] private GameObject rotationOrigin;
     [SerializeField] private GameObject[] visibleObjects;
 
+    [SerializeField] private Vector3 centreOffset;
+
     public Item GetItem() {
         return item;
     }
@@ -22,6 +24,10 @@ public class PlaceableObject : MonoBehaviour {
             gameObject.transform.GetChild(i).gameObject.layer = LayerMask.NameToLayer("BuildingGrid");
         }
         parentGrid = grid;
+    }
+
+    public Vector3 GetOffset() {
+        return centreOffset;
     }
 
     public void UpdateMaterials(Material mat) {

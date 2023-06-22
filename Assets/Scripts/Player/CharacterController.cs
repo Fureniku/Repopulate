@@ -24,21 +24,17 @@ public class CharacterController : MonoBehaviour {
     [SerializeField] private float mouseSensitivity = 100.0f;
 
     [Header("Gameplay stuff")]
-    [SerializeField] private Scrollbar scrollbar;
-    //[SerializeField] private ScrollBarHandler scrollBarHandler;
+    [SerializeField] private DroidController currentDroid;
     [SerializeField] private UIController uiController;
     [SerializeField] private List<GameObject> droidList;
 
     [SerializeField] private KeyCode SwitchDroidKey;
 
-    [SerializeField] private GameObject heldItem;
-    [SerializeField] private float heldRotation = 0;
-
     [SerializeField] private Material previewMaterialValid;
     [SerializeField] private Material previewMaterialInvalid;
 
     private bool isPlayerActive = true; //True when player is active and can move, false when in a UI or similar.
-    private bool canPlaceNow = true; //Updated with the preview, changes the material shading and also allows/disallows placement.
+    
     private float xRotation = 0.0f;
     private int currentDroidId = 0;
 
@@ -51,26 +47,19 @@ public class CharacterController : MonoBehaviour {
     private Rigidbody rigidbody;
     private CapsuleCollider capsuleCollider;
 
-    public void UpdateSelection() {
-        DestroyImmediate(heldItem);
-        heldItem = Instantiate(scrollbar.GetHeldItem().Get());//blockPrefab[scrollBarHandler.GetSelectedSlot()]);
-        heldItem.GetComponent<PlaceableObject>().UpdateMaterials(previewMaterialValid);
-    }
-
     private void Awake() {
         Transform parent = transform.parent;
         rigidbody = parent.GetComponent<Rigidbody>();
         capsuleCollider = parent.GetComponent<CapsuleCollider>();
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-        heldItem = Instantiate(scrollbar.GetHeldItem().Get());
-        heldItem.GetComponent<PlaceableObject>().UpdateMaterials(previewMaterialValid);
+        currentDroid.SetDroidActive(true);
     }
 
     private void SwitchDroid() {
+        currentDroid.SetDroidActive(false);
         if (currentDroidId < droidList.Count-1) {
             currentDroidId++;
-        }
-        else {
+        } else {
             currentDroidId = 0;
         }
 
@@ -80,6 +69,7 @@ public class CharacterController : MonoBehaviour {
         Transform parent = transform.parent;
         rigidbody = parent.GetComponent<Rigidbody>();
         capsuleCollider = parent.GetComponent<CapsuleCollider>();
+        currentDroid.SetDroidActive(true);
     }
 
     private void Update() {
@@ -88,10 +78,6 @@ public class CharacterController : MonoBehaviour {
         }
 
         if (isPlayerActive) {
-            if (Input.GetKeyDown(KeyCode.R)) {
-                HandleRotation();
-            }
-
             HandleCamera();
 
             if (Input.GetKeyDown(SwitchDroidKey)) {
@@ -103,18 +89,20 @@ public class CharacterController : MonoBehaviour {
         if (Input.GetMouseButtonDown(1)) {
             PlaceSelection();
         }
-        
-        UpdatePreview();
+
+        if (currentDroid == null) {
+            Debug.Log("Droid is null");
+        }
+
+        if (fpCam == null) {
+            Debug.Log("Cam is null");
+        }
+        currentDroid.UpdatePreview(fpCam);
     }
 
     public void SetPlayerActive(bool active) {
         UnityEngine.Cursor.lockState = active ? CursorLockMode.Locked : CursorLockMode.None;
         isPlayerActive = active;
-    }
-
-    private void HandleRotation() {
-        heldRotation += 90f;
-        if (heldRotation > 360) heldRotation -= 360f;
     }
 
     private void FixedUpdate() {
@@ -147,36 +135,8 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
-    void UpdatePreview() {
-        if (heldItem == null) {
-            return;
-        }
-        Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
-            BuildingGrid targetGrid;
-            PlaceableObject placeable = heldItem.GetComponent<PlaceableObject>();
-            if (hit.transform.parent.GetComponent<PlaceableObject>() != null) {
-                targetGrid = hit.transform.parent.GetComponent<PlaceableObject>().GetParentGrid();
-            } else {
-                targetGrid = hit.transform.parent.GetComponent<BuildingGrid>();
-            }
-            Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
-            placeable.SetRotation(heldRotation + targetGrid.transform.rotation.y);
-            heldItem.transform.rotation = targetGrid.GetPreviewRotation();
-            heldItem.transform.position = targetGrid.GetPreviewPosition(gridPosition);
-            canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeable.GetItem().GetSize());
-
-            if (placeable.GetItem().MustBeGrounded() && gridPosition.y > 0) {
-                canPlaceNow = false;
-            }
-            
-            placeable.UpdateMaterials(canPlaceNow ? previewMaterialValid : previewMaterialInvalid);
-        }
-    }
-    
-
     void PlaceSelection() {
-        if (canPlaceNow) {
+        if (currentDroid.GetPreviewItem().IsPlaceable()) {
             Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
                 BuildingGrid targetGrid = hit.transform.parent.GetComponent<BuildingGrid>();
@@ -188,8 +148,7 @@ public class CharacterController : MonoBehaviour {
         }
     }
     
-    private void PlaceBlock(BuildingGrid targetGrid)
-    {
+    private void PlaceBlock(BuildingGrid targetGrid) {
         Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
             
@@ -210,7 +169,7 @@ public class CharacterController : MonoBehaviour {
             }
 
             // Place the block
-            targetGrid.PlaceBlock(gridPosition, scrollbar.GetHeldItem().Get());
+            targetGrid.PlaceBlock(gridPosition, currentDroid.GetHeldItem().Get());
         }
     }
     
