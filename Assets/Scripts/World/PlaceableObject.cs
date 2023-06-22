@@ -6,20 +6,16 @@ public class PlaceableObject : MonoBehaviour {
     
     private Material lastMat;
     private BuildingGrid parentGrid;
-    
-    [Header("Placement Data")]
-    [SerializeField] private Vector3Int size;
-    [SerializeField] private bool mustBeGrounded = false;
-    [SerializeField] private bool wallMount = false;
 
     [Header("Prefab Information")]
+    [SerializeField] private Item item;
     [SerializeField] private GameObject rotationOrigin;
     [SerializeField] private GameObject[] visibleObjects;
 
-    void Start() {
-        
+    public Item GetItem() {
+        return item;
     }
-
+    
     public void Place(BuildingGrid grid) {
         gameObject.layer = LayerMask.NameToLayer("BuildingGrid");
         for (int i = 0; i < gameObject.transform.childCount; i++) {
@@ -55,17 +51,5 @@ public class PlaceableObject : MonoBehaviour {
 
     public BuildingGrid GetParentGrid() {
         return parentGrid;
-    }
-
-    public Vector3Int GetSize() {
-        return size;
-    }
-
-    public bool MustBeGrounded() {
-        return mustBeGrounded;
-    }
-
-    public bool WallMounted() {
-        return wallMount;
     }
 }

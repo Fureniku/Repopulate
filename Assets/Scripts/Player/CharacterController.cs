@@ -24,13 +24,12 @@ public class CharacterController : MonoBehaviour {
     [SerializeField] private float mouseSensitivity = 100.0f;
 
     [Header("Gameplay stuff")]
-    [SerializeField] private ScrollBarHandler scrollBarHandler;
+    [SerializeField] private Scrollbar scrollbar;
+    //[SerializeField] private ScrollBarHandler scrollBarHandler;
     [SerializeField] private UIController uiController;
     [SerializeField] private List<GameObject> droidList;
 
     [SerializeField] private KeyCode SwitchDroidKey;
-
-    [SerializeField] private GameObject[] blockPrefab;
 
     [SerializeField] private GameObject heldItem;
     [SerializeField] private float heldRotation = 0;
@@ -54,7 +53,7 @@ public class CharacterController : MonoBehaviour {
 
     public void UpdateSelection() {
         DestroyImmediate(heldItem);
-        heldItem = Instantiate(blockPrefab[scrollBarHandler.GetSelectedSlot()]);
+        heldItem = Instantiate(scrollbar.GetHeldItem().Get());//blockPrefab[scrollBarHandler.GetSelectedSlot()]);
         heldItem.GetComponent<PlaceableObject>().UpdateMaterials(previewMaterialValid);
     }
 
@@ -63,7 +62,7 @@ public class CharacterController : MonoBehaviour {
         rigidbody = parent.GetComponent<Rigidbody>();
         capsuleCollider = parent.GetComponent<CapsuleCollider>();
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-        heldItem = Instantiate(blockPrefab[scrollBarHandler.GetSelectedSlot()]);
+        heldItem = Instantiate(scrollbar.GetHeldItem().Get());
         heldItem.GetComponent<PlaceableObject>().UpdateMaterials(previewMaterialValid);
     }
 
@@ -165,9 +164,9 @@ public class CharacterController : MonoBehaviour {
             placeable.SetRotation(heldRotation + targetGrid.transform.rotation.y);
             heldItem.transform.rotation = targetGrid.GetPreviewRotation();
             heldItem.transform.position = targetGrid.GetPreviewPosition(gridPosition);
-            canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeable.GetSize());
+            canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeable.GetItem().GetSize());
 
-            if (placeable.MustBeGrounded() && gridPosition.y > 0) {
+            if (placeable.GetItem().MustBeGrounded() && gridPosition.y > 0) {
                 canPlaceNow = false;
             }
             
@@ -182,7 +181,7 @@ public class CharacterController : MonoBehaviour {
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
                 BuildingGrid targetGrid = hit.transform.parent.GetComponent<BuildingGrid>();
     
-                if (targetGrid != null && blockPrefab != null) {
+                if (targetGrid != null) {
                     PlaceBlock(targetGrid);
                 }
             }
@@ -211,7 +210,7 @@ public class CharacterController : MonoBehaviour {
             }
 
             // Place the block
-            targetGrid.PlaceBlock(gridPosition, blockPrefab[scrollBarHandler.GetSelectedSlot()]);
+            targetGrid.PlaceBlock(gridPosition, scrollbar.GetHeldItem().Get());
         }
     }
     

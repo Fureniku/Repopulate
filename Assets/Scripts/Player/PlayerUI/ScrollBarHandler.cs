@@ -1,12 +1,19 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScrollBarHandler : MonoBehaviour {
 
+    [SerializeField] private Scrollbar scrollbar;
+
     [SerializeField] private GameObject[] slots;
     [SerializeField] private GameObject selectionBox;
-    [SerializeField] private CharacterController characterController;
 
     private int selectedId = 0;
+
+    void Awake() {
+        Debug.Log("Setting slot icon");
+        UpdateSlot(0);
+    }
 
     void Update() {
         float mouseScroll = Input.mouseScrollDelta.y;
@@ -28,6 +35,10 @@ public class ScrollBarHandler : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Alpha9)) { SelectSlot(8); }
     }
 
+    public void UpdateSlot(int id) {
+        slots[id].GetComponent<Image>().sprite = scrollbar.GetItemInSlot(id).GetIcon();
+    }
+
     public void SelectSlot(int id) {
         if (id == slots.Length + 1) {
             selectedId = 0;
@@ -45,7 +56,7 @@ public class ScrollBarHandler : MonoBehaviour {
 
     private void UpdateSelectionBox() {
         selectionBox.transform.SetParent(slots[selectedId].transform, false);
-        characterController.UpdateSelection();
+        scrollbar.SelectSlot(selectedId);
     }
 
     public int GetSelectedSlot() {

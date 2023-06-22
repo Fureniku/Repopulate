@@ -107,13 +107,14 @@ public class BuildingGrid : MonoBehaviour {
     public void PlaceBlock(Vector3Int gridSpace, GameObject blockPrefab) {
         // Check if the block's grid space is available
         if (CheckGridSpaceAvailability(gridSpace, Vector3Int.one)) {
-            GameObject newBlock = Instantiate(blockPrefab, transform.position + transform.parent.rotation * gridSpace, transform.parent.rotation);
+            GameObject block = ItemRegistry.Instance.ALGAE_FARM_1.Get();
+            
+            GameObject newBlock = Instantiate(block, transform.position + transform.parent.rotation * gridSpace, transform.parent.rotation);
             newBlock.transform.SetParent(transform);
             newBlock.GetComponent<PlaceableObject>().Place(this);
             
-
             // Occupy the grid space
-            OccupyGridSpaces(gridSpace, newBlock.GetComponent<PlaceableObject>().GetSize());
+            OccupyGridSpaces(gridSpace, newBlock.GetComponent<PlaceableObject>().GetItem().GetSize());
             OnGridChanged();
         }
         else {
