@@ -9,7 +9,6 @@ public class UIController : MonoBehaviour {
     
     [SerializeField] private GameObject activeUI;
     [SerializeField] private GameObject UIParent;
-    [SerializeField] private GameObject TEMP_UI_TEST;
 
     [SerializeField] private InteractableObject interactedObject;
     
@@ -30,11 +29,12 @@ public class UIController : MonoBehaviour {
         DestroyImmediate(activeUI);
     }
 
-    public void OpenNewUI() {
+    public void OpenNewUI(GameObject ui) {
         character.SetPlayerActive(false);
         DestroyImmediate(activeUI);
-        activeUI = Instantiate(TEMP_UI_TEST, UIParent.transform);
+        activeUI = Instantiate(ui.gameObject, UIParent.transform);
         activeUI.GetComponent<DynamicInteractedUI>().SetUIController(this);
+        
     }
 
     public void SetInteractedObject(InteractableObject go) {

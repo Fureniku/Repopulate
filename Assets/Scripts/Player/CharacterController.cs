@@ -44,12 +44,12 @@ public class CharacterController : MonoBehaviour {
     private bool jumpInput { get; set; }
     private bool sprintInput { get; set; }
     
-    private Rigidbody rigidbody;
+    private Rigidbody rb;
     private CapsuleCollider capsuleCollider;
 
     private void Awake() {
         Transform parent = transform.parent;
-        rigidbody = parent.GetComponent<Rigidbody>();
+        rb = parent.GetComponent<Rigidbody>();
         capsuleCollider = parent.GetComponent<CapsuleCollider>();
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         currentDroid.SetDroidActive(true);
@@ -67,7 +67,7 @@ public class CharacterController : MonoBehaviour {
         transform.localRotation = Quaternion.identity;
 
         Transform parent = transform.parent;
-        rigidbody = parent.GetComponent<Rigidbody>();
+        rb = parent.GetComponent<Rigidbody>();
         capsuleCollider = parent.GetComponent<CapsuleCollider>();
         currentDroid.SetDroidActive(true);
     }
@@ -203,20 +203,20 @@ public class CharacterController : MonoBehaviour {
         }
         
         if (IsGrounded) {
-            rigidbody.velocity = Vector3.zero; //Reset the velocity
+            rb.velocity = Vector3.zero; //Reset the velocity
             if (jumpInput) { //Check if trying to jump
-                rigidbody.velocity += Vector3.up * jumpSpeed; //Apply an upward velocity to jump
+                rb.velocity += Vector3.up * jumpSpeed; //Apply an upward velocity to jump
             }
 
             //Process movement
-            rigidbody.velocity += velForward * moveSpeed;
-            rigidbody.velocity += velStrafe * moveSpeed;
+            rb.velocity += velForward * moveSpeed;
+            rb.velocity += velStrafe * moveSpeed;
         } else {
             // Check if player is trying to change forward/backward movement while jumping/falling
             if (!Mathf.Approximately(forwardInput, 0f)) {
                 // Override just the forward velocity with player input at half speed
-                Vector3 verticalVelocity = Vector3.Project(rigidbody.velocity, Vector3.up);
-                rigidbody.velocity = verticalVelocity + velForward * moveSpeed / 2f + velStrafe * moveSpeed / 2f;
+                Vector3 verticalVelocity = Vector3.Project(rb.velocity, Vector3.up);
+                rb.velocity = verticalVelocity + velForward * moveSpeed / 2f + velStrafe * moveSpeed / 2f;
             }
         }
     }

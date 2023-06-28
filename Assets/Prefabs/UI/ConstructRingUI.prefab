@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 344011542189453003}
   - component: {fileID: 344011542189453001}
   - component: {fileID: 344011542189453000}
-  - component: {fileID: 5781015265762852563}
   - component: {fileID: 7197520831790074111}
+  - component: {fileID: 5182904814713099910}
   m_Layer: 5
-  m_Name: ConstructModulePanel
+  m_Name: ConstructRingUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,23 +79,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5781015265762852563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 344011542189453002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b46d4b07fa4b743459d9a6d2ce798bc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiController: {fileID: 0}
-  availableObjects:
-  - {fileID: 6723309931491890404, guid: b893a6577c62fb94c8a344844fa2655a, type: 3}
-  - {fileID: 6723309931491890404, guid: 28a5c8a6bb8ee874387faa3705d7d149, type: 3}
-  uiButtonPrefab: {fileID: 1701198399912063001, guid: 60356fb6c2792934e9649ca2843aac1c, type: 3}
 --- !u!114 &7197520831790074111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,6 +105,22 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &5182904814713099910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344011542189453002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88fb63fce321ca3479554894505ee04f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiController: {fileID: 0}
+  availableObjects:
+  - {fileID: 2925726717463453983, guid: c2e281d7b0bac454c9d1f09917bc270d, type: 3}
+  uiButtonPrefab: {fileID: 1701198399912063001, guid: 60356fb6c2792934e9649ca2843aac1c, type: 3}
 --- !u!1 &344011542906430221
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,7 +187,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Select Module Type
+  m_text: Select Ring Type
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

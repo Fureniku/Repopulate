@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UI;
 using UnityEngine;
 
-public class ModuleConstructUI : DynamicInteractedUI {
+public class RingConstructUI : DynamicInteractedUI {
 
 	[SerializeField] private GameObject[] availableObjects;
 	[SerializeField] private GameObject uiButtonPrefab;
@@ -18,8 +17,8 @@ public class ModuleConstructUI : DynamicInteractedUI {
 	}
 
 	public override void CreateObject(GameObject obj) {
-		DoorController door = uiController.GetInteractedObject().GetComponent<DoorControlPanel>().GetDoorController();
-		door.CreateModule(obj);
+		SegmentControlPanel segment = uiController.GetInteractedObject().GetComponent<SegmentControlPanel>();
+		segment.CreateRing(obj);
 		
 		uiController.CloseUI();
 	}

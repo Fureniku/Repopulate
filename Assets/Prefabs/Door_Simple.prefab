@@ -111,7 +111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorController: {fileID: 2034530409}
-  ui: {fileID: 344011542189453002, guid: bf3a775ecf9075b40b1c7524e317cc41, type: 3}
 --- !u!1001 &8010621491340487235
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -242,19 +241,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -8049679903455636679, guid: 19e54d7d0c7051b4daf7c790dda8743c, type: 3}
   m_PrefabInstance: {fileID: 8010621491340487235}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &8811470089588618545
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9179104647453391226}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 55.395035, y: 250.04735, z: 181.86836}
-  m_Center: {x: -0.000038167964, y: -30.436266, z: -91.24281}
 --- !u!95 &7317223256235055863
 Animator:
   serializedVersion: 5
@@ -276,3 +262,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &8811470089588618545
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9179104647453391226}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 55.395035, y: 250.04735, z: 181.86836}
+  m_Center: {x: -0.000038167964, y: -30.436266, z: -91.24281}

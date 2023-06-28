@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Item : ScriptableObject {
 
 	[Header("Item Information")]
-	[SerializeField] private string name;
+	[SerializeField] private string itemName;
 	[SerializeField] private Category category;
 	
 	[Header("Placement Data")]
