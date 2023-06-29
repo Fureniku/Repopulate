@@ -7,7 +7,7 @@ public class PreviewItem : MonoBehaviour {
 	[SerializeField] private GameObject go;
 	[SerializeField] private Material invalidPlace;
 	[SerializeField] private Material validPlace;
-	[SerializeField] private float heldRotation = 0;
+	[SerializeField] private DroidController droid;
 	[SerializeField] private MeshRenderer meshRenderer;
 	
 	private bool canPlaceNow = true; //Updated with the preview, changes the material shading and also allows/disallows placement.
@@ -15,11 +15,6 @@ public class PreviewItem : MonoBehaviour {
 	public void SetObject(GameObject goIn) {
 		go = goIn;
 		CombineMeshes();
-	}
-	
-	public void Rotate() {
-		heldRotation += 90f;
-		if (heldRotation > 360) heldRotation -= 360f;
 	}
 
 	public void UpdatePreview(Camera cam) {
@@ -33,15 +28,14 @@ public class PreviewItem : MonoBehaviour {
 				targetGrid = hit.transform.parent.GetComponent<BuildingGrid>();
 			}
 			Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
-			placeable.SetRotation(heldRotation + targetGrid.transform.rotation.y);
-			transform.rotation = targetGrid.GetPreviewRotation();
-			transform.position = placeable.GetOffset() + targetGrid.GetPreviewPosition(gridPosition);
-			canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeable.GetItem().GetSize());
+			placeable.SetRotation(targetGrid.GetPreviewRotation().y);
+			transform.rotation = targetGrid.GetPlacementRotation(gridPosition, droid.GetHeldRotation());
+			transform.position = targetGrid.GetPlacementPosition(gridPosition, ItemRegistry.Instance.ALGAE_FARM_1);
+			canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeable.GetItem().GetSize(), droid.GetHeldRotation());
 
 			if (placeable.GetItem().MustBeGrounded() && gridPosition.y > 0) {
 				canPlaceNow = false;
 			}
-            Debug.Log("Position: " + go.transform.position);
 			meshRenderer.material = canPlaceNow ? validPlace : invalidPlace;
 		}
 	}

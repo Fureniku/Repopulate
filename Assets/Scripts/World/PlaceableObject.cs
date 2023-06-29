@@ -9,7 +9,6 @@ public class PlaceableObject : MonoBehaviour {
 
     [Header("Prefab Information")]
     [SerializeField] private Item item;
-    [SerializeField] private GameObject rotationOrigin;
     [SerializeField] private GameObject[] visibleObjects;
 
     [SerializeField] private Vector3 centreOffset;
@@ -30,29 +29,9 @@ public class PlaceableObject : MonoBehaviour {
         return centreOffset;
     }
 
-    public void UpdateMaterials(Material mat) {
-        if (mat == lastMat) {
-            return;
-        }
-
-        if (visibleObjects.Length > 0) {
-            for (int i = 0; i < visibleObjects.Length; i++) {
-                visibleObjects[i].GetComponent<MeshRenderer>().material = mat;
-            }
-
-            return;
-        }
-        
-        for (int i = 0; i < gameObject.transform.childCount; i++) {
-            gameObject.transform.GetChild(i).GetComponent<MeshRenderer>().material = mat;
-        }
-
-        lastMat = mat;
-    }
-
     public void SetRotation(float angle) {
-        Vector3 old = rotationOrigin.transform.eulerAngles;
-        rotationOrigin.transform.eulerAngles = new Vector3(old.x, angle, old.z);
+        Vector3 old = transform.eulerAngles;
+        transform.eulerAngles = new Vector3(old.x, angle, old.z);
     }
 
     public BuildingGrid GetParentGrid() {

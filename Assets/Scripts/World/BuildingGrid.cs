@@ -54,6 +54,7 @@ public class BuildingGrid : MonoBehaviour {
     }
 
     public Vector3 GetPreviewPosition(Vector3Int gridSpace) {
+        Debug.Log("Preview pos: " + transform.position + transform.parent.rotation * gridSpace);
         return transform.position + transform.parent.rotation * gridSpace;
     }
 
@@ -65,11 +66,13 @@ public class BuildingGrid : MonoBehaviour {
         return new Vector3Int((int)Math.Floor(vec3.x), (int)Math.Floor(vec3.y), (int)Math.Floor(vec3.z));
     }
 
-    public bool CheckGridSpaceAvailability(Vector3Int startGridSpace, Vector3Int size) {
-        // Check if the required grid spaces for a block are available
-        for (int x = startGridSpace.x; x < startGridSpace.x + size.x; x++) {
-            for (int y = startGridSpace.y; y < startGridSpace.y + size.y; y++) {
-                for (int z = startGridSpace.z; z < startGridSpace.z + size.z; z++) {
+    public bool CheckGridSpaceAvailability(Vector3Int startGridSpace, Vector3Int size, float rotation) {
+        Vector3Int rotatedSize = GetRotatedGridSize(size, rotation);
+        Vector3Int rotatedStart = GetRotatedGridPosition(startGridSpace, rotatedSize, rotation);
+        
+        for (int x = rotatedStart.x; x < rotatedStart.x + rotatedSize.x; x++) {
+            for (int y = rotatedStart.y; y < rotatedStart.y + rotatedSize.y; y++) {
+                for (int z = rotatedStart.z; z < rotatedStart.z + rotatedSize.z; z++) {
                     // Check if the grid space is out of bounds or already occupied
                     if (x < 0 || x >= gridSize.x || y < 0 || y >= gridSize.y || z < 0 || z >= gridSize.z ||
                         gridSpaces[x, y, z]) {
@@ -82,59 +85,75 @@ public class BuildingGrid : MonoBehaviour {
         return true;
     }
 
-    private void OccupyGridSpaces(Vector3Int startGridSpace, Vector3Int size) {
-        // Occupy the required grid spaces for a block
-        for (int x = startGridSpace.x; x < startGridSpace.x + size.x; x++) {
-            for (int y = startGridSpace.y; y < startGridSpace.y + size.y; y++) {
-                for (int z = startGridSpace.z; z < startGridSpace.z + size.z; z++) {
-                    gridSpaces[x, y, z] = true;
-                }
-            }
+    private Vector3Int GetRotatedGridSize(Vector3Int size,  float rotation) {
+        int sizeX = size.x;
+        int sizeZ = size.z;
+
+        if (Mathf.Approximately(rotation, 90)) {
+            sizeX = size.z;
+            sizeZ = size.x;
         }
+        
+        if (Mathf.Approximately(rotation, 270)) {
+            sizeX = size.z;
+            sizeZ = size.x;
+        }
+
+        return new Vector3Int(sizeX, size.y, sizeZ);
     }
 
-    private void ReleaseGridSpaces(Vector3Int startGridSpace, Vector3Int size) {
+    private Vector3Int GetRotatedGridPosition(Vector3Int startGridSpace, Vector3Int rotatedSize, float rotation) {
+        int startX = startGridSpace.x;
+        int startZ = startGridSpace.z;
+
+        if (Mathf.Approximately(rotation, 90)) {
+            startZ -= rotatedSize.z - 1;
+        }
+        
+        if (Mathf.Approximately(rotation, 180)) {
+            startX -= rotatedSize.x - 1;
+        }
+
+        return new Vector3Int(startX, startGridSpace.y, startZ);
+    }
+    
+    private void ModifyGridSpaceOccupancy(Vector3Int startGridSpace, Vector3Int size, float rotation, bool occupied) {
+        Vector3Int rotatedSize = GetRotatedGridSize(size, rotation);
+        Vector3Int rotatedStart = GetRotatedGridPosition(startGridSpace, rotatedSize, rotation);
+        
         // Release the occupied grid spaces of a block
-        for (int x = startGridSpace.x; x < startGridSpace.x + size.x; x++) {
-            for (int y = startGridSpace.y; y < startGridSpace.y + size.y; y++) {
-                for (int z = startGridSpace.z; z < startGridSpace.z + size.z; z++) {
-                    gridSpaces[x, y, z] = false;
+        for (int x = rotatedStart.x; x < rotatedStart.x + rotatedSize.x; x++) {
+            for (int y = rotatedStart.y; y < rotatedStart.y + rotatedSize.y; y++) {
+                for (int z = rotatedStart.z; z < rotatedStart.z + rotatedSize.z; z++) {
+                    gridSpaces[x, y, z] = occupied;
                 }
             }
         }
     }
 
-    public void PlaceBlock(Vector3Int gridSpace, GameObject blockPrefab) {
+    public Vector3 GetPlacementPosition(Vector3Int gridSpace, Item item) {
+        return (transform.position + transform.parent.rotation * gridSpace) + new Vector3(0.5f, 0, 0.5f);
+    }
+
+    public Quaternion GetPlacementRotation(Vector3Int gridspace, float rotation) {
+        return Quaternion.Euler(transform.parent.rotation.eulerAngles + new Vector3(0, rotation, 0));
+    }
+
+    public void PlaceBlock(Vector3Int gridSpace, GameObject blockPrefab, float rotation) {
         // Check if the block's grid space is available
-        if (CheckGridSpaceAvailability(gridSpace, Vector3Int.one)) {
+        if (CheckGridSpaceAvailability(gridSpace, Vector3Int.one, rotation)) {
             GameObject block = ItemRegistry.Instance.ALGAE_FARM_1.Get();
             
-            GameObject newBlock = Instantiate(block, transform.position + transform.parent.rotation * gridSpace, transform.parent.rotation);
+            GameObject newBlock = Instantiate(block, GetPlacementPosition(gridSpace, ItemRegistry.Instance.ALGAE_FARM_1), GetPlacementRotation(gridSpace, rotation));
             newBlock.transform.SetParent(transform);
             newBlock.GetComponent<PlaceableObject>().Place(this);
             
             // Occupy the grid space
-            OccupyGridSpaces(gridSpace, newBlock.GetComponent<PlaceableObject>().GetItem().GetSize());
+            ModifyGridSpaceOccupancy(gridSpace, newBlock.GetComponent<PlaceableObject>().GetItem().GetSize(), rotation, true);
             OnGridChanged();
-        }
-        else {
-            Debug.Log($"Invalid or occupied space {gridSpace}");
-        }
-    }
-
-    public void PlaceMultiGridBlock(Vector3 position, Vector3Int size, GameObject blockPrefab) {
-        Vector3 snappedPosition = GetHitSpace(position);
-        Vector3Int startGridSpace = new Vector3Int((int)Mathf.Floor(snappedPosition.x), (int)Mathf.Floor(snappedPosition.y),
-            (int)Mathf.Floor(snappedPosition.z));
-
-        // Check if the required grid spaces for the block are available
-        if (CheckGridSpaceAvailability(startGridSpace, size)) {
-            GameObject newBlock = Instantiate(blockPrefab, snappedPosition, Quaternion.identity);
-            newBlock.transform.SetParent(transform);
-
-            // Occupy the required grid spaces
-            OccupyGridSpaces(startGridSpace, size);
-            OnGridChanged();
+        } else {
+            //TODO UI feedback
+            Debug.Log($"Invalid or occupied space {gridSpace} - replace me with UI feedback!");
         }
     }
 
@@ -144,7 +163,8 @@ public class BuildingGrid : MonoBehaviour {
             Mathf.RoundToInt(block.transform.position.y), Mathf.RoundToInt(block.transform.position.z));
 
         // Release the occupied grid spaces
-        ReleaseGridSpaces(startGridSpace, Vector3Int.one);
+        //TODO get size and rotation from targeted block
+        //ModifyGridSpaceOccupancy(startGridSpace, Vector3Int.one, rotation, false);
 
         Destroy(block);
         OnGridChanged();
@@ -154,20 +174,24 @@ public class BuildingGrid : MonoBehaviour {
         for (int x = 0; x < gridSize.x; x++) {
             for (int y = 0; y < gridSize.y; y++) {
                 for (int z = 0; z < gridSize.z; z++) {
-                    DrawRotatedCube(transform.position, new Vector3(x, y, z));
+                    bool occupied = false;
+                    if (Application.isPlaying) {
+                        occupied = gridSpaces[x, y, z];
+                    }
+                    DrawRotatedCube(transform.position, new Vector3(x, y, z), occupied);
                 }
             }
         }
     }
 
-    private void DrawRotatedCube(Vector3 origin, Vector3 offset) {
+    private void DrawRotatedCube(Vector3 origin, Vector3 offset, bool occupied) {
         Vector3 start = origin + offset;
         Vector3 point1 = RotatePointAroundPivot(start, origin);
         Vector3 point2 = RotatePointAroundPivot(start + Vector3.forward, origin);
         Vector3 point3 = RotatePointAroundPivot(start + Vector3.right, origin);
         Vector3 point4 = RotatePointAroundPivot(new Vector3(start.x + 1, start.y, start.z + 1), origin);
 
-        Gizmos.color = Color.blue;
+        Gizmos.color = occupied ? Color.red : Color.blue;
         Gizmos.DrawLine(point1, point2);
         Gizmos.DrawLine(point1, point3);
         Gizmos.DrawLine(point2, point4);
@@ -187,6 +211,13 @@ public class BuildingGrid : MonoBehaviour {
         Gizmos.DrawLine(point2, point6);
         Gizmos.DrawLine(point3, point7);
         Gizmos.DrawLine(point4, point8);
+
+        if (occupied) {
+            Gizmos.DrawLine(point1, point8);
+            Gizmos.DrawLine(point2, point7);
+            Gizmos.DrawLine(point3, point6);
+            Gizmos.DrawLine(point4, point5);
+        }
     }
 
     private Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot) {

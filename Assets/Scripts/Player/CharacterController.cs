@@ -156,7 +156,7 @@ public class CharacterController : MonoBehaviour {
             Debug.Log($"GridPos: {gridPosition.x}, {gridPosition.y}, {gridPosition.z}, name of hit object: {hit.transform.name}, exact hit: {hit.point}");
 
             // Check if there's already a block at the target grid position
-            bool isOccupied = targetGrid.CheckGridSpaceAvailability(gridPosition, Vector3Int.one);
+            //bool isOccupied = targetGrid.CheckGridSpaceAvailability(gridPosition, Vector3Int.one);
 
             // Check if there's an adjacent block in any direction
             //bool hasAdjacentBlock = targetGrid.HasAdjacentBlock(gridPosition);
@@ -169,7 +169,7 @@ public class CharacterController : MonoBehaviour {
             }
 
             // Place the block
-            targetGrid.PlaceBlock(gridPosition, currentDroid.GetHeldItem().Get());
+            targetGrid.PlaceBlock(gridPosition, currentDroid.GetHeldItem().Get(), currentDroid.GetHeldRotation());
         }
     }
     

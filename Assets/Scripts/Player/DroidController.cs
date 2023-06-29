@@ -7,6 +7,7 @@ public class DroidController : MonoBehaviour {
 
 	[SerializeField] private PreviewItem heldItem;
 	[SerializeField] private Scrollbar scrollbar;
+	[SerializeField] private float heldRotation = 0;
 
 	private bool isDroidActive = false; //Whether this is the currently controlled droid. Not to be confused with playeractive which locks the camera etc
 
@@ -17,7 +18,8 @@ public class DroidController : MonoBehaviour {
 	void Update() {
 		if (isDroidActive) {
 			if (Input.GetKeyDown(KeyCode.R)) {
-				heldItem.Rotate();
+				heldRotation += 90f;
+				if (heldRotation > 360) heldRotation -= 360f;
 			}
 		}
 	}
@@ -36,6 +38,10 @@ public class DroidController : MonoBehaviour {
 
 	public Item GetHeldItem() {
 		return scrollbar.GetHeldItem();
+	}
+
+	public float GetHeldRotation() {
+		return heldRotation;
 	}
 
 	public void SetDroidActive(bool active) {

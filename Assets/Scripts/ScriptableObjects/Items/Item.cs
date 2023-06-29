@@ -12,6 +12,7 @@ public class Item : ScriptableObject {
 	
 	[Header("Placement Data")]
 	[SerializeField] private Vector3Int size;
+	[SerializeField] private Vector3 rotationOrigin;
 	[SerializeField] private bool mustBeGrounded = false;
 	[SerializeField] private bool wallMount = false;
 
@@ -33,6 +34,10 @@ public class Item : ScriptableObject {
 	public Vector3Int GetSize() {
 		return size;
 	}
+
+	public int GetX() { return size.x; }
+	public int GetY() { return size.y; }
+	public int GetZ() { return size.z; }
 
 	public bool MustBeGrounded() {
 		return mustBeGrounded;

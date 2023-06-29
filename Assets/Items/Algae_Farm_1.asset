@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e40d9dafe1793644d8c82e02288c3210, type: 3}
   m_Name: Algae_Farm_1
   m_EditorClassIdentifier: 
-  name: SImple Algae Farm
+  itemName: 
   category: {fileID: 11400000, guid: d621c135b06abac498fc60381dc97934, type: 2}
-  size: {x: 3, y: 3, z: 1}
+  size: {x: 4, y: 3, z: 1}
   mustBeGrounded: 1
   wallMount: 0
   prefab: {fileID: 107592285966079195, guid: 717c90983cd72fe49b1d910a311f184a, type: 3}
