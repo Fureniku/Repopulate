@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3299657393507760649}
   - component: {fileID: -482256047190856134}
+  - component: {fileID: -1163184328729161645}
   m_Layer: 0
   m_Name: Solary_Array
   m_TagString: Untagged
@@ -46,10 +47,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBuilt: 0
+  isEnterable: 0
   buildTime: 100
   innerDoorController: {fileID: 0}
   stationDoorController: {fileID: 0}
   grid: {fileID: 0}
+--- !u!114 &-1163184328729161645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5624316648304934164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b796e9eea5805040a0c9ea397ce678a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourceType: 2
+  produced: 1000
 --- !u!1001 &4078121420390632879
 PrefabInstance:
   m_ObjectHideFlags: 0

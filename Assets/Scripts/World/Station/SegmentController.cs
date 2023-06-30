@@ -7,13 +7,11 @@ using UnityEngine;
 public class SegmentController : MonoBehaviour {
 
     [SerializeField] private GameObject[] blades;
-    [SerializeField] private GameObject[] rings;
+    [SerializeField] private GameObject attachedRing;
     [SerializeField] [Range(0,1)] private float closedAmount;
     [SerializeField] [Range(0,1)] private float apertureSpeed;
     [SerializeField] private float maxClosed;
     [SerializeField] private Vector3 ringMountPosition;
-
-    private GameObject attachedRing;
 
     private float closedTarget;
 
