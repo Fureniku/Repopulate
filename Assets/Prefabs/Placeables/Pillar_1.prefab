@@ -46,9 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 14cde73593cd024418beee0933904a23, type: 2}
-  rotationOrigin: {fileID: 4170295839662180667}
-  visibleObjects:
-  - {fileID: 5987722886639860691}
+  centreOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &4170295839662180667
 GameObject:
   m_ObjectHideFlags: 0

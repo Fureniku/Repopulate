@@ -169,7 +169,7 @@ public class CharacterController : MonoBehaviour {
             }
 
             // Place the block
-            targetGrid.PlaceBlock(gridPosition, currentDroid.GetHeldItem().Get(), currentDroid.GetHeldRotation());
+            targetGrid.PlaceBlock(gridPosition, currentDroid.GetHeldItem(), currentDroid.GetHeldRotation());
         }
     }
     

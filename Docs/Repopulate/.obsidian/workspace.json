@@ -13,7 +13,19 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Gameplay/Station Modules.md",
+                "file": "Gameplay/Resources & Resource Mechanics/Resources.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f4ed6217a4de4b97",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Gameplay/Resources & Resource Mechanics/Energy.md",
                 "mode": "source",
                 "source": false
               }
@@ -25,26 +37,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Code Plans/Module Creation & Interaction.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "5c0ef6d2b6104572",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Gameplay/Resources & Resource Mechanics/Oxygen.md",
+                "file": "Gameplay/Resources & Resource Mechanics/Items/Algae Tanks.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -110,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Gameplay/Resources & Resource Mechanics/Oxygen.md",
+                "file": "Gameplay/Resources & Resource Mechanics/Energy.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Gameplay/Resources & Resource Mechanics/Oxygen.md",
+                "file": "Gameplay/Resources & Resource Mechanics/Energy.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Gameplay/Resources & Resource Mechanics/Oxygen.md"
+                "file": "Gameplay/Resources & Resource Mechanics/Energy.md"
               }
             }
           }
@@ -172,35 +172,36 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "5c0ef6d2b6104572",
+  "active": "f4ed6217a4de4b97",
   "lastOpenFiles": [
-    "Gameplay/Breeding Programs.md",
-    "Code Plans/Module Creation & Interaction.md",
-    "Code Plans",
-    "Gameplay/Resources & Resource Mechanics/Items.md",
-    "Gameplay/Internal Station Management.md",
+    "Gameplay/Resources & Resource Mechanics/Items/Battery.md",
+    "Gameplay/Resources & Resource Mechanics/Items/Algae Tanks.md",
+    "Gameplay/Resources & Resource Mechanics/Resources.md",
     "Gameplay/Station Modules.md",
+    "Gameplay/Resources & Resource Mechanics/Items.md",
+    "Gameplay/Resources & Resource Mechanics/Water.md",
+    "Gameplay/Resources & Resource Mechanics/Oxygen.md",
+    "Gameplay/Resources & Resource Mechanics/Items",
     "What we have so far....md",
+    "Music SFX.md",
+    "Code Plans/Module Creation & Interaction.md",
+    "Gameplay/Breeding Programs.md",
+    "Code Plans",
+    "Gameplay/Internal Station Management.md",
     "The Genesis.md",
     "Core GDD.md",
     "Controls.md",
-    "Gameplay/Resources & Resource Mechanics/Resources.md",
     "Gameplay/External Station Management.md",
     "Gameplay/Building Grid.md",
     "Aliens.md",
     "Gameplay/Solar Exploration.md",
     "Art.md",
     "Gameplay.md",
-    "Music SFX.md",
     "Story.md",
     "Naming Conventions.md",
     "Release, Monetisation etc.md",
     "Gameplay/Connections.md",
     "Gameplay/Colonisation.md",
-    "Gameplay/Resource Gathering (Space).md",
-    "Gameplay/Resource Gathering (Planet).md",
-    "Gameplay/Galactic Exploration.md",
-    "Gameplay/Resources & Resource Mechanics/Carbon Nanotubes.md",
     "Gameplay/Resources & Resource Mechanics",
     "Gameplay",
     "Music",

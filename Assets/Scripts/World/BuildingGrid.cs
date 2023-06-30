@@ -139,12 +139,12 @@ public class BuildingGrid : MonoBehaviour {
         return Quaternion.Euler(transform.parent.rotation.eulerAngles + new Vector3(0, rotation, 0));
     }
 
-    public void PlaceBlock(Vector3Int gridSpace, GameObject blockPrefab, float rotation) {
+    public void PlaceBlock(Vector3Int gridSpace, Item item, float rotation) {
         // Check if the block's grid space is available
         if (CheckGridSpaceAvailability(gridSpace, Vector3Int.one, rotation)) {
-            GameObject block = ItemRegistry.Instance.ALGAE_FARM_1.Get();
+            GameObject block = item.Get();
             
-            GameObject newBlock = Instantiate(block, GetPlacementPosition(gridSpace, ItemRegistry.Instance.ALGAE_FARM_1), GetPlacementRotation(gridSpace, rotation));
+            GameObject newBlock = Instantiate(block, GetPlacementPosition(gridSpace, item), GetPlacementRotation(gridSpace, rotation));
             newBlock.transform.SetParent(transform);
             newBlock.GetComponent<PlaceableObject>().Place(this);
             

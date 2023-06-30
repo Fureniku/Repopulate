@@ -16,6 +16,20 @@ public class PreviewItem : MonoBehaviour {
 		go = goIn;
 		CombineMeshes();
 	}
+	
+	void OnEnable()  {
+		ScrollBarHandler.OnScrolled += UpdateObject;
+	}
+
+
+	void OnDisable()  {
+		ScrollBarHandler.OnScrolled -= UpdateObject;
+	}
+
+	void UpdateObject() {
+		Debug.Log("Calling update object from event");
+		SetObject(droid.GetHeldItem().Get());
+	}
 
 	public void UpdatePreview(Camera cam) {
 		Ray ray = cam.ScreenPointToRay(Input.mousePosition);

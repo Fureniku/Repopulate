@@ -13,6 +13,7 @@ Select module type
 One button per module, dynamic"]
 ```
 
+
 ```mermaid
 sequenceDiagram
 	participant PlayerController

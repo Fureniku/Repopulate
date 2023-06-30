@@ -5,9 +5,17 @@
   "showAttachments": false,
   "hideUnresolved": false,
   "showOrphans": true,
-  "collapse-color-groups": true,
-  "colorGroups": [],
-  "collapse-display": false,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "path:Gameplay",
+      "color": {
+        "a": 1,
+        "rgb": 16722217
+      }
+    }
+  ],
+  "collapse-display": true,
   "showArrow": false,
   "textFadeMultiplier": -0.2,
   "nodeSizeMultiplier": 0.738020833333333,
@@ -17,6 +25,6 @@
   "repelStrength": 8.125,
   "linkStrength": 0.307291666666667,
   "linkDistance": 336,
-  "scale": 0.5087618855792599,
-  "close": false
+  "scale": 1.0000000000000029,
+  "close": true
 }

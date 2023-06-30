@@ -7,12 +7,17 @@ public class ScrollBarHandler : MonoBehaviour {
 
     [SerializeField] private GameObject[] slots;
     [SerializeField] private GameObject selectionBox;
+    
+    public delegate void ScrollAction();
+    public static event ScrollAction OnScrolled;
 
     private int selectedId = 0;
 
     void Awake() {
         Debug.Log("Setting slot icon");
         UpdateSlot(0);
+        UpdateSlot(1);
+        UpdateSlot(2);
     }
 
     void Update() {
@@ -52,6 +57,7 @@ public class ScrollBarHandler : MonoBehaviour {
             selectedId = slots.Length;
         }
         UpdateSelectionBox();
+        OnScrolled();
     }
 
     private void UpdateSelectionBox() {

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e40d9dafe1793644d8c82e02288c3210, type: 3}
-  m_Name: Pillar_1
+  m_Name: Battery_1
   m_EditorClassIdentifier: 
   itemName: 
-  category: {fileID: 11400000, guid: 415e3d2377c5520439dd7af74c45d261, type: 2}
-  size: {x: 1, y: 3, z: 1}
+  category: {fileID: 11400000, guid: 877b178f73a9bcb46ace6be0eb637ced, type: 2}
+  size: {x: 1, y: 2, z: 1}
   rotationOrigin: {x: 0, y: 0, z: 0}
   mustBeGrounded: 1
   wallMount: 0
-  prefab: {fileID: 2187904420691561021, guid: de50d4440f438cb4a9fd1c6d3010cf78, type: 3}
-  icon: {fileID: 21300000, guid: 29a1d11b7d6e91343935481296ff9337, type: 3}
+  prefab: {fileID: 873879130526559233, guid: 72d9e41b12bf302469d7e752d06a9cd1, type: 3}
+  icon: {fileID: 21300000, guid: a1f150d35a243b740b778470d385ccd4, type: 3}
