@@ -95,6 +95,7 @@ MonoBehaviour:
   availableObjects:
   - {fileID: 6723309931491890404, guid: b893a6577c62fb94c8a344844fa2655a, type: 3}
   - {fileID: 6723309931491890404, guid: 28a5c8a6bb8ee874387faa3705d7d149, type: 3}
+  - {fileID: 5624316648304934164, guid: 1d3b04e30e3ef7d4fb31c900ceb361ad, type: 3}
   uiButtonPrefab: {fileID: 1701198399912063001, guid: 60356fb6c2792934e9649ca2843aac1c, type: 3}
 --- !u!114 &7197520831790074111
 MonoBehaviour:

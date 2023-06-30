@@ -882,6 +882,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBuilt: 0
+  isEnterable: 1
   buildTime: 240
   innerDoorController: {fileID: 3434860949711594674}
   stationDoorController: {fileID: 0}

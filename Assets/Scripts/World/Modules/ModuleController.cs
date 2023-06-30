@@ -5,6 +5,7 @@ using UnityEngine;
 public class ModuleController : MonoBehaviour, UIFillable {
 
     [SerializeField] private bool isBuilt = false;
+    [SerializeField] private bool isEnterable = false; //Whether there should be doors, oxygen, etc
     [SerializeField] private int buildTime;
     [SerializeField] private DoorController innerDoorController;
     [SerializeField] private DoorController stationDoorController;
@@ -21,8 +22,10 @@ public class ModuleController : MonoBehaviour, UIFillable {
             } else {
                 isBuilt = true;
                 Debug.Log("Module constructed!");
-                stationDoorController.ForceDoorState(true);
-                innerDoorController.ForceDoorState(true);
+                if (isEnterable) {
+                    stationDoorController.ForceDoorState(true);
+                    innerDoorController.ForceDoorState(true);
+                }
             }
         }
     }

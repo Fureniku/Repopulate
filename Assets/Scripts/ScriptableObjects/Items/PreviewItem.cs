@@ -34,6 +34,7 @@ public class PreviewItem : MonoBehaviour {
 	public void UpdatePreview(Camera cam) {
 		Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 		if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
+			meshRenderer.enabled = true;
 			BuildingGrid targetGrid;
 			PlaceableObject placeable = go.GetComponent<PlaceableObject>();
 			if (hit.transform.parent.GetComponent<PlaceableObject>() != null) {
@@ -51,6 +52,8 @@ public class PreviewItem : MonoBehaviour {
 				canPlaceNow = false;
 			}
 			meshRenderer.material = canPlaceNow ? validPlace : invalidPlace;
+		} else {
+			meshRenderer.enabled = false;
 		}
 	}
 
