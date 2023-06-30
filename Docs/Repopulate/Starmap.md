@@ -1,0 +1,5 @@
+The game should have a generated galaxy of stars. The player can then select a star to travel to. Once at the star the player can freely move around the solar system, but cannot freely travel between stars; only via "warp travel" where a star is selected.
+
+Upon arrival at each star, the game generates a new skybox simulating the galaxy as viewed from this position. The player can view an interactive starmap from the bridge of the station. The skybox will remain the same regardless of where they are in the current system.
+
+Travelling around a system will have a highlight for any known celestial object. Due to distances, objects often wont be shown on screen. The objects themselves will spawn in and out when close enough and adjust their scale as the ship moves, to simulate getting closer without having to actually implement a massive map.

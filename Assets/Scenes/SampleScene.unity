@@ -1840,6 +1840,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1033139439}
   m_CullTransparentMesh: 1
+--- !u!114 &1061550298 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1383732006986229320, guid: ac6bbfc948ed0ac40ab3cd2dddc30495, type: 3}
+  m_PrefabInstance: {fileID: 729531567}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45bf7fbe155e0da489a60550eeaf6711, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1114119198
 GameObject:
   m_ObjectHideFlags: 0
@@ -11723,6 +11734,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1542816219}
+  - component: {fileID: 1542816221}
+  - component: {fileID: 1542816220}
   m_Layer: 0
   m_Name: Station
   m_TagString: Untagged
@@ -11747,6 +11760,40 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1542816220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542816218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31b34bb5551878048a41e90c77c15b6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stationController: {fileID: 0}
+  oxygenProducers: []
+  energyProducers: []
+  energyStorages: []
+  energyConsumers: []
+--- !u!114 &1542816221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542816218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ba69cc2d001fe49a116e7e6af60221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stationResources: {fileID: 0}
+  segments:
+  - {fileID: 1061550298}
+  - {fileID: 1176075711}
+  maxRings: 0
 --- !u!1 &1565243310
 GameObject:
   m_ObjectHideFlags: 0
