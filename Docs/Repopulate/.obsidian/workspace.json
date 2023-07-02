@@ -37,7 +37,19 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Starmap.md",
+                "file": "The Genesis.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "fd0304c18dca0e8e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Station Design 2.0.md",
                 "mode": "source",
                 "source": false
               }
@@ -56,7 +68,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -122,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Starmap.md",
+                "file": "Station Design 2.0.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Starmap.md",
+                "file": "Station Design 2.0.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Starmap.md"
+                "file": "Station Design 2.0.md"
               }
             }
           }
@@ -184,10 +196,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e7ee962f9c6a57ea",
+  "active": "fd0304c18dca0e8e",
   "lastOpenFiles": [
-    "What we have so far....md",
+    "The Genesis.md",
+    "Station Design 2.0.md",
     "Starmap.md",
+    "What we have so far....md",
     "Gameplay/Resources & Resource Mechanics/Energy.md",
     "Gameplay/Resources & Resource Mechanics/Items/Battery.md",
     "Gameplay/Resources & Resource Mechanics/Items/Algae Tanks.md",
@@ -202,7 +216,6 @@
     "Gameplay/Breeding Programs.md",
     "Code Plans",
     "Gameplay/Internal Station Management.md",
-    "The Genesis.md",
     "Core GDD.md",
     "Controls.md",
     "Gameplay/External Station Management.md",
@@ -213,7 +226,6 @@
     "Gameplay.md",
     "Story.md",
     "Naming Conventions.md",
-    "Release, Monetisation etc.md",
     "Gameplay/Resources & Resource Mechanics",
     "Gameplay",
     "Music",

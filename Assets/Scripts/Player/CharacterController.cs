@@ -3,21 +3,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 public class CharacterController : MonoBehaviour {
-
-    [Header("Player controller settings")]
-    [Tooltip("Maximum slope the character can jump on")]
-    [Range(5f, 60f)]
-    [SerializeField] private float slopeLimit = 45f;
     
-    [Tooltip("Move speed in meters/second")]
-    [SerializeField] private float moveSpeed = 5f;
-    
-    [Tooltip("Multiplier on forward move speed when sprinting")]
-    [SerializeField] private float sprintFactor = 2f;
-
-    [Tooltip("Upward speed to apply when jumping in meters/second")]
-    [SerializeField] private float jumpSpeed = 4f;
-
     [Tooltip("The first-person camera, which should be a child of the controller.")]
     [SerializeField] private Camera fpCam;
 
@@ -38,19 +24,13 @@ public class CharacterController : MonoBehaviour {
     private float xRotation = 0.0f;
     private int currentDroidId = 0;
 
-    private bool IsGrounded { get; set; }
+    
     private float forwardInput { get; set; }
     private float strafeInput { get; set; }
     private bool jumpInput { get; set; }
     private bool sprintInput { get; set; }
-    
-    private Rigidbody rb;
-    private CapsuleCollider capsuleCollider;
 
     private void Awake() {
-        Transform parent = transform.parent;
-        rb = parent.GetComponent<Rigidbody>();
-        capsuleCollider = parent.GetComponent<CapsuleCollider>();
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         currentDroid.SetDroidActive(true);
     }
@@ -66,9 +46,6 @@ public class CharacterController : MonoBehaviour {
         transform.SetParent(droidList[currentDroidId].transform, false);
         transform.localRotation = Quaternion.identity;
 
-        Transform parent = transform.parent;
-        rb = parent.GetComponent<Rigidbody>();
-        capsuleCollider = parent.GetComponent<CapsuleCollider>();
         currentDroid.SetDroidActive(true);
     }
 
@@ -98,6 +75,7 @@ public class CharacterController : MonoBehaviour {
             Debug.Log("Cam is null");
         }
         currentDroid.UpdatePreview(fpCam);
+        
     }
 
     public void SetPlayerActive(bool active) {
@@ -108,11 +86,7 @@ public class CharacterController : MonoBehaviour {
     private void FixedUpdate() {
         forwardInput = Mathf.RoundToInt(Input.GetAxisRaw("Vertical"));
         strafeInput = Mathf.RoundToInt(Input.GetAxisRaw("Horizontal"));
-        sprintInput = Input.GetKey(KeyCode.LeftShift);
-        jumpInput = Input.GetKey(KeyCode.Space);
-
-        CheckGrounded();
-        ProcessActions();
+        //sprintInput = Input.GetKey(KeyCode.LeftShift);
     }
 
     private void HandleCamera() {
@@ -131,7 +105,7 @@ public class CharacterController : MonoBehaviour {
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
             fpCam.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-            transform.Rotate(Vector3.up * mouseX);
+            currentDroid.UpdateRotation(Vector3.up * mouseX);
         }
     }
 
@@ -147,13 +121,14 @@ public class CharacterController : MonoBehaviour {
             }
         }
     }
-    
+
     private void PlaceBlock(BuildingGrid targetGrid) {
         Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
-            
+
             Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
-            Debug.Log($"GridPos: {gridPosition.x}, {gridPosition.y}, {gridPosition.z}, name of hit object: {hit.transform.name}, exact hit: {hit.point}");
+            Debug.Log(
+                $"GridPos: {gridPosition.x}, {gridPosition.y}, {gridPosition.z}, name of hit object: {hit.transform.name}, exact hit: {hit.point}");
 
             // Check if there's already a block at the target grid position
             //bool isOccupied = targetGrid.CheckGridSpaceAvailability(gridPosition, Vector3Int.one);
@@ -170,54 +145,6 @@ public class CharacterController : MonoBehaviour {
 
             // Place the block
             targetGrid.PlaceBlock(gridPosition, currentDroid.GetHeldItem(), currentDroid.GetHeldRotation());
-        }
-    }
-    
-    //Check if the character is touching the floor in some way.
-    private void CheckGrounded() {
-        IsGrounded = false;
-        float capsuleHeight = Mathf.Max(capsuleCollider.radius * 2f, capsuleCollider.height);
-        Vector3 capsuleBottom = transform.TransformPoint(capsuleCollider.center - Vector3.up * capsuleHeight / 2f);
-        float radius = transform.TransformVector(capsuleCollider.radius, 0f, 0f).magnitude;
-        Ray ray = new Ray(capsuleBottom + transform.up * .01f, -transform.up); //Cast a ray from the bottom of the characters capsule
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, radius * 5f)) {
-            float normalAngle = Vector3.Angle(hit.normal, transform.up);
-            if (normalAngle < slopeLimit) {
-                float maxDist = radius / Mathf.Cos(Mathf.Deg2Rad * normalAngle) - radius + .02f;
-                if (hit.distance < maxDist) {
-                    IsGrounded = true;
-                }
-            }
-        }
-    }
-
-    //Handle movement and abilities
-    private void ProcessActions() {
-        //Process Movement/Jumping
-        Vector3 velForward = transform.forward * Mathf.Clamp(forwardInput, -1f, 1f);
-        Vector3 velStrafe = transform.right * Mathf.Clamp(strafeInput, -1f, 1f);
-
-        if (forwardInput > 0 && sprintInput) {
-            velForward *= sprintFactor;
-        }
-        
-        if (IsGrounded) {
-            rb.velocity = Vector3.zero; //Reset the velocity
-            if (jumpInput) { //Check if trying to jump
-                rb.velocity += Vector3.up * jumpSpeed; //Apply an upward velocity to jump
-            }
-
-            //Process movement
-            rb.velocity += velForward * moveSpeed;
-            rb.velocity += velStrafe * moveSpeed;
-        } else {
-            // Check if player is trying to change forward/backward movement while jumping/falling
-            if (!Mathf.Approximately(forwardInput, 0f)) {
-                // Override just the forward velocity with player input at half speed
-                Vector3 verticalVelocity = Vector3.Project(rb.velocity, Vector3.up);
-                rb.velocity = verticalVelocity + velForward * moveSpeed / 2f + velStrafe * moveSpeed / 2f;
-            }
         }
     }
 }
