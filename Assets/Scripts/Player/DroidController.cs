@@ -80,9 +80,11 @@ public class DroidController : MonoBehaviour {
 	}
 
 	private void Gravity() {
-		if (gravitySource != null) {
-			Vector3 direction = gravitySource.GetPullDirection(transform);
-			Vector3 gravDirection = gravitySource.GetPull(transform);
+		Vector3 pos = transform.position;
+		
+		if (gravitySource != null && gravitySource.IsWithinGravitationalEffect(pos)) {
+			Vector3 direction = gravitySource.GetPullDirection(pos);
+			Vector3 gravDirection = gravitySource.GetPull(pos);
 		
 			rb.AddForce(gravDirection);
 
