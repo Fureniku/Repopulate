@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DroidController : MonoBehaviour {
@@ -12,6 +8,8 @@ public class DroidController : MonoBehaviour {
 	
 	[SerializeField] private Rigidbody rb;
 	[SerializeField] private CapsuleCollider capsuleCollider;
+
+	[SerializeField] private GravitySource gravitySource;
 	
 	[Header("Control settings")]
 	[Tooltip("Move speed in meters/second")]
@@ -82,17 +80,17 @@ public class DroidController : MonoBehaviour {
 	}
 
 	private void Gravity() {
-		Vector3 gravity = new Vector3(0, -9.8f, 0);
-		Vector3 direction = Vector3.Normalize(Vector3.zero - transform.position);
-		float magnitude = gravity.magnitude;
-		Vector3 gravDirection = direction * magnitude;
+		if (gravitySource != null) {
+			Vector3 direction = gravitySource.GetPullDirection(transform);
+			Vector3 gravDirection = gravitySource.GetPull(transform);
 		
-		rb.AddForce(gravDirection);
+			rb.AddForce(gravDirection);
 
-		Quaternion targetRotation = Quaternion.FromToRotation(transform.up, -direction) * transform.rotation;
-		Quaternion slerp = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+			Quaternion targetRotation = Quaternion.FromToRotation(transform.up, -direction) * transform.rotation;
+			Quaternion slerp = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
 
-		transform.rotation = slerp;
+			transform.rotation = slerp;
+		}
 	}
 	
 	//Check if the character is touching the floor in some way.
@@ -121,7 +119,6 @@ public class DroidController : MonoBehaviour {
 		if (isGrounded) {
 			rb.velocity = Vector3.zero; //Reset the velocity
 			if (Input.GetKey(KeyCode.Space)) { //Check if trying to jump
-				Debug.Log("You say jump, I say how high");
 				rb.velocity += Vector3.up * jumpSpeed; //Apply an upward velocity to jump
 			}
 		} /*else {

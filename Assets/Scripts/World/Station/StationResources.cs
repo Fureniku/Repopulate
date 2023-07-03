@@ -103,6 +103,6 @@ public class StationResources : MonoBehaviour {
             storage += energyStorages[i].GetCurrentFIll();
         }
         
-        Debug.Log($"Energy! Produced {production}, consumed {consumption} and current stored is {storage}");
+        //Debug.Log($"Energy! Produced {production}, consumed {consumption} and current stored is {storage}");
     }
 }
