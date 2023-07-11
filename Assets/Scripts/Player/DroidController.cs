@@ -26,12 +26,16 @@ public class DroidController : MonoBehaviour {
 	
 	private bool isGrounded { get; set; }
 
+
+	private bool isInGravity = false;
+
 	private bool isDroidActive = false; //Whether this is the currently controlled droid. Not to be confused with playeractive which locks the camera etc
 
 	void Awake() {
 		UpdateSelection();
 		rb = GetComponent<Rigidbody>();
 		capsuleCollider = GetComponent<CapsuleCollider>();
+		isInGravity = gravitySource != null;
 	}
 
 	void Update() {
@@ -41,10 +45,25 @@ public class DroidController : MonoBehaviour {
 				if (heldRotation > 360) heldRotation -= 360f;
 			}
 		}
-		
-		moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+
+		//TODO temporary MC creative-esque flight out of gravity.
+		//Change to physics-based to counter force and drift with a stabilisation key and ability to kick off surfaces later.
+		float verticalMove = isInGravity ? 0 : GetVerticalMoveAxis();
+		moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), verticalMove, Input.GetAxisRaw("Vertical")).normalized;
 	}
 
+	private float GetVerticalMoveAxis() {
+		float movement = 0;
+		if (Input.GetKey(KeyCode.Space)) {
+			movement++;
+		}
+
+		if (Input.GetKey(KeyCode.LeftControl)) {
+			movement--;
+		}
+		return movement;
+	}
+	
 	private void FixedUpdate() {
 		Gravity();
 		CheckGrounded();
