@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GravitySource : MonoBehaviour {
-
+	
 	[Tooltip("The strength and direction of the gravity")]
 	[SerializeField] private Vector3 gravity = new Vector3(0, -9.8f, 0);
 	[Tooltip("The position gravity pulls towards")]
@@ -13,6 +13,9 @@ public class GravitySource : MonoBehaviour {
 	[SerializeField] private float minEffectDistance;
 	[Tooltip("If the object is further than this, gravity has no effect")]
 	[SerializeField] private float maxEffectDistance;
+	
+	[Tooltip("If true, the force of gravity will push away from this point instead of pulling towards it. Used for gravity rings.")]
+	[SerializeField] private bool inverseGravity = false;
 
 	[Tooltip("If true, gravity pulls to a central point and Gravity Source B is ignorerd. Else, it pulls to a line defined by Gravity Source B.")]
 	[SerializeField] private bool singlePoint;
@@ -51,7 +54,7 @@ public class GravitySource : MonoBehaviour {
 	
 	//The direction of pull, without strength
 	public Vector3 GetPullDirection(Vector3 pulledObject) {
-		return Vector3.Normalize(GetGravitationalLineOrigin(GetScalarProjection(pulledObject)) - pulledObject);
+		return Vector3.Normalize(GetGravitationalLineOrigin(GetScalarProjection(pulledObject)) - pulledObject) * (inverseGravity ? -1 : 1);
 	}
 
 	//The direction and strength of the gravitational pull
