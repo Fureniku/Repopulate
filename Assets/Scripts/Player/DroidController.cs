@@ -10,6 +10,7 @@ public class DroidController : MonoBehaviour {
 	[SerializeField] private CapsuleCollider capsuleCollider;
 
 	[SerializeField] private GravitySource gravitySource;
+	[SerializeField] private MultiGravitySelector multiGravitySelector;
 	
 	[Header("Control settings")]
 	[Tooltip("Move speed in meters/second")]
@@ -100,6 +101,9 @@ public class DroidController : MonoBehaviour {
 
 	private void Gravity() {
 		Vector3 pos = transform.position;
+		if (multiGravitySelector != null) {
+			gravitySource = multiGravitySelector.GetClosestGravity(pos);
+		}
 		
 		if (gravitySource != null && gravitySource.IsWithinGravitationalEffect(pos)) {
 			Vector3 direction = gravitySource.GetPullDirection(pos);
