@@ -11,9 +11,13 @@ public class DoorController : MonoBehaviour
     [SerializeField] private Vector3 mountPoint;
     [SerializeField] private float mountRotation;
     [SerializeField] private GameObject mountedObject;
+    [SerializeField] private bool startOpen;
 
     void Awake() {
         anim = GetComponent<Animator>();
+        if (startOpen) {
+            ForceDoorState(true);
+        }
     }
     
     public Vector3 GetMountPoint() {

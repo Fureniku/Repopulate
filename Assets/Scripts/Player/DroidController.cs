@@ -139,12 +139,13 @@ public class DroidController : MonoBehaviour {
 	
 	//Handle movement and abilities
 	private void Movement() {
-		rb.MovePosition(rb.position + transform.TransformDirection(moveDir) * moveSpeed * sprintFactor * Time.deltaTime);
-		
+		//TODO Rigidbody.MovePosition doesn't work on a moving object. Find an alternative for that for physics.
+		transform.Translate(moveDir * (moveSpeed * sprintFactor * Time.deltaTime));
+
 		if (isGrounded) {
-			rb.velocity = Vector3.zero; //Reset the velocity
+			//rb.velocity = Vector3.zero; //Reset the velocity
 			if (Input.GetKey(KeyCode.Space)) { //Check if trying to jump
-				rb.velocity += Vector3.up * jumpSpeed; //Apply an upward velocity to jump
+				//rb.velocity += Vector3.up * jumpSpeed; //Apply an upward velocity to jump
 			}
 		} /*else {
             // Check if player is trying to change forward/backward movement while jumping/falling

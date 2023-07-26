@@ -58,7 +58,13 @@ public class BuildingGrid : MonoBehaviour {
         return transform.position + transform.parent.rotation * gridSpace;
     }
 
+    [SerializeField] private bool debugLine = false;
+
     public Quaternion GetPreviewRotation() {
+        if (debugLine) {
+            Debug.Log($"Rotation: {transform.parent.rotation}");   
+        }
+        
         return transform.parent.rotation;
     }
 
@@ -132,7 +138,10 @@ public class BuildingGrid : MonoBehaviour {
     }
 
     public Vector3 GetPlacementPosition(Vector3Int gridSpace, Item item) {
-        return (transform.position + transform.parent.rotation * gridSpace) + new Vector3(0.5f, 0, 0.5f);
+        Quaternion rot = transform.parent.rotation;
+        Vector3 transformedPosition = rot * gridSpace;
+
+        return transform.position + transformedPosition; // + new Vector3(0.5f, 0, 0.5f);
     }
 
     public Quaternion GetPlacementRotation(Vector3Int gridspace, float rotation) {
@@ -171,74 +180,31 @@ public class BuildingGrid : MonoBehaviour {
     }
 
     private void OnDrawGizmos() {
-        for (int x = 0; x < gridSize.x; x++) {
-            for (int y = 0; y < gridSize.y; y++) {
-                for (int z = 0; z < gridSize.z; z++) {
-                    bool occupied = false;
-                    if (Application.isPlaying) {
-                        occupied = gridSpaces[x, y, z];
+        Gizmos.color = Color.blue;
+        Vector3 pos = transform.position;
+        Quaternion rot = transform.rotation;
+
+        for (int x = 0; x <= gridSize.x; x++) {
+            for (int y = 0; y <= gridSize.y; y++) {
+                for (int z = 0; z <= gridSize.z; z++) {
+                    // Calculate the position of the cell in the grid, accounting for rotation
+                    Vector3 cellPosition = new Vector3(x, y, z);
+                    Vector3 transformedPosition = rot * cellPosition;
+
+                    // Draw lines to visualize the grid
+                    if (x < gridSize.x) {
+                        Gizmos.DrawLine(pos + transformedPosition, pos + rot * new Vector3((x + 1), y, z));
                     }
-                    DrawRotatedCube(transform.position, new Vector3(x, y, z), occupied);
+
+                    if (y < gridSize.y) {
+                        Gizmos.DrawLine(pos + transformedPosition, pos + rot * new Vector3(x, (y + 1), z));
+                    }
+
+                    if (z < gridSize.z) {
+                        Gizmos.DrawLine(pos + transformedPosition, pos + rot * new Vector3(x, y, (z + 1)));
+                    }
                 }
             }
         }
-    }
-
-    private void DrawRotatedCube(Vector3 origin, Vector3 offset, bool occupied) {
-        Vector3 start = origin + offset;
-        Vector3 point1 = RotatePointAroundPivot(start, origin);
-        Vector3 point2 = RotatePointAroundPivot(start + Vector3.forward, origin);
-        Vector3 point3 = RotatePointAroundPivot(start + Vector3.right, origin);
-        Vector3 point4 = RotatePointAroundPivot(new Vector3(start.x + 1, start.y, start.z + 1), origin);
-
-        Gizmos.color = occupied ? Color.red : Color.blue;
-        Gizmos.DrawLine(point1, point2);
-        Gizmos.DrawLine(point1, point3);
-        Gizmos.DrawLine(point2, point4);
-        Gizmos.DrawLine(point3, point4);
-
-        Vector3 point5 = point1 + Vector3.up;
-        Vector3 point6 = point2 + Vector3.up;
-        Vector3 point7 = point3 + Vector3.up;
-        Vector3 point8 = point4 + Vector3.up;
-        
-        Gizmos.DrawLine(point5, point6);
-        Gizmos.DrawLine(point5, point7);
-        Gizmos.DrawLine(point6, point8);
-        Gizmos.DrawLine(point7, point8);
-        
-        Gizmos.DrawLine(point1, point5);
-        Gizmos.DrawLine(point2, point6);
-        Gizmos.DrawLine(point3, point7);
-        Gizmos.DrawLine(point4, point8);
-
-        if (occupied) {
-            Gizmos.DrawLine(point1, point8);
-            Gizmos.DrawLine(point2, point7);
-            Gizmos.DrawLine(point3, point6);
-            Gizmos.DrawLine(point4, point5);
-        }
-    }
-
-    private Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot) {
-        Vector3 axis = new Vector3(0, 1, 0);
-        float angle = transform.parent.eulerAngles.y;
-        Vector3 direction = point - pivot;
-        float sinAngle = Mathf.Sin(angle * Mathf.Deg2Rad);
-        float cosAngle = Mathf.Cos(angle * Mathf.Deg2Rad);
-
-        float newX = direction.x * (cosAngle + axis.x * axis.x * (1 - cosAngle))
-                     + direction.y * (axis.x * axis.y * (1 - cosAngle) - axis.z * sinAngle)
-                     + direction.z * (axis.x * axis.z * (1 - cosAngle) + axis.y * sinAngle);
-
-        float newY = direction.x * (axis.y * axis.x * (1 - cosAngle) + axis.z * sinAngle)
-                     + direction.y * (cosAngle + axis.y * axis.y * (1 - cosAngle))
-                     + direction.z * (axis.y * axis.z * (1 - cosAngle) - axis.x * sinAngle);
-
-        float newZ = direction.x * (axis.z * axis.x * (1 - cosAngle) - axis.y * sinAngle)
-                     + direction.y * (axis.z * axis.y * (1 - cosAngle) + axis.x * sinAngle)
-                     + direction.z * (cosAngle + axis.z * axis.z * (1 - cosAngle));
-
-        return pivot + new Vector3(newX, newY, newZ);
     }
 }

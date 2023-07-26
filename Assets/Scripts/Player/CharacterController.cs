@@ -16,15 +16,11 @@ public class CharacterController : MonoBehaviour {
 
     [SerializeField] private KeyCode SwitchDroidKey;
 
-    [SerializeField] private Material previewMaterialValid;
-    [SerializeField] private Material previewMaterialInvalid;
-
     private bool isPlayerActive = true; //True when player is active and can move, false when in a UI or similar.
     
     private float xRotation = 0.0f;
     private int currentDroidId = 0;
 
-    
     private float forwardInput { get; set; }
     private float strafeInput { get; set; }
     private bool jumpInput { get; set; }
@@ -116,19 +112,17 @@ public class CharacterController : MonoBehaviour {
                 BuildingGrid targetGrid = hit.transform.parent.GetComponent<BuildingGrid>();
     
                 if (targetGrid != null) {
-                    PlaceBlock(targetGrid);
+                    PlaceBlock(targetGrid, targetGrid.GetHitSpace(hit.point));
                 }
             }
         }
     }
 
-    private void PlaceBlock(BuildingGrid targetGrid) {
-        Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
+    private void PlaceBlock(BuildingGrid targetGrid, Vector3Int gridPosition) {
+        //Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
+        //if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
 
-            Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
-            Debug.Log(
-                $"GridPos: {gridPosition.x}, {gridPosition.y}, {gridPosition.z}, name of hit object: {hit.transform.name}, exact hit: {hit.point}");
+            //Debug.Log($"GridPos: {gridPosition.x}, {gridPosition.y}, {gridPosition.z}, name of hit object: {hit.transform.name}, exact hit: {hit.point}");
 
             // Check if there's already a block at the target grid position
             //bool isOccupied = targetGrid.CheckGridSpaceAvailability(gridPosition, Vector3Int.one);
@@ -145,6 +139,6 @@ public class CharacterController : MonoBehaviour {
 
             // Place the block
             targetGrid.PlaceBlock(gridPosition, currentDroid.GetHeldItem(), currentDroid.GetHeldRotation());
-        }
+       // }
     }
 }

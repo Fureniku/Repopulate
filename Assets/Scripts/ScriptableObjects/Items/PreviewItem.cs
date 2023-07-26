@@ -33,19 +33,25 @@ public class PreviewItem : MonoBehaviour {
 
 	public void UpdatePreview(Camera cam) {
 		Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+		
+		// Draw the ray for debugging purposes
+		Debug.DrawRay(ray.origin, ray.direction * 10f, Color.red);
+		Debug.Log("Firing ray");
 		if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
 			meshRenderer.enabled = true;
-			BuildingGrid targetGrid;
+			BuildingGrid targetGrid = hit.transform.GetComponent<GridCollider>().GetGrid();
 			PlaceableObject placeable = go.GetComponent<PlaceableObject>();
-			if (hit.transform.parent.GetComponent<PlaceableObject>() != null) {
-				targetGrid = hit.transform.parent.GetComponent<PlaceableObject>().GetParentGrid();
-			} else {
-				targetGrid = hit.transform.parent.GetComponent<BuildingGrid>();
+			if (targetGrid == null) {
+				Debug.LogError($"PreviewItem {name} unable to get grid from target {hit.transform.name}");
 			}
+
 			Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
-			placeable.SetRotation(targetGrid.GetPreviewRotation().y);
+			
+			//Debug.Log($"Ray hit position: {hit.point}, returned grid position: {gridPosition}");
+			//placeable.SetRotation(targetGrid.GetPreviewRotation());
+			transform.position = targetGrid.GetPlacementPosition(gridPosition, placeable.GetItem());
 			transform.rotation = targetGrid.GetPlacementRotation(gridPosition, droid.GetHeldRotation());
-			transform.position = targetGrid.GetPlacementPosition(gridPosition, ItemRegistry.Instance.ALGAE_FARM_1);
+
 			canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeable.GetItem().GetSize(), droid.GetHeldRotation());
 
 			if (placeable.GetItem().MustBeGrounded() && gridPosition.y > 0) {
@@ -61,7 +67,7 @@ public class PreviewItem : MonoBehaviour {
 		return canPlaceNow;
 	}
 	
-    public void CombineMeshes() {
+    private void CombineMeshes() {
         MeshFilter[] meshFilters = go.GetComponentsInChildren<MeshFilter>();
         
         Mesh combinedMesh = new Mesh();
@@ -85,7 +91,6 @@ public class PreviewItem : MonoBehaviour {
         combinedMesh.RecalculateNormals();
         combinedMesh.RecalculateBounds();
         
-        Debug.Log("Setting material");
         meshRenderer.material = invalidPlace;
     }
 }
