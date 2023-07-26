@@ -10,6 +10,9 @@ public class Scrollbar : ScriptableObject {
 	private readonly int maxSlots = 8; //Zero-based
 
 	public Item GetHeldItem() {
+		if (slots[currentSlot] == null) {
+			return null;
+		}
 		Debug.Log("Getting item in slot " + currentSlot);
 		Debug.Log("Item is " + slots[currentSlot].Get().name);
 		return slots[currentSlot];

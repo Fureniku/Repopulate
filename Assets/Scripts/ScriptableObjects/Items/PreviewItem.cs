@@ -36,7 +36,6 @@ public class PreviewItem : MonoBehaviour {
 		
 		// Draw the ray for debugging purposes
 		Debug.DrawRay(ray.origin, ray.direction * 10f, Color.red);
-		Debug.Log("Firing ray");
 		if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
 			meshRenderer.enabled = true;
 			BuildingGrid targetGrid = hit.transform.GetComponent<GridCollider>().GetGrid();

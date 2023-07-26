@@ -14,9 +14,9 @@ public class GravitySource : MonoBehaviour {
 	[Tooltip("The second point. Gravity's centre is a line between Gravity Source and this.")]
 	[SerializeField] private Vector3 gravitySourceB;
 	[Tooltip("If the object is closer than this, gravity has no effect")]
-	[SerializeField] protected float minEffectDistance;
+	[SerializeField] private float minEffectDistance;
 	[Tooltip("If the object is further than this, gravity has no effect")]
-	[SerializeField] protected float maxEffectDistance;
+	[SerializeField] private float maxEffectDistance;
 	[Tooltip("If true, the force of gravity will push away from this point instead of pulling towards it. Used for gravity rings.")]
 	[SerializeField] protected bool inverseGravity = false;
 	
