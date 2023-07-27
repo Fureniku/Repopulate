@@ -9,7 +9,7 @@ public class DroidController : MonoBehaviour {
 	[SerializeField] private Rigidbody rb;
 	[SerializeField] private CapsuleCollider capsuleCollider;
 
-	[SerializeField] private GravitySource gravitySource;
+	[SerializeField] private GravityBase gravitySource;
 	[SerializeField] private MultiGravitySelector multiGravitySelector;
 	
 	[Header("Control settings")]

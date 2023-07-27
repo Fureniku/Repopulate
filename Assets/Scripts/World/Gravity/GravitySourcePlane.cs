@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GravitySourcePlane : GravitySource {
+public class GravitySourcePlane : GravityBase {
 
 	//[SerializeField] private Vector3 direction;
 	[SerializeField] private float aboveDistance = 5;

@@ -414,11 +414,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: {x: 0, y: -9.8, z: 0}
-  singlePoint: 0
-  gravitySource: {x: 0, y: 0, z: 0}
-  gravitySourceB: {x: 0, y: 0, z: 0}
-  minEffectDistance: 0
-  maxEffectDistance: 27
   inverseGravity: 0
   aboveDistance: 27
   belowDistance: 0
@@ -586,11 +581,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: {x: 0, y: -9.8, z: 0}
-  singlePoint: 0
-  gravitySource: {x: 0, y: 0, z: 0}
-  gravitySourceB: {x: 0, y: 0, z: 0}
-  minEffectDistance: 0
-  maxEffectDistance: 27
   inverseGravity: 1
   aboveDistance: 0
   belowDistance: 27
@@ -640,66 +630,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: {x: 0, y: -9.8, z: 0}
-  singlePoint: 0
-  gravitySource: {x: 0, y: 0, z: 0}
-  gravitySourceB: {x: 0, y: 0, z: 0}
-  minEffectDistance: 0
-  maxEffectDistance: 0
   inverseGravity: 0
   aboveDistance: 5
   belowDistance: 5
---- !u!4 &212393655 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
-  m_PrefabInstance: {fileID: 890652897}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &303789933
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 303789934}
-  - component: {fileID: 303789935}
-  m_Layer: 6
-  m_Name: Grid
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &303789934
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 303789933}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1528531498}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &303789935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 303789933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f1a78dd23fabd246b5afa781ae7f3c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridSize: {x: 2, y: 2, z: 2}
-  preOccupiedSlots: []
-  debugLine: 0
 --- !u!1 &366258528
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,12 +727,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: {x: 0, y: -9.8, z: 0}
+  inverseGravity: 0
   singlePoint: 0
   gravitySource: {x: -3, y: 0, z: 0}
-  gravitySourceB: {x: 3, y: 0, z: 0}
   minEffectDistance: 21
   maxEffectDistance: 26
-  inverseGravity: 0
 --- !u!1 &484824522
 GameObject:
   m_ObjectHideFlags: 0
@@ -1286,11 +1218,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: {x: 0, y: -9.8, z: 0}
-  singlePoint: 0
-  gravitySource: {x: 0, y: 0, z: 0}
-  gravitySourceB: {x: 0, y: 0, z: 0}
-  minEffectDistance: 0
-  maxEffectDistance: 27
   inverseGravity: 1
   aboveDistance: 0
   belowDistance: 27
@@ -1303,7 +1230,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -9112032579066259642, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
@@ -1351,35 +1278,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7265979391692914815, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: -7038338396492305482, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 25
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: -6407581410336295621, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -6376964848936932913, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: -5445033492852354116, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: -4903077088222698855, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -4579284735627691270, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 21
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: -4083399210052558697, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -2810949637231201872, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
@@ -1387,19 +1314,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2676348979606660556, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: -2056264628595335348, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: -1819236903621655986, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 22
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: -980030491112168359, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 23
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: -839962133117117700, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
@@ -1407,7 +1334,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -497079614012896744, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 455226974190386471, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1415,7 +1342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 753280433992581559, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_Name
@@ -1423,27 +1350,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2035661216896661579, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2327129810164135821, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3505505042491094213, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 24
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 3808203583390398696, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4068215880941341535, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4368220592728155063, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 5861204448221292346, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1471,7 +1398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8239103654494160231, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c87843f392926d34ea8cd0f0e4d03df6, type: 3}
@@ -1519,11 +1446,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: {x: 0, y: -9.8, z: 0}
-  singlePoint: 0
-  gravitySource: {x: 0, y: 0, z: 0}
-  gravitySourceB: {x: 0, y: 0, z: 0}
-  minEffectDistance: 0
-  maxEffectDistance: 27
   inverseGravity: 1
   aboveDistance: 0
   belowDistance: 27
@@ -1553,59 +1475,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 0}
---- !u!1 &1178125497
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1178125498}
-  - component: {fileID: 1178125499}
-  m_Layer: 0
-  m_Name: GravityTopLeft
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1178125498
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178125497}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1690, y: 667, z: 757}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 212393655}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1178125499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178125497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ee0e670ef33f004e92da648321038b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravity: {x: 0, y: -9.8, z: 0}
-  singlePoint: 0
-  gravitySource: {x: 30, y: 0, z: 0}
-  gravitySourceB: {x: -10, y: 0, z: 0}
-  minEffectDistance: 0
-  maxEffectDistance: 10
-  inverseGravity: 1
-  aboveDistance: 5
-  belowDistance: 5
 --- !u!1 &1251401334
 GameObject:
   m_ObjectHideFlags: 0
@@ -1803,11 +1672,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: {x: 0, y: -9.8, z: 0}
-  singlePoint: 0
-  gravitySource: {x: 0, y: 0, z: 0}
-  gravitySourceB: {x: 0, y: 0, z: 0}
-  minEffectDistance: 0
-  maxEffectDistance: 27
   inverseGravity: 1
   aboveDistance: 0
   belowDistance: 27
@@ -2019,88 +1883,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7847270534795153549, guid: 22f1839802f7cfa4db6e19b438888375, type: 3}
---- !u!1 &1528531497
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1528531498}
-  - component: {fileID: 1528531499}
-  - component: {fileID: 1528531501}
-  - component: {fileID: 1528531500}
-  m_Layer: 6
-  m_Name: GravityTop
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1528531498
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1528531497}
-  m_LocalRotation: {x: 0, y: 0.19509031, z: 0, w: 0.98078537}
-  m_LocalPosition: {x: 1682, y: 667, z: -696}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 303789934}
-  m_Father: {fileID: 212393655}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 22.5, z: 0}
---- !u!114 &1528531499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1528531497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ee0e670ef33f004e92da648321038b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravity: {x: 0, y: -9.8, z: 0}
-  singlePoint: 0
-  gravitySource: {x: 30, y: 0, z: 0}
-  gravitySourceB: {x: -10, y: 0, z: 0}
-  minEffectDistance: 0
-  maxEffectDistance: 10
-  inverseGravity: 1
-  aboveDistance: 5
-  belowDistance: 5
---- !u!65 &1528531500
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1528531497}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3, y: 3, z: 3}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1528531501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1528531497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01513db38eb589b4bbec8f182f22e5cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grid: {fileID: 0}
 --- !u!1 &1551833001
 GameObject:
   m_ObjectHideFlags: 0
@@ -2451,67 +2233,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: {x: 0, y: -9.8, z: 0}
-  singlePoint: 0
-  gravitySource: {x: 0, y: 0, z: 0}
-  gravitySourceB: {x: 0, y: 0, z: 0}
-  minEffectDistance: 0
-  maxEffectDistance: 27
   inverseGravity: 1
   aboveDistance: 0
   belowDistance: 27
---- !u!1 &1622278604
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1622278606}
-  - component: {fileID: 1622278605}
-  m_Layer: 0
-  m_Name: GravityTopRight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1622278605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1622278604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ee0e670ef33f004e92da648321038b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravity: {x: 0, y: -9.8, z: 0}
-  singlePoint: 0
-  gravitySource: {x: 30, y: 0, z: 0}
-  gravitySourceB: {x: -10, y: 0, z: 0}
-  minEffectDistance: 0
-  maxEffectDistance: 10
-  inverseGravity: 1
-  aboveDistance: 5
-  belowDistance: 5
---- !u!4 &1622278606
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1622278604}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 688, y: 667, z: -1663}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 212393655}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1673669307 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6534297780034698126, guid: 22f1839802f7cfa4db6e19b438888375, type: 3}
@@ -2698,11 +2422,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: {x: 0, y: -9.8, z: 0}
-  singlePoint: 0
-  gravitySource: {x: 0, y: 0, z: 0}
-  gravitySourceB: {x: 0, y: 0, z: 0}
-  minEffectDistance: 0
-  maxEffectDistance: 27
   inverseGravity: 1
   aboveDistance: 0
   belowDistance: 27
@@ -2750,11 +2469,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: {x: 0, y: -9.8, z: 0}
-  singlePoint: 0
-  gravitySource: {x: 0, y: 0, z: 0}
-  gravitySourceB: {x: 0, y: 0, z: 0}
-  minEffectDistance: 0
-  maxEffectDistance: 27
   inverseGravity: 1
   aboveDistance: 0
   belowDistance: 27
@@ -2776,12 +2490,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: {x: 0, y: -9.8, z: 0}
+  inverseGravity: 0
   singlePoint: 0
   gravitySource: {x: -7, y: 0, z: 0}
-  gravitySourceB: {x: 0, y: 0, z: 0}
   minEffectDistance: 10
   maxEffectDistance: 20
-  inverseGravity: 0
 --- !u!1001 &1854168777
 PrefabInstance:
   m_ObjectHideFlags: 0
