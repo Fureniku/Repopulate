@@ -79,7 +79,7 @@ public class GravitySourceLine : GravityBase {
 	    float angleIncrement = 2 * Mathf.PI / 24;
 
 	    Vector3[] last = null;
-		
+	    
 	    for (int i = 0; i < 25; i++) { //25; 24 for the loop and one extra to make sure its closed
 		    float angle = i * angleIncrement;
 		    Vector3 minPos = minEffectDistance * perpendicular;
@@ -104,10 +104,5 @@ public class GravitySourceLine : GravityBase {
 			
 		    last = new[] { point1, point2, pointB1, pointB2 };
 	    }
-    }
-
-    private void DrawGizmoArrow(Vector3 target, Vector3 tail) {
-	    Gizmos.DrawLine(target, tail);
-	    Gizmos.DrawSphere(target, 0.25f);
     }
 }

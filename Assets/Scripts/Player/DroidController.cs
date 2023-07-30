@@ -15,6 +15,7 @@ public class DroidController : MonoBehaviour {
 	[Header("Control settings")]
 	[Tooltip("Move speed in meters/second")]
 	[SerializeField] private float moveSpeed = 5f;
+	[SerializeField] private float moveSpeedSpace = 25f;
 	[Tooltip("Multiplier on forward move speed when sprinting")]
 	[SerializeField] private float sprintFactor = 2f;
 	[Tooltip("Maximum slope the character can jump on")]
@@ -28,7 +29,7 @@ public class DroidController : MonoBehaviour {
 	private bool isGrounded { get; set; }
 
 
-	private bool isInGravity = false;
+	public bool isInGravity { get; private set; }= false;
 
 	private bool isDroidActive = false; //Whether this is the currently controlled droid. Not to be confused with playeractive which locks the camera etc
 
@@ -137,23 +138,99 @@ public class DroidController : MonoBehaviour {
 		}
 	}
 	
+	private Vector3 currentMomentum;
+	private Vector3 currentDirection;
+
 	//Handle movement and abilities
 	private void Movement() {
-		//TODO Rigidbody.MovePosition doesn't work on a moving object. Find an alternative for that for physics.
-		transform.Translate(moveDir * (moveSpeed * sprintFactor * Time.deltaTime));
+		if (isInGravity) {
+			//TODO Rigidbody.MovePosition doesn't work on a moving object. Find an alternative for that for physics.
+			//rb.MovePosition(moveDir * (moveSpeed * sprintFactor * Time.deltaTime));
+			transform.Translate(moveDir * (moveSpeed * sprintFactor * Time.deltaTime));
+			Debug.Log("velocity on movement: " + rb.velocity);
 
-		if (isGrounded) {
-			//rb.velocity = Vector3.zero; //Reset the velocity
-			if (Input.GetKey(KeyCode.Space)) { //Check if trying to jump
-				//rb.velocity += Vector3.up * jumpSpeed; //Apply an upward velocity to jump
+			if (isGrounded) {
+				//rb.velocity = Vector3.zero; //Reset the velocity
+				if (Input.GetKey(KeyCode.Space)) { //Check if trying to jump
+					//rb.velocity += Vector3.up * jumpSpeed; //Apply an upward velocity to jump
+				}
+			} /*else {
+				// Check if player is trying to change forward/backward movement while jumping/falling
+	            if (!Mathf.Approximately(forwardInput, 0f)) {
+	                // Override just the forward velocity with player input at half speed
+	                Vector3 verticalVelocity = Vector3.Project(rb.velocity, Vector3.up);
+	                rb.velocity = verticalVelocity + velForward * moveSpeed / 2f + velStrafe * moveSpeed / 2f;
+	            }
+	        }*/
+		} else {
+			Vector3 moveDirection = Vector3.zero;
+
+			if (Input.GetKey(KeyCode.E)) { 
+				rb.velocity = Vector3.MoveTowards(rb.velocity, Vector3.zero, 5f * Time.fixedDeltaTime);
+			} else {
+				// Check for input to activate the thrusters
+				if (Input.GetKey(KeyCode.W))
+					moveDirection += transform.forward;
+				if (Input.GetKey(KeyCode.S))
+					moveDirection -= transform.forward;
+				if (Input.GetKey(KeyCode.A))
+					moveDirection -= transform.right;
+				if (Input.GetKey(KeyCode.D))
+					moveDirection += transform.right;
+				if (Input.GetKey(KeyCode.Space))
+					moveDirection += transform.up;
+				if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+					moveDirection -= transform.up;
+
+				// Apply the relative movement
+				rb.AddForce(moveDirection.normalized * moveSpeedSpace * Time.deltaTime * 10);
 			}
-		} /*else {
-            // Check if player is trying to change forward/backward movement while jumping/falling
-            if (!Mathf.Approximately(forwardInput, 0f)) {
-                // Override just the forward velocity with player input at half speed
-                Vector3 verticalVelocity = Vector3.Project(rb.velocity, Vector3.up);
-                rb.velocity = verticalVelocity + velForward * moveSpeed / 2f + velStrafe * moveSpeed / 2f;
-            }
-        }*/
+		}
+	}
+
+	public void AssignGravityToDroid(GravityBase gravity) {
+		Debug.Log("Droid entering gravity");
+		isInGravity = true;
+		gravitySource = gravity;
+	}
+
+	public GravityBase CurrentGravitySource() {
+		return gravitySource;
+	}
+
+	public void ExitGravity() {
+		gravitySource = null;
+		isInGravity = false;
+		transform.parent = StationController.Instance.transform;
+		SetVelocity();
+		Debug.Log("Droid exiting gravity. Current vel: " + rb.velocity);
+	}
+	
+	private Vector3 lastPosition;
+	
+	private void LateUpdate()
+	{
+		if (isInGravity)
+		{
+			// Calculate the current velocity when the object is a child
+			lastPosition = transform.position;
+			//rb.velocity = currentVelocity;
+		}
+	}
+
+	private float maxSpeed = 5f;
+	private void SetVelocity() {
+		rb.velocity = (transform.position - lastPosition) / Time.deltaTime;
+		float currentSpeed = rb.velocity.magnitude;
+
+		// If the current speed exceeds the maximum speed, clamp the velocity to the maximum value
+		if (currentSpeed > maxSpeed)
+		{
+			// Calculate the desired velocity vector with the maximum speed
+			Vector3 desiredVelocity = rb.velocity.normalized * maxSpeed;
+
+			// Apply the clamped velocity to the Rigidbody
+			rb.velocity = desiredVelocity;
+		}
 	}
 }

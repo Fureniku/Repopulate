@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class RingController : MonoBehaviour {
     
     [SerializeField] private ModuleController[] modules;
     [SerializeField] private int maxModules;
+    [SerializeField] private float rotationSpeed;
 
     private float oxygenPressure;
     
@@ -22,6 +22,10 @@ public class RingController : MonoBehaviour {
     void Update()
     {
         
+    }
+
+    private void FixedUpdate() {
+        transform.Rotate (rotationSpeed * Time.deltaTime,0,0);
     }
 
     private void BalanceOxygen() {

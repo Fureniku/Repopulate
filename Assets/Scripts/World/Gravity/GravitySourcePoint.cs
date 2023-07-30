@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class GravitySourcePoint : GravityBase {
 	
-	
-	[Tooltip("If true, gravity pulls to a central point and Gravity Source B is ignorerd. Else, it pulls to a line defined by Gravity Source B.")]
-	[SerializeField] private bool singlePoint;
 	[Tooltip("The position gravity pulls towards")]
 	[SerializeField] private Vector3 gravitySource = new Vector3(0, 0, 0);
 	[Tooltip("If the object is closer than this, gravity has no effect")]
@@ -55,7 +52,9 @@ public class GravitySourcePoint : GravityBase {
 	}
 
 	private void OnDrawGizmos() {
+		gizmoCol.a = 0.3f;
 		Gizmos.color = gizmoCol;
-		Gizmos.DrawSphere(GravitySource(), 0.5f);
+		Gizmos.DrawSphere(GravitySource(), minEffectDistance);
+		Gizmos.DrawSphere(GravitySource(), maxEffectDistance);
 	}
 }

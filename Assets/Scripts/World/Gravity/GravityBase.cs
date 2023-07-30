@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ public abstract class GravityBase : MonoBehaviour {
     [SerializeField] protected Vector3 gravity = new Vector3(0, -9.8f, 0);
     [Tooltip("If true, the force of gravity will push away from this point instead of pulling towards it. Used for gravity rings.")]
     [SerializeField] protected bool inverseGravity = false;
-    
+
     protected float gravityDistance;
     
     //Debug:
@@ -17,9 +18,42 @@ public abstract class GravityBase : MonoBehaviour {
 
     public abstract Vector3 GetPullDirection(Vector3 pulledObject);
     public abstract bool IsWithinGravitationalEffect(Vector3 pulledObject);
-    
+
     //The direction and strength of the gravitational pull
     public Vector3 GetPull(Vector3 pulledObject) {
         return GetPullDirection(pulledObject) * gravity.magnitude;
+    }
+    
+    private void OnTriggerStay(Collider other) {
+        DroidController droid = other.GetComponent<DroidController>();
+        if (droid != null) {
+            if (IsWithinGravitationalEffect(droid.transform.position)) {
+                if (droid.transform.parent != transform) {
+                    droid.transform.parent = transform;
+                    droid.transform.localScale = Vector3.one;
+                }
+                if (droid.CurrentGravitySource() != this) {
+                    droid.AssignGravityToDroid(this);
+                } 
+            } else if (droid.CurrentGravitySource() == this) {
+                droid.ExitGravity();
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        DroidController droid = other.GetComponent<DroidController>();
+        if (droid != null) {
+            droid.ExitGravity();
+        }
+    }
+    
+    protected void DrawGizmoArrow(Vector3 from, Vector3 to) {
+        Gizmos.DrawLine(from, to);
+        Vector3 direction = to - from;
+        Vector3 right = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180 + 30, 0) * Vector3.forward;
+        Vector3 left = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180 - 30, 0) * Vector3.forward;
+        Gizmos.DrawLine(to, to - (direction + right) * 0.1f);
+        Gizmos.DrawLine(to, to - (direction + left) * 0.1f);
     }
 }

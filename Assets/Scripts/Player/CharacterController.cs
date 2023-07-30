@@ -84,7 +84,7 @@ public class CharacterController : MonoBehaviour {
         strafeInput = Mathf.RoundToInt(Input.GetAxisRaw("Horizontal"));
         //sprintInput = Input.GetKey(KeyCode.LeftShift);
     }
-
+    
     private void HandleCamera() {
         if (UnityEngine.Cursor.lockState == CursorLockMode.Locked) {
             float mouseX = 0;
@@ -96,12 +96,20 @@ public class CharacterController : MonoBehaviour {
             } else {
                 mouseX = Input.GetAxis("Horizontal") * mouseSensitivity * Time.deltaTime;
             }
-        
+            
             xRotation -= mouseY;
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            
+            if (currentDroid.isInGravity) {
+                xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-            fpCam.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-            currentDroid.UpdateRotation(Vector3.up * mouseX);
+                fpCam.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+                currentDroid.UpdateRotation(Vector3.up * mouseX);
+            } else {
+                currentDroid.transform.localRotation *= Quaternion.Euler(-mouseY, mouseX, 0f);
+
+                // Set the camera to always look in the direction of Object A's forward vector.
+                fpCam.transform.localRotation = Quaternion.identity;
+            }
         }
     }
 

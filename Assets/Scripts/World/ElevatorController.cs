@@ -6,6 +6,7 @@ using UnityEngine;
 public class ElevatorController : MonoBehaviour {
 
     [SerializeField][Tooltip("< 10 for down, > 10 for up")] private float strength = 10f;
+    [SerializeField] private Vector3 direction;
     [SerializeField] private float maxSpeed = 5f;
 
     private void OnTriggerStay(Collider other) {
