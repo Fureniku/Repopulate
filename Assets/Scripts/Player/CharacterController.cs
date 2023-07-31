@@ -87,16 +87,9 @@ public class CharacterController : MonoBehaviour {
     
     private void HandleCamera() {
         if (UnityEngine.Cursor.lockState == CursorLockMode.Locked) {
-            float mouseX = 0;
-            float mouseY = 0;
-        
-            if (fpCam.gameObject.activeSelf) {
-                mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-                mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-            } else {
-                mouseX = Input.GetAxis("Horizontal") * mouseSensitivity * Time.deltaTime;
-            }
-            
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
             xRotation -= mouseY;
             
             if (currentDroid.isInGravity) {
@@ -111,6 +104,10 @@ public class CharacterController : MonoBehaviour {
                 fpCam.transform.localRotation = Quaternion.identity;
             }
         }
+    }
+
+    public void ResetCamera() {
+        fpCam.transform.localRotation = Quaternion.identity;
     }
 
     void PlaceSelection() {
