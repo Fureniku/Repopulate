@@ -80,31 +80,35 @@ public class DroidController : MonoBehaviour {
 		moveDirection += t.up * moveDir.y;
 		
 		if (isInGravity) {
+			//Store our Y velocity so it's unaffected by player movement on X/Z
+			Vector3 velocityIn = rb.velocity;
 			
-			rb.AddForce(moveDirection * moveSpeed * Time.deltaTime, ForceMode.VelocityChange);
-			//rb.AddForce(new Vector3(0, -9.8f, 0), ForceMode.Acceleration);
-			/*Velocity sources:
-			 - Player input; move horizontally and stop it on release while grounded. X/Z velocity.
-			 - Player jumping; Move vertically by fixed amount. Can only do while grounded. Y velocity
-			 - Gravity: Pull towards gravity source always. Y velocity.
-			 - Gravity lifts: move towards centre of lift with exponential strength. player can push against the force, but only so far. Y velocity.
+			//Player input movement:
+			//Apply a velocity change force to instantly move them
+			rb.AddForce(moveDirection * (moveSpeed * Time.deltaTime * 10), ForceMode.VelocityChange);
+
+			//Restore the Y velocity
+			rb.velocity = new Vector3(rb.velocity.x, velocityIn.y, rb.velocity.z);
+
+			//Next, apply the gravitational force, pulling the object down.
+			Gravity();
 			
-			*/
-			/*Vector3 startVel = rb.velocity;
-			if (moveDir == Vector3.zero && isGrounded) { //While in gravity, instantly stop when keys are released and theyre on the floor. Keep any vertical momentum.
-				//rb.velocity = new Vector3(0, rb.velocity.y, 0);
+			//Now, if they've stopped pressing input and are on the floor, stop moving. Don't stop vertical velocity.
+			if (moveDir == Vector3.zero && isGrounded) {
+				rb.velocity = new Vector3(0, velocityIn.y, 0);
 			}
 
-			//transform.Translate(moveDir * (moveSpeed * sprintFactor * Time.deltaTime));
-			//rb.velocity += new Vector3(moveDirection.x, 0, moveDirection.z).normalized * (moveSpeedSpace * Time.deltaTime);
-			rb.AddForce(moveDirection * moveSpeed * Time.deltaTime, ForceMode.VelocityChange);
+			//Jump input
 			if (isGrounded) {
-				if (Input.GetKey(KeyCode.Space)) { //Check if trying to jump
-					rb.velocity += Vector3.up * jumpSpeed; //Apply an upward velocity to jump
+				if (Input.GetKey(KeyCode.Space)) {
+					rb.velocity += Vector3.up * jumpSpeed;
 				}
-			}*/
+			}
 			
-			//ClampVelocity();
+			// Gravity lifts: move towards centre of lift with exponential strength. player can push against the force, but only so far. Y velocity.
+			
+			//Finally, limit velocities within maximum ranges
+			ClampVelocity();
 		} else {
 			if (Input.GetKey(KeyCode.E)) { 
 				rb.velocity = Vector3.MoveTowards(rb.velocity, Vector3.zero, 5f * Time.fixedDeltaTime);
@@ -155,8 +159,8 @@ public class DroidController : MonoBehaviour {
 		float currentSpeed = rb.velocity.magnitude;
 
 		// If the current speed exceeds the maximum speed, clamp the velocity to the maximum value
-		if (currentSpeed > maxSpeed)
-		{
+		if (currentSpeed > maxSpeed) {
+			Debug.Log("Speeding!!");
 			// Calculate the desired velocity vector with the maximum speed
 			Vector3 desiredVelocity = rb.velocity.normalized * maxSpeed;
 
@@ -225,7 +229,6 @@ public class DroidController : MonoBehaviour {
 	}
 
 	public void AssignGravityToDroid(GravityBase gravity) {
-		Debug.Log("Droid entering gravity");
 		isInGravity = true;
 		gravitySource = gravity;
 		characterController.ResetCamera();
@@ -240,9 +243,7 @@ public class DroidController : MonoBehaviour {
 		gravitySource = null;
 		isInGravity = false;
 		transform.parent = StationController.Instance.transform;
-		rb.velocity = (transform.position - lastPosition) / Time.deltaTime;
 		ClampVelocity();
-		Debug.Log("Droid exiting gravity. Current vel: " + rb.velocity);
 	}
 	#endregion
 
@@ -250,7 +251,6 @@ public class DroidController : MonoBehaviour {
 		ElevatorController elevator = other.GetComponent<ElevatorController>();
 		if (elevator != null) {
 			rb.AddForce(Vector3.up * elevator.GetStrength(), ForceMode.Force);
-			rb.velocity = elevator.GetLiftedVelocity(rb.velocity);
 		}
 	}
 }
