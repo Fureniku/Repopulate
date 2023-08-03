@@ -42,7 +42,8 @@ public class DroidController : MonoBehaviour {
 	private Vector3 currentDirection;
 	
 	private bool isGrounded { get; set; } //Only when in gravity
-	public bool isInGravity { get; private set; }= false;
+	public bool isInGravity { get; private set; } = false;
+	public bool isInElevator { get; private set; } = false;
 	private bool isDroidActive = false; //Whether this is the currently controlled droid. Not to be confused with playeractive which locks the camera etc
 
 	void Awake() {
@@ -85,7 +86,8 @@ public class DroidController : MonoBehaviour {
 			
 			//Player input movement:
 			//Apply a velocity change force to instantly move them
-			rb.AddForce(moveDirection * (moveSpeed * Time.deltaTime * 10), ForceMode.VelocityChange);
+			float moveModifier = isGrounded ? 10f : 5f; //Less movement when in the air
+			rb.AddForce(moveDirection * (moveSpeed * Time.deltaTime * moveModifier), ForceMode.VelocityChange);
 
 			//Restore the Y velocity
 			rb.velocity = new Vector3(rb.velocity.x, velocityIn.y, rb.velocity.z);
@@ -101,6 +103,7 @@ public class DroidController : MonoBehaviour {
 			//Jump input
 			if (isGrounded) {
 				if (Input.GetKey(KeyCode.Space)) {
+					rb.AddForce(transform.TransformDirection(Vector3.up), ForceMode.Impulse);
 					rb.velocity += Vector3.up * jumpSpeed;
 				}
 			}
@@ -249,8 +252,36 @@ public class DroidController : MonoBehaviour {
 
 	private void OnTriggerStay(Collider other) {
 		ElevatorController elevator = other.GetComponent<ElevatorController>();
+		Vector3 elevPos = other.transform.position;
+		Vector3 rbPos = transform.position;
+		
 		if (elevator != null) {
-			rb.AddForce(Vector3.up * elevator.GetStrength(), ForceMode.Force);
+			isInElevator = true;
+			if (moveDir == Vector3.zero) {
+
+				Vector3 directionToCenter = (elevPos - rbPos).normalized;
+				Vector3 localDirection = transform.InverseTransformDirection(directionToCenter);
+				float distanceToCenter = Vector3.Distance(rbPos, elevPos);
+        
+				// Calculate the attraction force towards the center (only on X and Z axes)
+				Vector3 localAttractionForce = new Vector3(localDirection.x, 0.0f, localDirection.z) * elevator.GetCentralisingForce();
+				rb.AddRelativeForce(localAttractionForce);
+
+				// Calculate the bounce force and apply damping only on X and Z axes
+				Vector3 relativeVelocity = transform.InverseTransformDirection(rb.velocity) - localDirection * Vector3.Dot(transform.InverseTransformDirection(rb.velocity), localDirection);
+				float bounceFactor = Mathf.Clamp01(1.0f - distanceToCenter / elevator.GetMaxBounceDistance());
+				Vector3 localBounceForce = new Vector3(-relativeVelocity.x, 0.0f, -relativeVelocity.z) * bounceFactor * elevator.GetDamping();
+				rb.AddRelativeForce(localBounceForce);
+			}
+			
+			// Apply constant upward force
+			rb.AddForce(other.transform.TransformDirection(Vector3.up) * elevator.GetStrength());
+		} else {
+			isInElevator = false;
 		}
+	}
+
+	private void OnTriggerExit(Collider other) {
+		isInElevator = false;
 	}
 }

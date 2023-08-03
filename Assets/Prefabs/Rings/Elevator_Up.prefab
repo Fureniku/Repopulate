@@ -95,10 +95,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
+  m_Radius: 5
+  m_Height: 10
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 5, z: 0}
 --- !u!114 &8566191498688988917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,5 +111,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe20861b90dcf874fa3588f2faee161a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isUp: 0
   strength: 7.5
+  height: 10
+  radius: 5
+  maxSpeed: 5
+  damping: 0.5
+  maxBounceDistance: 1
+  centralisingForce: 10
