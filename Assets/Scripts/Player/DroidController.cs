@@ -11,7 +11,6 @@ public class DroidController : MonoBehaviour {
 	[SerializeField] private CapsuleCollider capsuleCollider;
 
 	[SerializeField] private GravityBase gravitySource;
-	[SerializeField] private MultiGravitySelector multiGravitySelector;
 
 	[SerializeField] private CharacterController characterController;
 
@@ -95,16 +94,25 @@ public class DroidController : MonoBehaviour {
 			//Next, apply the gravitational force, pulling the object down.
 			Gravity();
 			
-			//Now, if they've stopped pressing input and are on the floor, stop moving. Don't stop vertical velocity.
+			//Now, if they've stopped pressing input and are on the floor, stop moving. Don't stop vertical velocity. Must be done in local space!
 			if (moveDir == Vector3.zero && isGrounded) {
 				rb.velocity = new Vector3(0, velocityIn.y, 0);
+				
+				Vector3 localDirection = rb.transform.InverseTransformDirection(rb.velocity);
+
+				localDirection.x = 0f;
+				localDirection.z = 0f;
+
+				Vector3 globalDirection = rb.transform.TransformDirection(localDirection);
+
+				rb.velocity = globalDirection;
 			}
 
 			//Jump input
 			if (isGrounded) {
 				if (Input.GetKey(KeyCode.Space)) {
-					rb.AddForce(transform.TransformDirection(Vector3.up), ForceMode.Impulse);
-					rb.velocity += Vector3.up * jumpSpeed;
+					rb.AddForce(transform.TransformDirection(Vector3.up) * 10f, ForceMode.Impulse);
+					//rb.velocity += Vector3.up * jumpSpeed;
 				}
 			}
 			
@@ -163,12 +171,24 @@ public class DroidController : MonoBehaviour {
 
 		// If the current speed exceeds the maximum speed, clamp the velocity to the maximum value
 		if (currentSpeed > maxSpeed) {
-			Debug.Log("Speeding!!");
 			// Calculate the desired velocity vector with the maximum speed
 			Vector3 desiredVelocity = rb.velocity.normalized * maxSpeed;
 
 			// Apply the clamped velocity to the Rigidbody
 			rb.velocity = desiredVelocity;
+			
+			/*			// Convert global velocity to local velocity
+			Vector3 localVelocity = rb.transform.InverseTransformDirection(rb.velocity);
+
+			// Clamp the local X and Z components of the velocity to limit movement
+			localVelocity.x = Mathf.Clamp(localVelocity.x, -maxSpeed, maxSpeed);
+			localVelocity.z = Mathf.Clamp(localVelocity.z, -maxSpeed, maxSpeed);
+
+			// Convert the clamped local velocity back to global velocity
+			Vector3 globalVelocity = rb.transform.TransformDirection(localVelocity);
+
+			// Apply the clamped velocity to the Rigidbody, ensuring upward velocity is not clamped
+			rb.velocity = new Vector3(globalVelocity.x, Mathf.Clamp(globalVelocity.y, -maxSpeed, maxSpeed), globalVelocity.z);*/
 		}
 	}
 	
@@ -214,10 +234,7 @@ public class DroidController : MonoBehaviour {
 	#region Gravity
 	private void Gravity() {
 		Vector3 pos = transform.position;
-		if (multiGravitySelector != null) {
-			gravitySource = multiGravitySelector.GetClosestGravity(pos);
-		}
-		
+
 		if (gravitySource != null && gravitySource.IsWithinGravitationalEffect(pos)) {
 			Vector3 direction = gravitySource.GetPullDirection(pos);
 			Vector3 gravDirection = gravitySource.GetPull(pos);
@@ -248,34 +265,24 @@ public class DroidController : MonoBehaviour {
 		transform.parent = StationController.Instance.transform;
 		ClampVelocity();
 	}
+
+	private void GravityLift() {
+		
+	}
+	
 	#endregion
 
 	private void OnTriggerStay(Collider other) {
-		ElevatorController elevator = other.GetComponent<ElevatorController>();
-		Vector3 elevPos = other.transform.position;
-		Vector3 rbPos = transform.position;
-		
-		if (elevator != null) {
+		GravityLift gravLift = other.GetComponent<GravityLift>();
+
+		if (gravLift != null) {
 			isInElevator = true;
 			if (moveDir == Vector3.zero) {
-
-				Vector3 directionToCenter = (elevPos - rbPos).normalized;
-				Vector3 localDirection = transform.InverseTransformDirection(directionToCenter);
-				float distanceToCenter = Vector3.Distance(rbPos, elevPos);
-        
-				// Calculate the attraction force towards the center (only on X and Z axes)
-				Vector3 localAttractionForce = new Vector3(localDirection.x, 0.0f, localDirection.z) * elevator.GetCentralisingForce();
-				rb.AddRelativeForce(localAttractionForce);
-
-				// Calculate the bounce force and apply damping only on X and Z axes
-				Vector3 relativeVelocity = transform.InverseTransformDirection(rb.velocity) - localDirection * Vector3.Dot(transform.InverseTransformDirection(rb.velocity), localDirection);
-				float bounceFactor = Mathf.Clamp01(1.0f - distanceToCenter / elevator.GetMaxBounceDistance());
-				Vector3 localBounceForce = new Vector3(-relativeVelocity.x, 0.0f, -relativeVelocity.z) * bounceFactor * elevator.GetDamping();
-				rb.AddRelativeForce(localBounceForce);
+				gravLift.HandleForces(rb);
 			}
 			
 			// Apply constant upward force
-			rb.AddForce(other.transform.TransformDirection(Vector3.up) * elevator.GetStrength());
+			rb.AddForce(other.transform.TransformDirection(Vector3.up) * gravLift.GetStrength());
 		} else {
 			isInElevator = false;
 		}
