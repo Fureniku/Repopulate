@@ -19,34 +19,76 @@ public class GravityLift : MonoBehaviour {
         cldr.isTrigger = true;
     }
 
-    public void HandleForces(Rigidbody rb) {
-	    float slowRadius = cldr.radius * maxSlowdownRangeFactor;
+    private float innerThreshold = 0.5f;
+
+    public void HandleForcesGPT(Rigidbody rb) {
+	    float radius = cldr.radius * maxSlowdownRangeFactor;
+
+	    // Calculate the local position of the rigidbody in cylinder's local space
 	    Vector3 localPosition = transform.InverseTransformPoint(rb.transform.position);
-	    localPosition.y = 0f; //Only get X/Z distance, so distance to horizontal centre
+	    localPosition.y = 0f; // Project onto XZ plane
+
+	    // Calculate the local center in cylinder's local space
+	    Vector3 localCenter = Vector3.zero;
+	    localCenter.y = 0f;
+
+	    // Calculate the distance to the local center
+	    float distanceToCenter = Vector3.Distance(localPosition, localCenter) - radius;
+
+	    if (distanceToCenter > 0f)
+	    {
+		    // Calculate the slowdown factor based on the distance and inner threshold
+		    float slowdownFactor = Mathf.Clamp01((distanceToCenter - radius * (1f - innerThreshold)) / (radius * innerThreshold));
+
+		    // Apply the force towards the center only if we're outside the inner threshold
+		    if (slowdownFactor > 0f)
+		    {
+			    // Calculate the forces in the cylinder's local space
+			    Vector3 centerForceVectorLocal = new Vector3(-localPosition.x, 0f, -localPosition.z).normalized * centerForce * slowdownFactor;
+			    Vector3 horizontalVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+			    Vector3 horizontalDampingForceVectorLocal = -horizontalVelocity * dampingForce;
+
+			    // Add the forces in local space
+			    Vector3 totalForceLocal = centerForceVectorLocal + horizontalDampingForceVectorLocal;
+
+			    // Apply the forces on the rigidbody in its local space
+			    rb.AddRelativeForce(totalForceLocal, ForceMode.Force);
+		    }
+	    }
+
+	    // Apply the upward force in the cylinder's local space
+	    Vector3 upwardForceVectorLocal = transform.up * strength;
+
+	    // Apply the upward force on the rigidbody in its local space
+	    rb.AddRelativeForce(upwardForceVectorLocal, ForceMode.Force);
+    }
+    
+    public void HandleForces(Rigidbody rb) {
+	    float slowRadius = radius * maxSlowdownRangeFactor;
+	    Vector3 rbRawPosition = rb.transform.position;
+
+	    Vector3 localPosition = transform.InverseTransformPoint(rbRawPosition);
+	    localPosition.y = 0f; // Only get X/Z distance, so distance to horizontal center
 
 	    float distanceToCenter = localPosition.magnitude - slowRadius;
 
 	    Vector3 forceVector = Vector3.zero;
 
 	    if (distanceToCenter > 0f) {
-		    // Calculate the slowdown factor based on the distance and inner threshold
 		    float slowdownFactor = Mathf.Clamp01(distanceToCenter / slowRadius);
-		    // Apply the force towards the centre only if we're outside the inner threshold
 		    if (slowdownFactor > 0f) {
 			    float centerForceMagnitude = centerForce * slowdownFactor;
 
-			    Vector3 centerForceVector = new Vector3(-localPosition.x, 0f, -localPosition.z).normalized * centerForceMagnitude;
+			    float angleToCenter = Mathf.Atan2(localPosition.z, localPosition.x);
+            
+			    float forceX = -Mathf.Cos(angleToCenter) * centerForceMagnitude;
+			    float forceZ = -Mathf.Sin(angleToCenter) * centerForceMagnitude;
 
-			    // Calculate the horizontal damping force for stabilization
-			    Vector3 horizontalVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-			    Vector3 horizontalDampingForceVector = -horizontalVelocity * dampingForce;
-
-			    forceVector += centerForceVector + horizontalDampingForceVector;
+			    forceVector += new Vector3(forceX, 0f, forceZ);
 		    }
 	    }
-
-	    // Apply the upward force on the local Y axis
-	    Vector3 upwardForceVector = Vector3.up * strength;
+	    
+	    Vector3 upwardForceVector = transform.up * strength;
 	    forceVector += upwardForceVector;
 
 	    // Apply combined forces
@@ -62,7 +104,7 @@ public class GravityLift : MonoBehaviour {
 
     private void OnDrawGizmos() {
 	    DrawGravitationalArea(transform.position, Vector3.zero, Vector3.up * height);
-	}
+    }
 
 	private void DrawGravitationalArea(Vector3 pos, Vector3 localBelowPoint, Vector3 localAbovePoint) {
 		Gizmos.color = Color.cyan;
