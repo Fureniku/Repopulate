@@ -282,7 +282,7 @@ public class DroidController : MonoBehaviour {
 			}
 			
 			// Apply constant upward force
-			rb.AddForce(other.transform.TransformDirection(Vector3.up) * gravLift.GetStrength());
+			//rb.AddForce(other.transform.TransformDirection(Vector3.up) * gravLift.GetStrength());
 		} else {
 			isInElevator = false;
 		}

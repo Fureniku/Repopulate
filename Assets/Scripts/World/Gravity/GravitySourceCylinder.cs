@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class GravitySourceCylinder : GravityBase {
 
-	//[SerializeField] private Vector3 direction;
 	[SerializeField] private float aboveDistance = 5;
 	[SerializeField] private float belowDistance = 5;
 
@@ -37,7 +36,6 @@ public class GravitySourceCylinder : GravityBase {
 	}
 
 	private void OnDrawGizmos() {
-	    Gizmos.color = gizmoCol;
 	    Vector3 pos = transform.position;
 
 	    // Calculate positions in local coordinates

@@ -5,9 +5,12 @@ using UnityEngine;
 
 public class GravitySourceCube : GravityBase {
 
-	//[SerializeField] private Vector3 direction;
 	[SerializeField] private BoxCollider box;
 
+	[SerializeField] private float aboveDistance = 5;
+	[SerializeField] private float belowDistance = 5;
+
+	[SerializeField] float radius = 10f;
 	
 	public override Vector3 GetPullDirection(Vector3 pulledObject) {
 		Vector3 gravityDirection = transform.up; // Use the plane's normal as gravity direction
@@ -17,7 +20,6 @@ public class GravitySourceCube : GravityBase {
 	public override bool IsWithinGravitationalEffect(Vector3 pulledObject) {
 		gizmoCol = Color.red;
 
-		//TODO check if positions within box
 		gizmoCol = Color.green;
 		return true;
 	}

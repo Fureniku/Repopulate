@@ -4,13 +4,13 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider))]
 public class GravityLift : MonoBehaviour {
 
-    [SerializeField][Tooltip("< 10 for down, > 10 for up")] private float strength = 10f;
+    [SerializeField] private float strength = 10f;
     [SerializeField] private float height = 10f;
     [SerializeField] private float radius = 5f;
     
-    [SerializeField] private float damping = 0.5f;
-    [SerializeField] private float maxBounceDistance = 1.0f;
-    [SerializeField] private float centralisingForce = 10f;
+    [SerializeField] private float centerForce = 10f;
+    [SerializeField] private float maxSlowdownRangeFactor = 0.1f; // Controls how close to the center the slowdown range extends
+    [SerializeField] private float dampingForce = 5f;
 
     private CapsuleCollider cldr;
 
@@ -18,31 +18,39 @@ public class GravityLift : MonoBehaviour {
         cldr = GetComponent<CapsuleCollider>();
         cldr.isTrigger = true;
     }
-    
-    public float GetStrength() {
-        return strength;
-    }
 
     public void HandleForces(Rigidbody rb) {
-        Vector3 elevPos = transform.position;
-        Vector3 rbPos = rb.transform.position;
-        
-        Vector3 directionToCenter = (elevPos - rbPos).normalized;
-        Vector3 localDirection = transform.InverseTransformDirection(directionToCenter);
-        float distanceToCenter = Vector3.Distance(rbPos, elevPos);
-        
-        // Calculate the attraction force towards the center (only on X and Z axes)
-        Vector3 localAttractionForce = new Vector3(localDirection.x, 0.0f, localDirection.z) * centralisingForce;
-        if (localAttractionForce != Vector3.zero) {
-            Debug.Log($"succ: {localAttractionForce}");
-        }
-        rb.AddRelativeForce(localAttractionForce);
+	    float slowRadius = cldr.radius * maxSlowdownRangeFactor;
+	    Vector3 localPosition = transform.InverseTransformPoint(rb.transform.position);
+	    localPosition.y = 0f; //Only get X/Z distance, so distance to horizontal centre
 
-        // Calculate the bounce force and apply damping only on X and Z axes
-        Vector3 relativeVelocity = transform.InverseTransformDirection(rb.velocity) - localDirection * Vector3.Dot(transform.InverseTransformDirection(rb.velocity), localDirection);
-        float bounceFactor = Mathf.Clamp01(1.0f - distanceToCenter / maxBounceDistance);
-        Vector3 localBounceForce = new Vector3(-relativeVelocity.x, 0.0f, -relativeVelocity.z) * bounceFactor * damping;
-        rb.AddRelativeForce(localBounceForce);
+	    float distanceToCenter = localPosition.magnitude - slowRadius;
+
+	    Vector3 forceVector = Vector3.zero;
+
+	    if (distanceToCenter > 0f) {
+		    // Calculate the slowdown factor based on the distance and inner threshold
+		    float slowdownFactor = Mathf.Clamp01(distanceToCenter / slowRadius);
+		    // Apply the force towards the centre only if we're outside the inner threshold
+		    if (slowdownFactor > 0f) {
+			    float centerForceMagnitude = centerForce * slowdownFactor;
+
+			    Vector3 centerForceVector = new Vector3(-localPosition.x, 0f, -localPosition.z).normalized * centerForceMagnitude;
+
+			    // Calculate the horizontal damping force for stabilization
+			    Vector3 horizontalVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+			    Vector3 horizontalDampingForceVector = -horizontalVelocity * dampingForce;
+
+			    forceVector += centerForceVector + horizontalDampingForceVector;
+		    }
+	    }
+
+	    // Apply the upward force on the local Y axis
+	    Vector3 upwardForceVector = Vector3.up * strength;
+	    forceVector += upwardForceVector;
+
+	    // Apply combined forces
+	    rb.AddForce(forceVector, ForceMode.Force);
     }
 
     private void OnValidate() {
@@ -53,13 +61,41 @@ public class GravityLift : MonoBehaviour {
     }
 
     private void OnDrawGizmos() {
-        Matrix4x4 originalMatrix = Gizmos.matrix;
-        Gizmos.matrix = transform.localToWorldMatrix;
-        Color col = Color.green;
-        col.a = 0.25f;
-        Gizmos.color = col;
-        Gizmos.DrawCube(new Vector3(0, height / 2f, 0), new Vector3(radius*2, height, radius*2));
-        
-        Gizmos.matrix = originalMatrix;
-    }
+	    DrawGravitationalArea(transform.position, Vector3.zero, Vector3.up * height);
+	}
+
+	private void DrawGravitationalArea(Vector3 pos, Vector3 localBelowPoint, Vector3 localAbovePoint) {
+		Gizmos.color = Color.cyan;
+	    Vector3 directionAB = localBelowPoint - localAbovePoint;
+
+	    float angleIncrement = 2 * Mathf.PI / 24;
+
+	    Vector3[] last = null;
+
+	    for (int i = 0; i < 25; i++) { // 25; 24 for the loop and one extra to make sure it's closed
+	        float angle = i * angleIncrement;
+	        Vector3 minPos = Vector3.zero;
+	        Vector3 maxPos = new Vector3(0, 0, radius);
+
+	        // Apply rotation to the points in local space
+	        Vector3 point1 = pos + transform.TransformVector(localAbovePoint + Quaternion.AngleAxis(angle * Mathf.Rad2Deg, directionAB) * minPos);
+	        Vector3 point2 = pos + transform.TransformVector(localAbovePoint + Quaternion.AngleAxis(angle * Mathf.Rad2Deg, directionAB) * maxPos);
+	        Gizmos.DrawLine(point1, point2);
+
+	        Vector3 pointB1 = pos + transform.TransformVector(localBelowPoint + Quaternion.AngleAxis(angle * Mathf.Rad2Deg, directionAB) * minPos);
+	        Vector3 pointB2 = pos + transform.TransformVector(localBelowPoint + Quaternion.AngleAxis(angle * Mathf.Rad2Deg, directionAB) * maxPos);
+	        Gizmos.DrawLine(pointB1, pointB2);
+
+	        Gizmos.DrawLine(point2, pointB2);
+
+	        if (last != null) {
+	            Gizmos.DrawLine(point1, last[0]);
+	            Gizmos.DrawLine(point2, last[1]);
+	            Gizmos.DrawLine(pointB1, last[2]);
+	            Gizmos.DrawLine(pointB2, last[3]);
+	        }
+
+	        last = new[] { point1, point2, pointB1, pointB2 };
+	    }
+	}
 }
