@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DroidController : MonoBehaviour {
@@ -41,13 +42,14 @@ public class DroidController : MonoBehaviour {
 	
 	private Vector3 moveDir; //The in-gravity movement input
 	private Vector3 lastPosition; //The last known position when in gravity, used for transitioning velocity to out-of-gravity
+	private List<GravityBase> currentGravities = new();
 	
 	//In-space variables
 	private Vector3 currentMomentum;
 	private Vector3 currentDirection;
-	
-	private bool isGrounded { get; set; } //Only when in gravity
-	public bool isInGravity { get; private set; } = false;
+
+	[SerializeField] private bool isGrounded;// { get; set; } //Only when in gravity
+	public bool isInGravity;// { get; private set; } = false;
 	public bool isInElevator { get; private set; } = false;
 	private bool isDroidActive = false; //Whether this is the currently controlled droid. Not to be confused with playeractive which locks the camera etc
 
@@ -71,7 +73,6 @@ public class DroidController : MonoBehaviour {
 	}
 	
 	private void FixedUpdate() {
-		//Gravity();
 		CheckGrounded();
 		Movement();
 	}
@@ -123,7 +124,8 @@ public class DroidController : MonoBehaviour {
 			//Jump input
 			if (isGrounded) {
 				if (Input.GetKey(KeyCode.Space)) {
-					rb.AddForce(transform.TransformDirection(transform.up) * jumpSpeed, ForceMode.Impulse);
+					Debug.Log("Jump!");
+					rb.AddForce(transform.TransformDirection(Vector3.up) * jumpSpeed, ForceMode.Impulse);
 				}
 			}
 			
@@ -158,21 +160,27 @@ public class DroidController : MonoBehaviour {
 
 	//Check if the character is touching the floor in some way, while within gravity
 	private void CheckGrounded() {
-		isGrounded = false;
 		float capsuleHeight = Mathf.Max(capsuleCollider.radius * 2f, capsuleCollider.height);
-		Vector3 capsuleBottom = transform.TransformPoint(capsuleCollider.center - transform.up * capsuleHeight / 2f);
-		float radius = transform.TransformVector(capsuleCollider.radius, 0f, 0f).magnitude;
-		Ray ray = new Ray(capsuleBottom + transform.up * .01f, -transform.up); //Cast a ray from the bottom of the characters capsule
+		Vector3 rayDirection = transform.TransformDirection(Vector3.down);
+		
+		float offsetDistance = capsuleHeight / 2f;
+		Vector3 rayOrigin = transform.position + rayDirection * offsetDistance;
+
+		Ray ray = new Ray(rayOrigin, rayDirection);
 		RaycastHit hit;
-		if (Physics.Raycast(ray, out hit, radius * 5f)) {
+
+		if (Physics.Raycast(ray, out hit, capsuleHeight / 2f + 0.01f)) {
 			float normalAngle = Vector3.Angle(hit.normal, transform.up);
 			if (normalAngle < slopeLimit) {
-				float maxDist = radius / Mathf.Cos(Mathf.Deg2Rad * normalAngle) - radius + .02f;
+				float radius = capsuleCollider.radius;
+				float maxDist = radius / Mathf.Cos(Mathf.Deg2Rad * normalAngle) - radius + 0.02f;
 				if (hit.distance < maxDist) {
 					isGrounded = true;
+					return;
 				}
 			}
 		}
+		isGrounded = false;
 	}
 	
 	private void ClampVelocity() {
@@ -227,6 +235,32 @@ public class DroidController : MonoBehaviour {
 	#region Gravity
 	private void Gravity() {
 		Vector3 pos = transform.position;
+		if (currentGravities.Count > 0) {
+			if (!isInGravity) {
+				characterController.ResetCamera();
+				transform.localScale = Vector3.one;
+			}
+
+			GravityBase priorityGravity = currentGravities[0];
+			
+			foreach (GravityBase grav in currentGravities) {
+				if (grav.GetPriority() > priorityGravity.GetPriority()) {
+					if (grav.IsWithinGravitationalEffect(pos)) {
+						priorityGravity = grav;
+					}
+				}
+			}
+
+			gravitySource = priorityGravity;
+			isInGravity = true;
+		} else {
+			if (isInGravity) {
+				gravitySource = null;
+				transform.parent = StationController.Instance.transform;
+				ClampVelocity();
+			}
+			isInGravity = false;
+		}
 
 		if (gravitySource != null && gravitySource.IsWithinGravitationalEffect(pos)) {
 			Vector3 direction = gravitySource.GetPullDirection(pos);
@@ -241,29 +275,30 @@ public class DroidController : MonoBehaviour {
 		}
 	}
 
-	public void AssignGravityToDroid(GravityBase gravity) {
-		isInGravity = true;
-		gravitySource = gravity;
-		characterController.ResetCamera();
-		transform.localScale = Vector3.one;
-	}
-
 	public GravityBase CurrentGravitySource() {
 		return gravitySource;
 	}
 
-	public void ExitGravity() {
-		gravitySource = null;
-		isInGravity = false;
-		transform.parent = StationController.Instance.transform;
-		ClampVelocity();
+	#endregion
+
+	private void OnTriggerEnter(Collider other) {
+		GravityBase gravity = other.GetComponent<GravityBase>();
+
+		if (gravity != null) {
+			isInGravity = true;
+			currentGravities.Add(gravity);
+			Debug.Log($"Adding {gravity} to list of gravities. Total now {currentGravities.Count}");
+		}
 	}
 
-	private void GravityLift() {
-		
+	private void OnTriggerExit(Collider other) {
+		GravityBase gravity = other.GetComponent<GravityBase>();
+
+		if (gravity != null) {
+			currentGravities.Remove(gravity);
+			Debug.Log($"Removing {gravity} from list of gravities. Total now {currentGravities.Count}");
+		}
 	}
-	
-	#endregion
 
 	private void OnTriggerStay(Collider other) {
 		GravityLift gravLift = other.GetComponent<GravityLift>();
@@ -276,9 +311,5 @@ public class DroidController : MonoBehaviour {
 		} else {
 			isInElevator = false;
 		}
-	}
-
-	private void OnTriggerExit(Collider other) {
-		isInElevator = false;
 	}
 }

@@ -3,12 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider))]
 public class GravitySourceCylinder : GravityBase {
 
 	[SerializeField] private float aboveDistance = 5;
 	[SerializeField] private float belowDistance = 5;
 
 	[SerializeField] float radius = 10f;
+	
+	private BoxCollider cldr;
+	
+	void Awake() {
+		cldr = GetComponent<BoxCollider>();
+		cldr.isTrigger = true;
+	}
+	
+	private void OnValidate() {
+		cldr = GetComponent<BoxCollider>();
+		cldr.center = new Vector3(0, (-belowDistance + aboveDistance) / 2.0f, 0);
+		cldr.size = new Vector3(radius*2, aboveDistance+belowDistance, radius*2);
+	}
 	
 	public override Vector3 GetPullDirection(Vector3 pulledObject) {
 		Vector3 gravityDirection = transform.up; // Use the plane's normal as gravity direction

@@ -36,8 +36,6 @@ public class GravitySourcePoint : GravityBase {
 		float distanceToGravityCentre = Vector3.Distance(pulledObject, GetGravitationalLineOrigin(scalarProjection));
 		bool inRange = distanceToGravityCentre >= minEffectDistance && distanceToGravityCentre <= maxEffectDistance;
 
-		gizmoCol = inRange ? Color.green : Color.red;
-		
 		return inRange;
 	}
 	
