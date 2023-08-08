@@ -1,0 +1,1 @@
+In addition to the main ship lifts, players can add smaller gravity lifts into their modules. This allows them to construct a module which might have multiple floors of smaller structures.

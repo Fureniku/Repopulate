@@ -1,6 +1,6 @@
 Station Modules are generic buildings which attach to the station or its rings. Station Modules are the easiest and best way to add additional space to your station in a very modular way.
 
-The station's shaft itself can host four modules directly attached, or the player can add a ring of various levels. Rings massively increase the number of modules that can be added per level by effectively adding more space for the modules to exist in and attach to. Alternatively, rings can be entire, self-contained prefabs, such as an observation deck.
+The station's shaft itself can host 8 modules directly attached in place of rings, or the player can add a [[ring]] of various sizes. Rings massively increase the number of modules that can be added per level by effectively adding more space for the modules to exist in and attach to. Rings come in pairs, with the modules sitting between the pair of rings. 
 
 Modules can be self-contained systems. Once constructed, they can be freely attached or detatched to the ship at will via the external view. A module can be left in space and reclaimed any time later by returning to the same area. Modules can also be sent down to a planet, but cannot leave the surface again once down.
 
@@ -10,16 +10,8 @@ Modules on a planet can be connected to one another, forming networks the same w
 
 Finally, some modules may not actually be directly usable but instead provide things. For example a solar panel or sensor array, which could generate power or improve exploration.
 
-Modules can come in various sizes and have cosmetic differences. For example:
-- Standard module (Varied Sizes). A normal module with white interior and solid walls. Can attach a small flat solar panel to the end
-- Windowed module (Varied sizes). Same as standard, but cannot have a solar panel. Instead, has a large window in the end wall.
-- Observation module (Varied sizes). Same as standard but has windows in back and side walls.
+Modules can come in various forms and have cosmetic and functional differences. For example:
+- Standard module (Varied Sizes). A normal module with white interior and solid walls. Has the most buildable space. Can fit either two smaller or one maximum size in each module space, with a maximum size one also acting as a bridge between the paired rings.
+- Docking module (Only maximum size). A module which has a docking port on top. Shuttles and other small craft can dock to it. There is some building space for storage, but most space is taken up by the dock itself.
 
-
-The varied size modules can come in the following sizes:
-- 6x3x6
-- 12x3x8
-- 18x4x8
-- 18x4x16
-
-Larger sizes cost more to make, and may block other nearby space stopping other module mount points from being usable.
+The current maximum size for a module is 40x16x28. This provides ample building space for anything required on the station. 

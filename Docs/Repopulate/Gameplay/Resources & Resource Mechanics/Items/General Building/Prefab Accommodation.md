@@ -1,0 +1,1 @@
+Accommodation for aliens exists as a variety of prefab cabins. They can vary from shared spaces with bunks in a single room, to luxury rooms made for one or two aliens each. The player can designate accommodation to aliens or it can be handled automatically, and the type of accommodation will affect the aliens comfort levels.
