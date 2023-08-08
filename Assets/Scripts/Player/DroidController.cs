@@ -79,7 +79,7 @@ public class DroidController : MonoBehaviour {
 	
 	#region Movement controls
 
-	private bool physicsMovement = true; //Debug switch to use physics addforce or transform.translate to move character on X
+	private readonly bool physicsMovement = true; //Debug switch to use physics addforce or transform.translate to move character on X
 	
 	//Handle movement and abilities
 	private void Movement() {

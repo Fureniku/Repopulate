@@ -30,19 +30,18 @@ public class PreviewItem : MonoBehaviour {
 		Debug.Log("Calling update object from event");
 		SetObject(droid.GetHeldItem().Get());
 	}
-
+	
 	public void UpdatePreview(Camera cam) {
 		Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 		
-		// Draw the ray for debugging purposes
-		Debug.DrawRay(ray.origin, ray.direction * 10f, Color.red);
 		if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
 			meshRenderer.enabled = true;
+			if (hit.transform.GetComponent<GridCollider>() == null) {
+				Debug.LogError($"You forgot to add a GridCollider to {hit.transform.name}, so nothing works!!");
+				return;
+			}
 			BuildingGrid targetGrid = hit.transform.GetComponent<GridCollider>().GetGrid();
 			PlaceableObject placeable = go.GetComponent<PlaceableObject>();
-			if (targetGrid == null) {
-				Debug.LogError($"PreviewItem {name} unable to get grid from target {hit.transform.name}");
-			}
 
 			Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
 			

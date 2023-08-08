@@ -1,16 +1,24 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider))]
 public class GravitySourceCube : GravityBase {
 
 	[SerializeField] private BoxCollider box;
-
-	[SerializeField] private float aboveDistance = 5;
-	[SerializeField] private float belowDistance = 5;
-
-	[SerializeField] float radius = 10f;
+	
+	[SerializeField] private Vector3 size = new Vector3(5,5,5);
+	
+	private BoxCollider cldr;
+	
+	void Awake() {
+		cldr = GetComponent<BoxCollider>();
+		cldr.isTrigger = true;
+	}
+	
+	private void OnValidate() {
+		cldr = GetComponent<BoxCollider>();
+		cldr.center = new Vector3(0, 0, 0);
+		cldr.size = new Vector3(size.x, size.y, size.z);
+	}
 	
 	public override Vector3 GetPullDirection(Vector3 pulledObject) {
 		Vector3 gravityDirection = transform.up; // Use the plane's normal as gravity direction
@@ -18,15 +26,23 @@ public class GravitySourceCube : GravityBase {
 	}
 	
 	public override bool IsWithinGravitationalEffect(Vector3 pulledObject) {
+		Vector3 closestPointInCollider = cldr.ClosestPoint(pulledObject);
+		if (closestPointInCollider == pulledObject) {
+			gizmoCol = Color.green;
+			return true;
+		}
+		
 		gizmoCol = Color.red;
-
-		gizmoCol = Color.green;
-		return true;
+		return false;
 	}
 
 	private void OnDrawGizmos() {
-	    Gizmos.color = gizmoCol;
-	    Vector3 pos = transform.position;
-
+		Gizmos.color = gizmoCol;
+		Matrix4x4 oldMatrix = Gizmos.matrix;
+		Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
+		
+	    Gizmos.DrawWireCube(cldr.center, cldr.size);
+	    
+	    Gizmos.matrix = oldMatrix;
 	}
 }

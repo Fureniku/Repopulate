@@ -62,14 +62,7 @@ public class CharacterController : MonoBehaviour {
         if (Input.GetMouseButtonDown(1)) {
             PlaceSelection();
         }
-
-        if (currentDroid == null) {
-            Debug.Log("Droid is null");
-        }
-
-        if (fpCam == null) {
-            Debug.Log("Cam is null");
-        }
+        
         currentDroid.UpdatePreview(fpCam);
         
     }
@@ -111,10 +104,12 @@ public class CharacterController : MonoBehaviour {
     }
 
     void PlaceSelection() {
+        Debug.Log("Starting placement");
         if (currentDroid.GetPreviewItem().IsPlaceable()) {
+            Debug.Log("its placeable!");
             Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
-                BuildingGrid targetGrid = hit.transform.parent.GetComponent<BuildingGrid>();
+                BuildingGrid targetGrid = hit.transform.GetComponent<GridCollider>().GetGrid();
     
                 if (targetGrid != null) {
                     PlaceBlock(targetGrid, targetGrid.GetHitSpace(hit.point));
@@ -124,6 +119,7 @@ public class CharacterController : MonoBehaviour {
     }
 
     private void PlaceBlock(BuildingGrid targetGrid, Vector3Int gridPosition) {
+        Debug.Log("why is all this commented out i really need to clean up my code");
         //Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
         //if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
 
