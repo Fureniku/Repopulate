@@ -12902,6 +12902,10 @@ PrefabInstance:
       propertyPath: UIParent
       value: 
       objectReference: {fileID: 484824522}
+    - target: {fileID: 5619554501056235509, guid: b7b4cdcd8069d6447ba994027546ebb8, type: 3}
+      propertyPath: droidList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5619554503047192848, guid: b7b4cdcd8069d6447ba994027546ebb8, type: 3}
       propertyPath: m_Name
       value: Droid_1

@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ALGAE_FARM_1: {fileID: 11400000, guid: 4171680838cf7584dbf218148a924fd0, type: 2}
   PILLAR_1: {fileID: 11400000, guid: 14cde73593cd024418beee0933904a23, type: 2}
+  BATTERY_1: {fileID: 11400000, guid: be785791c7fbc014d92ad8ebccf829fe, type: 2}
+  CUBE_PANELS: {fileID: 11400000, guid: 99d1e706300d33f4a82e16a16f040c4d, type: 2}
+  CUBE_METAL: {fileID: 11400000, guid: 64fecd26fad8e7a478150b2c6ae3e25d, type: 2}

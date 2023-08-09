@@ -36,17 +36,23 @@ public class PreviewItem : MonoBehaviour {
 		
 		if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
 			meshRenderer.enabled = true;
-			if (hit.transform.GetComponent<GridCollider>() == null) {
-				Debug.LogError($"You forgot to add a GridCollider to {hit.transform.name}, so nothing works!!");
-				return;
+			BuildingGrid targetGrid = null;
+			if (hit.transform.parent.GetComponent<PlaceableObject>() != null) { //TODO not ideal; won't work if there's nested children in more complex objects.
+				targetGrid = hit.transform.parent.GetComponent<PlaceableObject>().GetParentGrid();
 			}
-			BuildingGrid targetGrid = hit.transform.GetComponent<GridCollider>().GetGrid();
+
+			if (hit.transform.GetComponent<GridCollider>() != null) {
+				targetGrid = hit.transform.GetComponent<GridCollider>().GetGrid();
+			}
+
+			if (targetGrid == null) {
+				Debug.LogError($"You forgot to add a GridCollider or PlaceableObject component to {hit.transform.name}, so nothing works!!");
+			}
+			
 			PlaceableObject placeable = go.GetComponent<PlaceableObject>();
 
 			Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
-			
-			//Debug.Log($"Ray hit position: {hit.point}, returned grid position: {gridPosition}");
-			//placeable.SetRotation(targetGrid.GetPreviewRotation());
+
 			transform.position = targetGrid.GetPlacementPosition(gridPosition, placeable.GetItem());
 			transform.rotation = targetGrid.GetPlacementRotation(gridPosition, droid.GetHeldRotation());
 

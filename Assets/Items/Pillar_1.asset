@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e40d9dafe1793644d8c82e02288c3210, type: 3}
   m_Name: Pillar_1
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: pillar_1
   category: {fileID: 11400000, guid: 415e3d2377c5520439dd7af74c45d261, type: 2}
   size: {x: 1, y: 3, z: 1}
   rotationOrigin: {x: 0, y: 0, z: 0}

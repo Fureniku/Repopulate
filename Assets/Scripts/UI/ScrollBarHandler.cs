@@ -18,6 +18,8 @@ public class ScrollBarHandler : MonoBehaviour {
         UpdateSlot(0);
         UpdateSlot(1);
         UpdateSlot(2);
+        UpdateSlot(3);
+        UpdateSlot(4);
     }
 
     void Update() {
@@ -41,7 +43,9 @@ public class ScrollBarHandler : MonoBehaviour {
     }
 
     public void UpdateSlot(int id) {
-        slots[id].GetComponent<Image>().sprite = scrollbar.GetItemInSlot(id).GetIcon();
+        if (slots[id] != null) {
+            slots[id].GetComponent<Image>().sprite = scrollbar.GetItemInSlot(id).GetIcon();
+        }
     }
 
     public void SelectSlot(int id) {

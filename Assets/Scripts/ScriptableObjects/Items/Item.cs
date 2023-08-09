@@ -46,4 +46,12 @@ public class Item : ScriptableObject {
 	public bool WallMounted() {
 		return wallMount;
 	}
+
+	public string GetItemName() {
+		return itemName;
+	}
+
+	public string GetItemUnlocalizedName() {
+		return itemName;
+	}
 }

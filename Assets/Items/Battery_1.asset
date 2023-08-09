@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e40d9dafe1793644d8c82e02288c3210, type: 3}
   m_Name: Battery_1
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: battery_1
   category: {fileID: 11400000, guid: 877b178f73a9bcb46ace6be0eb637ced, type: 2}
   size: {x: 1, y: 2, z: 1}
   rotationOrigin: {x: 0, y: 0, z: 0}
   mustBeGrounded: 1
   wallMount: 0
   prefab: {fileID: 873879130526559233, guid: 72d9e41b12bf302469d7e752d06a9cd1, type: 3}
-  icon: {fileID: 21300000, guid: a1f150d35a243b740b778470d385ccd4, type: 3}
+  icon: {fileID: 21300000, guid: 5988f09642454154cae1fcda40685996, type: 3}

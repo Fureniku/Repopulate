@@ -1,0 +1,6 @@
+Dear Future Fureniku
+
+Dont delete this folder! Its a special Unity folder which has to be used to dynamically find resources.
+
+With love,
+Past Fureniku

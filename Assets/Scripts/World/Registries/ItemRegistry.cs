@@ -21,4 +21,19 @@ public class ItemRegistry : ScriptableObject {
 
     public Item ALGAE_FARM_1;
     public Item PILLAR_1;
+    public Item BATTERY_1;
+    public Item CUBE_PANELS;
+    public Item CUBE_METAL;
+
+    public List<Item> GetItemList() {
+        List<Item> itemList = new();
+
+        itemList.Add(ALGAE_FARM_1);
+        itemList.Add(PILLAR_1);
+        itemList.Add(BATTERY_1);
+        itemList.Add(CUBE_PANELS);
+        itemList.Add(CUBE_METAL);
+        
+        return itemList;
+    }
 }
