@@ -13,6 +13,10 @@ public class PreviewItem : MonoBehaviour {
 	private bool canPlaceNow = true; //Updated with the preview, changes the material shading and also allows/disallows placement.
 
 	public void SetObject(GameObject goIn) {
+		if (goIn == null) {
+			Debug.LogWarning("Trying to set null object for PreviewItem");
+			return;
+		}
 		go = goIn;
 		CombineMeshes();
 	}
@@ -32,6 +36,9 @@ public class PreviewItem : MonoBehaviour {
 	}
 	
 	public void UpdatePreview(Camera cam) {
+		if (go == null) {
+			return;
+		}
 		Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 		
 		if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {

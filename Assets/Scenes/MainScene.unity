@@ -11682,7 +11682,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1243295565}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 40, y: 16, z: 28}
@@ -11707,7 +11707,7 @@ MonoBehaviour:
   gravity: {x: 0, y: -9.8, z: 0}
   inverseGravity: 0
   priority: 0
-  box: {fileID: 0}
+  box: {fileID: 1243295571}
   size: {x: 40, y: 16, z: 28}
 --- !u!114 &1243295576
 MonoBehaviour:
@@ -12909,6 +12909,10 @@ PrefabInstance:
     - target: {fileID: 5619554503047192848, guid: b7b4cdcd8069d6447ba994027546ebb8, type: 3}
       propertyPath: m_Name
       value: Droid_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5619554503047192848, guid: b7b4cdcd8069d6447ba994027546ebb8, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5619554503047192849, guid: b7b4cdcd8069d6447ba994027546ebb8, type: 3}
       propertyPath: maxSpeed

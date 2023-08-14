@@ -160,27 +160,24 @@ public class DroidController : MonoBehaviour {
 
 	//Check if the character is touching the floor in some way, while within gravity
 	private void CheckGrounded() {
-		float capsuleHeight = Mathf.Max(capsuleCollider.radius * 2f, capsuleCollider.height);
-		Vector3 rayDirection = transform.TransformDirection(Vector3.down);
+		if (gravitySource == null) {
+			Debug.LogWarning($"Attempting to check ground for {name} but object is not currently within gravity.");
+			return;
+		}
 		
-		float offsetDistance = capsuleHeight / 2f;
-		Vector3 rayOrigin = transform.position + rayDirection * offsetDistance;
+		Vector3 pos = transform.position;
+		Vector3 customGravityDirection = gravitySource.GetPullDirection(pos); // Replace this with your own method to get the gravity direction
 
-		Ray ray = new Ray(rayOrigin, rayDirection);
-		RaycastHit hit;
+		Vector3 bottom = pos - customGravityDirection * capsuleCollider.bounds.extents.y;
 
-		if (Physics.Raycast(ray, out hit, capsuleHeight / 2f + 0.01f)) {
-			float normalAngle = Vector3.Angle(hit.normal, transform.up);
-			if (normalAngle < slopeLimit) {
-				float radius = capsuleCollider.radius;
-				float maxDist = radius / Mathf.Cos(Mathf.Deg2Rad * normalAngle) - radius + 0.02f;
-				if (hit.distance < maxDist) {
-					isGrounded = true;
-					return;
-				}
+		LayerMask layerMask = ~LayerMask.GetMask("Player");
+		isGrounded = false;
+
+		if (Physics.Raycast(bottom, customGravityDirection, out var hitInfo, Mathf.Infinity, layerMask)) {
+			if (hitInfo.distance < 2.05f) {
+				isGrounded = true;
 			}
 		}
-		isGrounded = false;
 	}
 	
 	private void ClampVelocity() {
@@ -202,6 +199,26 @@ public class DroidController : MonoBehaviour {
 
 	#region Item Stuff
 	public void UpdateSelection() {
+		if (heldItem == null) {
+			Debug.LogWarning($"Trying to update held item for {name} but held item object is null.");
+			return;
+		}
+
+		if (scrollbar == null) {
+			Debug.LogWarning($"Trying to update selection for {name} but scrollbar is null");
+			return;
+		}
+
+		if (scrollbar.GetHeldItem() == null) {
+			Debug.LogWarning($"Trying to update selection with {scrollbar.name} but nothing is selected");
+			return;
+		}
+
+		Debug.Log($"UpdateSelection! helditem name; {heldItem.name}");
+		Debug.Log($"UpdateSelection! scrollbar name: {scrollbar.name}");
+		Debug.Log($"UpdateSelection! scrollbar selection: {scrollbar.GetHeldItem().name}");
+		Debug.Log($"UpdateSelection! scrollbar item SO: {scrollbar.GetHeldItem().Get().name}");
+		
 		heldItem.SetObject(scrollbar.GetHeldItem().Get());
 	}
 
