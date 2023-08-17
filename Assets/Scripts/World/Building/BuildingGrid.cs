@@ -8,14 +8,32 @@ public class BuildingGrid : MonoBehaviour {
 
     private bool[,,] gridSpaces; // Represents the availability of each grid space
 
-    [SerializeField] private Vector3Int[] preOccupiedSlots;
+    [SerializeField] public GridSize[] occupiedSlots;
+
+    [SerializeField] private bool showDebugGrid = true;
+
+    private void OnValidate() {
+        gridSpaces = new bool[gridSize.x, gridSize.y, gridSize.z];
+        FillPreoccupiedSlots();
+    }
 
     private void Awake() {
         gridSpaces = new bool[gridSize.x, gridSize.y, gridSize.z];
+        FillPreoccupiedSlots();
+    }
 
-        for (int i = 0; i < preOccupiedSlots.Length; i++) {
-            Vector3Int s = preOccupiedSlots[i];
-            gridSpaces[s.x, s.y, s.z] = true;
+    private void FillPreoccupiedSlots() {
+        foreach (GridSize s in occupiedSlots) {
+            Vector3Int startPos = s.position;
+            Vector3Int size = s.size;
+            
+            for (int x = startPos.x; x < startPos.x + size.x; x++) {
+                for (int y = startPos.y; y < startPos.y + size.y; y++) {
+                    for (int z = startPos.z; z < startPos.z + size.z; z++) {
+                        gridSpaces[x, y, z] = true;
+                    }
+                }
+            }
         }
     }
 
@@ -180,28 +198,38 @@ public class BuildingGrid : MonoBehaviour {
     }
 
     private void OnDrawGizmos() {
-        Gizmos.color = Color.blue;
-        Vector3 pos = transform.position;
-        Quaternion rot = transform.rotation;
+        if (showDebugGrid) {
+            
+            Vector3 pos = transform.position;
+            Quaternion rot = transform.rotation;
 
-        for (int x = 0; x <= gridSize.x; x++) {
-            for (int y = 0; y <= gridSize.y; y++) {
-                for (int z = 0; z <= gridSize.z; z++) {
-                    // Calculate the position of the cell in the grid, accounting for rotation
-                    Vector3 cellPosition = new Vector3(x, y, z);
-                    Vector3 transformedPosition = rot * cellPosition;
+            for (int x = 0; x <= gridSize.x; x++) {
+                for (int y = 0; y <= gridSize.y; y++) {
+                    for (int z = 0; z <= gridSize.z; z++) {
+                        // Calculate the position of the cell in the grid, accounting for rotation
+                        Vector3 cellPosition = new Vector3(x, y, z);
+                        Vector3 transformedPosition = rot * cellPosition;
 
-                    // Draw lines to visualize the grid
-                    if (x < gridSize.x) {
-                        Gizmos.DrawLine(pos + transformedPosition, pos + rot * new Vector3((x + 1), y, z));
-                    }
+                        if (x < gridSize.x && y < gridSize.y && z < gridSize.z) {
+                            Gizmos.color = gridSpaces[x,y,z] ? Color.red : Color.blue;
+                        } else {
+                            Gizmos.color = Color.white;
+                        }
+                        
+                        
+                        
+                        // Draw lines to visualize the grid
+                        if (x < gridSize.x) {
+                            Gizmos.DrawLine(pos + transformedPosition, pos + rot * new Vector3((x + 1), y, z));
+                        }
 
-                    if (y < gridSize.y) {
-                        Gizmos.DrawLine(pos + transformedPosition, pos + rot * new Vector3(x, (y + 1), z));
-                    }
+                        if (y < gridSize.y) {
+                            Gizmos.DrawLine(pos + transformedPosition, pos + rot * new Vector3(x, (y + 1), z));
+                        }
 
-                    if (z < gridSize.z) {
-                        Gizmos.DrawLine(pos + transformedPosition, pos + rot * new Vector3(x, y, (z + 1)));
+                        if (z < gridSize.z) {
+                            Gizmos.DrawLine(pos + transformedPosition, pos + rot * new Vector3(x, y, (z + 1)));
+                        }
                     }
                 }
             }

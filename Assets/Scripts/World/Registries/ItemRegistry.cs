@@ -24,6 +24,7 @@ public class ItemRegistry : ScriptableObject {
     public Item BATTERY_1;
     public Item CUBE_PANELS;
     public Item CUBE_METAL;
+    public Item WALL_LIGHT_1;
 
     public List<Item> GetItemList() {
         List<Item> itemList = new();
@@ -33,6 +34,7 @@ public class ItemRegistry : ScriptableObject {
         itemList.Add(BATTERY_1);
         itemList.Add(CUBE_PANELS);
         itemList.Add(CUBE_METAL);
+        itemList.Add(WALL_LIGHT_1);
         
         return itemList;
     }

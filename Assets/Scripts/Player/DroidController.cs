@@ -161,7 +161,6 @@ public class DroidController : MonoBehaviour {
 	//Check if the character is touching the floor in some way, while within gravity
 	private void CheckGrounded() {
 		if (gravitySource == null) {
-			Debug.LogWarning($"Attempting to check ground for {name} but object is not currently within gravity.");
 			return;
 		}
 		

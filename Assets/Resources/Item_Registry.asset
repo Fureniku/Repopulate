@@ -17,3 +17,4 @@ MonoBehaviour:
   BATTERY_1: {fileID: 11400000, guid: be785791c7fbc014d92ad8ebccf829fe, type: 2}
   CUBE_PANELS: {fileID: 11400000, guid: 99d1e706300d33f4a82e16a16f040c4d, type: 2}
   CUBE_METAL: {fileID: 11400000, guid: 64fecd26fad8e7a478150b2c6ae3e25d, type: 2}
+  WALL_LIGHT_1: {fileID: 11400000, guid: 235747dae56bf62428c728df3d4975b8, type: 2}
