@@ -61,7 +61,7 @@ public class PreviewItem : MonoBehaviour {
 			Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
 
 			transform.position = targetGrid.GetPlacementPosition(gridPosition, placeable.GetItem());
-			transform.rotation = targetGrid.GetPlacementRotation(gridPosition, droid.GetHeldRotation());
+			transform.rotation = targetGrid.GetPlacementRotation(droid.GetHeldRotation());
 
 			canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeable.GetItem().GetSize(), droid.GetHeldRotation());
 

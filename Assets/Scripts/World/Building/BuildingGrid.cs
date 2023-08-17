@@ -13,8 +13,7 @@ public class BuildingGrid : MonoBehaviour {
     [SerializeField] private bool showDebugGrid = true;
 
     private void OnValidate() {
-        gridSpaces = new bool[gridSize.x, gridSize.y, gridSize.z];
-        FillPreoccupiedSlots();
+        Awake();
     }
 
     private void Awake() {
@@ -47,10 +46,6 @@ public class BuildingGrid : MonoBehaviour {
             }
         }
 
-        for (int i = 0; i < objects.Count; i++) {
-            Debug.Log("Checking attached object list. Found entry: " + objects[i].name);
-        }
-
         return objects;
     }
 
@@ -72,17 +67,10 @@ public class BuildingGrid : MonoBehaviour {
     }
 
     public Vector3 GetPreviewPosition(Vector3Int gridSpace) {
-        Debug.Log("Preview pos: " + transform.position + transform.parent.rotation * gridSpace);
         return transform.position + transform.parent.rotation * gridSpace;
     }
-
-    [SerializeField] private bool debugLine = false;
-
+    
     public Quaternion GetPreviewRotation() {
-        if (debugLine) {
-            Debug.Log($"Rotation: {transform.parent.rotation}");   
-        }
-        
         return transform.parent.rotation;
     }
 
@@ -159,11 +147,15 @@ public class BuildingGrid : MonoBehaviour {
         Quaternion rot = transform.parent.rotation;
         Vector3 transformedPosition = rot * gridSpace;
 
-        return transform.position + transformedPosition; // + new Vector3(0.5f, 0, 0.5f);
+        return transform.position + transformedPosition;
     }
 
-    public Quaternion GetPlacementRotation(Vector3Int gridspace, float rotation) {
-        return Quaternion.Euler(transform.parent.rotation.eulerAngles + new Vector3(0, rotation, 0));
+    public Quaternion GetPlacementRotation(float rotation) {
+        Quaternion originalRotation = transform.parent.rotation;
+
+        Quaternion modifiedRotation = originalRotation * Quaternion.Euler(0, rotation, 0);
+
+        return modifiedRotation;
     }
 
     public void PlaceBlock(Vector3Int gridSpace, Item item, float rotation) {
@@ -171,7 +163,7 @@ public class BuildingGrid : MonoBehaviour {
         if (CheckGridSpaceAvailability(gridSpace, Vector3Int.one, rotation)) {
             GameObject block = item.Get();
             
-            GameObject newBlock = Instantiate(block, GetPlacementPosition(gridSpace, item), GetPlacementRotation(gridSpace, rotation));
+            GameObject newBlock = Instantiate(block, GetPlacementPosition(gridSpace, item), GetPlacementRotation(rotation));
             newBlock.transform.SetParent(transform);
             newBlock.GetComponent<PlaceableObject>().Place(this);
             
@@ -185,14 +177,7 @@ public class BuildingGrid : MonoBehaviour {
     }
 
     public void RemoveBlock(GameObject block) {
-        // Get the occupied grid spaces of the block
-        Vector3Int startGridSpace = new Vector3Int(Mathf.RoundToInt(block.transform.position.x),
-            Mathf.RoundToInt(block.transform.position.y), Mathf.RoundToInt(block.transform.position.z));
-
-        // Release the occupied grid spaces
-        //TODO get size and rotation from targeted block
-        //ModifyGridSpaceOccupancy(startGridSpace, Vector3Int.one, rotation, false);
-
+        //TODO unimplemented
         Destroy(block);
         OnGridChanged();
     }
@@ -209,16 +194,15 @@ public class BuildingGrid : MonoBehaviour {
                         // Calculate the position of the cell in the grid, accounting for rotation
                         Vector3 cellPosition = new Vector3(x, y, z);
                         Vector3 transformedPosition = rot * cellPosition;
-
+                        Gizmos.color = Color.blue;
                         if (x < gridSize.x && y < gridSize.y && z < gridSize.z) {
-                            Gizmos.color = gridSpaces[x,y,z] ? Color.red : Color.blue;
-                        } else {
-                            Gizmos.color = Color.white;
+                            if (gridSpaces[x, y, z]) {
+                                Gizmos.color = Color.red;
+                                Gizmos.DrawLine(pos + transformedPosition, pos + rot * new Vector3(x + 1, y + 1, z + 1));
+                                Gizmos.DrawLine(pos + transformedPosition, pos + rot * new Vector3(x + 1, y, z + 1));
+                            }
                         }
                         
-                        
-                        
-                        // Draw lines to visualize the grid
                         if (x < gridSize.x) {
                             Gizmos.DrawLine(pos + transformedPosition, pos + rot * new Vector3((x + 1), y, z));
                         }
