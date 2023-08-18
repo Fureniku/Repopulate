@@ -18,8 +18,9 @@ public class ModuleConstructUI : DynamicInteractedUI {
 	}
 
 	public override void CreateObject(GameObject obj) {
-		DoorController door = uiController.GetInteractedObject().GetComponent<DoorControlPanel>().GetDoorController();
-		door.CreateModule(obj);
+		Debug.LogWarning("Create object not implemented, go fix it");
+		//DoorController door = uiController.GetInteractedObject().GetComponent<DoorControlPanel>().GetDoorController();
+		//door.CreateModule(obj);
 		
 		uiController.CloseUI();
 	}

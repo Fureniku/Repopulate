@@ -17,8 +17,9 @@ public class RingConstructUI : DynamicInteractedUI {
 	}
 
 	public override void CreateObject(GameObject obj) {
-		SegmentControlPanel segment = uiController.GetInteractedObject().GetComponent<SegmentControlPanel>();
-		segment.CreateRing(obj);
+		Debug.LogWarning("Create object not implemented, go fix it");
+		//SegmentControlPanel segment = uiController.GetInteractedObject().GetComponent<SegmentControlPanel>();
+		//segment.CreateRing(obj);
 		
 		uiController.CloseUI();
 	}

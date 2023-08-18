@@ -4,17 +4,11 @@ using UnityEngine;
 
 public abstract class InteractableObject : MonoBehaviour {
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    protected abstract void OnInteract();
+    
+    private void OnMouseOver() {
+        if (Input.GetMouseButtonDown(1)) {
+            OnInteract();
+        }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public abstract void OnInteract();
 }

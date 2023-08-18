@@ -7,8 +7,8 @@ public class ModuleController : MonoBehaviour, UIFillable {
     [SerializeField] private bool isBuilt = false;
     [SerializeField] private bool isEnterable = false; //Whether there should be doors, oxygen, etc
     [SerializeField] private int buildTime;
-    [SerializeField] private DoorController innerDoorController;
-    [SerializeField] private DoorController stationDoorController;
+    //[SerializeField] private DoorController innerDoorController;
+    //[SerializeField] private DoorController stationDoorController;
     [SerializeField] private BuildingGrid grid;
     
     private float oxygenPressure;
@@ -23,15 +23,11 @@ public class ModuleController : MonoBehaviour, UIFillable {
                 isBuilt = true;
                 Debug.Log("Module constructed!");
                 if (isEnterable) {
-                    stationDoorController.ForceDoorState(true);
-                    innerDoorController.ForceDoorState(true);
+                    //stationDoorController.ForceDoorState(true);
+                    //innerDoorController.ForceDoorState(true);
                 }
             }
         }
-    }
-
-    public void RegisterStationDoor(DoorController station) {
-        stationDoorController = station;
     }
     
     public float GetProgress() {
