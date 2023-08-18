@@ -14,6 +14,20 @@ public class GravityLift : MonoBehaviour {
 
     private CapsuleCollider cldr;
 
+    [SerializeField] private GameObject vfxObject;
+    
+    private void OnValidate() {
+	    cldr = GetComponent<CapsuleCollider>();
+	    cldr.center = new Vector3(0, height / 2f, 0);
+	    cldr.height = height;
+	    cldr.radius = radius;
+
+	    Vector3 pos = transform.position;
+
+	    vfxObject.transform.position = new Vector3(pos.x, pos.y + height / 2, pos.z);
+	    vfxObject.transform.localScale = new Vector3(radius * 2, height / 2, radius * 2);
+    }
+
     void Awake() {
         cldr = GetComponent<CapsuleCollider>();
         cldr.isTrigger = true;
@@ -93,13 +107,6 @@ public class GravityLift : MonoBehaviour {
 
 	    // Apply combined forces
 	    rb.AddForce(forceVector, ForceMode.Force);
-    }
-
-    private void OnValidate() {
-        cldr = GetComponent<CapsuleCollider>();
-        cldr.center = new Vector3(0, height / 2f, 0);
-        cldr.height = height;
-        cldr.radius = radius;
     }
 
     private void OnDrawGizmos() {
