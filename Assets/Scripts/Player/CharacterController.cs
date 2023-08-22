@@ -46,24 +46,24 @@ public class CharacterController : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.F3)) {
-            SetPlayerActive(!isPlayerActive);
-        }
+        //if (Input.GetKeyDown(KeyCode.F3)) {
+          //  SetPlayerActive(!isPlayerActive);
+        //}
 
         if (isPlayerActive) {
             HandleCamera();
 
-            if (Input.GetKeyDown(SwitchDroidKey)) {
+            /*if (Input.GetKeyDown(SwitchDroidKey)) {
                 SwitchDroid();
-            }
+            }*/
         }
         
         
-        if (Input.GetMouseButtonDown(1)) {
-            PlaceSelection();
-        }
+        //if (Input.GetMouseButtonDown(1)) {
+          //  PlaceSelection();
+        //}
         
-        currentDroid.UpdatePreview(fpCam);
+        //currentDroid.UpdatePreview(fpCam);
         
     }
 
@@ -73,15 +73,15 @@ public class CharacterController : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        forwardInput = Mathf.RoundToInt(Input.GetAxisRaw("Vertical"));
-        strafeInput = Mathf.RoundToInt(Input.GetAxisRaw("Horizontal"));
+        //forwardInput = Mathf.RoundToInt(Input.GetAxisRaw("Vertical"));
+        //strafeInput = Mathf.RoundToInt(Input.GetAxisRaw("Horizontal"));
         //sprintInput = Input.GetKey(KeyCode.LeftShift);
     }
     
     private void HandleCamera() {
         if (UnityEngine.Cursor.lockState == CursorLockMode.Locked) {
-            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+            float mouseX = 0;//Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            float mouseY = 0;//Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
             xRotation -= mouseY;
             

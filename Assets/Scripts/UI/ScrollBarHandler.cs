@@ -23,7 +23,7 @@ public class ScrollBarHandler : MonoBehaviour {
     }
 
     void Update() {
-        float mouseScroll = Input.mouseScrollDelta.y;
+        /*float mouseScroll = Input.mouseScrollDelta.y;
 
         if (mouseScroll > 0) {
             SelectSlot(selectedId-1);
@@ -39,7 +39,7 @@ public class ScrollBarHandler : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Alpha6)) { SelectSlot(5); }
         if (Input.GetKeyDown(KeyCode.Alpha7)) { SelectSlot(6); }
         if (Input.GetKeyDown(KeyCode.Alpha8)) { SelectSlot(7); }
-        if (Input.GetKeyDown(KeyCode.Alpha9)) { SelectSlot(8); }
+        if (Input.GetKeyDown(KeyCode.Alpha9)) { SelectSlot(8); }*/
     }
 
     public void UpdateSlot(int id) {

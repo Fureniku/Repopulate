@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DroidController : MonoBehaviour {
 
@@ -40,6 +41,14 @@ public class DroidController : MonoBehaviour {
 	[Tooltip("The maximum velocity the droid can move at (on all axis) while in space or zero-G areas")]
 	[SerializeField] private float maxSpeedZeroG = 5f;
 	
+	[Header("Input Settings")]
+	[SerializeField] private InputAction forwardInput;
+	[SerializeField] private InputAction strafeInput;
+	[SerializeField] private InputAction verticalInput;
+	[SerializeField] private InputAction stabiliseInput;
+	[SerializeField] private InputAction jumpInput;
+	[SerializeField] private InputAction switchDroidInput;
+	
 	private Vector3 moveDir; //The in-gravity movement input
 	private Vector3 lastPosition; //The last known position when in gravity, used for transitioning velocity to out-of-gravity
 	private List<GravityBase> currentGravities = new();
@@ -62,14 +71,14 @@ public class DroidController : MonoBehaviour {
 
 	void Update() {
 		if (isDroidActive) {
-			if (Input.GetKeyDown(KeyCode.R)) {
+			if (switchDroidInput.WasPressedThisFrame()) {
 				heldRotation += 90f;
 				if (heldRotation > 360) heldRotation -= 360f;
 			}
 		}
 
-		float verticalMove = isInGravity ? 0 : GetVerticalMoveAxis();
-		moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), verticalMove, Input.GetAxisRaw("Vertical")).normalized;
+		float verticalMove = isInGravity ? 0 : verticalInput.ReadValue<float>();
+		moveDir = new Vector3(forwardInput.ReadValue<float>(), verticalMove, strafeInput.ReadValue<float>()).normalized;
 	}
 	
 	private void FixedUpdate() {
@@ -123,7 +132,7 @@ public class DroidController : MonoBehaviour {
 
 			//Jump input
 			if (isGrounded) {
-				if (Input.GetKey(KeyCode.Space)) {
+				if (jumpInput.WasPressedThisFrame()) {
 					Debug.Log("Jump!");
 					rb.AddForce(transform.TransformDirection(Vector3.up) * jumpSpeed, ForceMode.Impulse);
 				}
@@ -132,7 +141,7 @@ public class DroidController : MonoBehaviour {
 			//Finally, limit velocities within maximum ranges
 			ClampVelocity();
 		} else {
-			if (Input.GetKey(KeyCode.E)) { 
+			if (stabiliseInput.IsPressed()) { 
 				rb.velocity = Vector3.MoveTowards(rb.velocity, Vector3.zero, 5f * Time.fixedDeltaTime);
 			} else {
 				// Check for input to activate the thrusters
@@ -146,7 +155,7 @@ public class DroidController : MonoBehaviour {
 		}
 	}
 	
-	private float GetVerticalMoveAxis() {
+	/*private float GetVerticalMoveAxis() {
 		float movement = 0;
 		if (Input.GetKey(KeyCode.Space)) {
 			movement++;
@@ -156,7 +165,7 @@ public class DroidController : MonoBehaviour {
 			movement--;
 		}
 		return movement;
-	}
+	}*/
 
 	//Check if the character is touching the floor in some way, while within gravity
 	private void CheckGrounded() {

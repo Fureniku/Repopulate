@@ -11,7 +11,6 @@ public class Billboard : MonoBehaviour {
     }
 
     void LateUpdate() {
-        Debug.Log("Camera: " + cam.name);
         transform.LookAt(cam.transform);
         Vector3 v = transform.rotation.eulerAngles;
         transform.localRotation = Quaternion.Euler(-90, v.y, v.z);

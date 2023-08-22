@@ -21,7 +21,10 @@ public class GravityLift : MonoBehaviour {
 	    cldr.center = new Vector3(0, height / 2f, 0);
 	    cldr.height = height;
 	    cldr.radius = radius;
-	    vfxObject.UpdateParameters();
+
+	    if (vfxObject != null) {
+		    vfxObject.UpdateParameters();
+	    }
     }
 
     public float GetRadius() {

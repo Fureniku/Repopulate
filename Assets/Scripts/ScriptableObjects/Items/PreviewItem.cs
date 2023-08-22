@@ -9,6 +9,7 @@ public class PreviewItem : MonoBehaviour {
 	[SerializeField] private Material validPlace;
 	[SerializeField] private DroidController droid;
 	[SerializeField] private MeshRenderer meshRenderer;
+	[SerializeField] private float placeableRange = 10f;
 	
 	private bool canPlaceNow = true; //Updated with the preview, changes the material shading and also allows/disallows placement.
 
@@ -39,9 +40,10 @@ public class PreviewItem : MonoBehaviour {
 		if (go == null) {
 			return;
 		}
+		
 		Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 		
-		if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
+		if (Physics.Raycast(ray, out RaycastHit hit, placeableRange, LayerMask.GetMask("BuildingGrid"))) {
 			meshRenderer.enabled = true;
 			BuildingGrid targetGrid = null;
 			if (hit.transform.parent.GetComponent<PlaceableObject>() != null) { //TODO not ideal; won't work if there's nested children in more complex objects.
