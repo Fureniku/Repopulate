@@ -14,18 +14,22 @@ public class GravityLift : MonoBehaviour {
 
     private CapsuleCollider cldr;
 
-    [SerializeField] private GameObject vfxObject;
+    [SerializeField] private GravLiftVFX vfxObject;
     
     private void OnValidate() {
 	    cldr = GetComponent<CapsuleCollider>();
 	    cldr.center = new Vector3(0, height / 2f, 0);
 	    cldr.height = height;
 	    cldr.radius = radius;
+	    vfxObject.UpdateParameters();
+    }
 
-	    Vector3 pos = transform.position;
+    public float GetRadius() {
+	    return radius;
+    }
 
-	    vfxObject.transform.position = new Vector3(pos.x, pos.y + height / 2, pos.z);
-	    vfxObject.transform.localScale = new Vector3(radius * 2, height / 2, radius * 2);
+    public float GetHeight() {
+	    return height;
     }
 
     void Awake() {
@@ -35,48 +39,6 @@ public class GravityLift : MonoBehaviour {
 
     private float innerThreshold = 0.5f;
 
-    public void HandleForcesGPT(Rigidbody rb) {
-	    float radius = cldr.radius * maxSlowdownRangeFactor;
-
-	    // Calculate the local position of the rigidbody in cylinder's local space
-	    Vector3 localPosition = transform.InverseTransformPoint(rb.transform.position);
-	    localPosition.y = 0f; // Project onto XZ plane
-
-	    // Calculate the local center in cylinder's local space
-	    Vector3 localCenter = Vector3.zero;
-	    localCenter.y = 0f;
-
-	    // Calculate the distance to the local center
-	    float distanceToCenter = Vector3.Distance(localPosition, localCenter) - radius;
-
-	    if (distanceToCenter > 0f)
-	    {
-		    // Calculate the slowdown factor based on the distance and inner threshold
-		    float slowdownFactor = Mathf.Clamp01((distanceToCenter - radius * (1f - innerThreshold)) / (radius * innerThreshold));
-
-		    // Apply the force towards the center only if we're outside the inner threshold
-		    if (slowdownFactor > 0f)
-		    {
-			    // Calculate the forces in the cylinder's local space
-			    Vector3 centerForceVectorLocal = new Vector3(-localPosition.x, 0f, -localPosition.z).normalized * centerForce * slowdownFactor;
-			    Vector3 horizontalVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-			    Vector3 horizontalDampingForceVectorLocal = -horizontalVelocity * dampingForce;
-
-			    // Add the forces in local space
-			    Vector3 totalForceLocal = centerForceVectorLocal + horizontalDampingForceVectorLocal;
-
-			    // Apply the forces on the rigidbody in its local space
-			    rb.AddRelativeForce(totalForceLocal, ForceMode.Force);
-		    }
-	    }
-
-	    // Apply the upward force in the cylinder's local space
-	    Vector3 upwardForceVectorLocal = transform.up * strength;
-
-	    // Apply the upward force on the rigidbody in its local space
-	    rb.AddRelativeForce(upwardForceVectorLocal, ForceMode.Force);
-    }
-    
     public void HandleForces(Rigidbody rb) {
 	    float slowRadius = radius * maxSlowdownRangeFactor;
 	    Vector3 rbRawPosition = rb.transform.position;

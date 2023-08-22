@@ -5,15 +5,16 @@ using UnityEngine;
 public class Billboard : MonoBehaviour {
 
     private Camera cam;
-    
+
     void Start() {
         cam = Camera.main;
     }
 
     void LateUpdate() {
+        Debug.Log("Camera: " + cam.name);
         transform.LookAt(cam.transform);
         Vector3 v = transform.rotation.eulerAngles;
-        transform.rotation = Quaternion.Euler(-90, v.y, v.z);
+        transform.localRotation = Quaternion.Euler(-90, v.y, v.z);
         transform.Rotate(0, 180, 0);
     }
 }
