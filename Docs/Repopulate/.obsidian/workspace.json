@@ -49,7 +49,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "What we have so far....md",
+                "file": "Gameplay/Gravity Lift.md",
                 "mode": "source",
                 "source": false
               }
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "What we have so far....md",
+                "file": "Gameplay/Gravity Lift.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "What we have so far....md",
+                "file": "Gameplay/Gravity Lift.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "What we have so far....md"
+                "file": "Gameplay/Gravity Lift.md"
               }
             }
           }
@@ -198,6 +198,8 @@
   },
   "active": "fd0304c18dca0e8e",
   "lastOpenFiles": [
+    "What we have so far....md",
+    "Gameplay/Gravity Lift.md",
     "Gameplay/Resources & Resource Mechanics/Items/General Building/Prefab Accommodation.md",
     "Gameplay/Resources & Resource Mechanics/Items/General Building/Gravity Lifts.md",
     "Gameplay/Resources & Resource Mechanics/Items/General Building/Generic Blocks.md",
@@ -206,7 +208,6 @@
     "Gameplay/Station Modules.md",
     "Gameplay/External Station Management.md",
     "Code Plans/Module Creation & Interaction.md",
-    "What we have so far....md",
     "Station Design 2.0.md",
     "The Genesis.md",
     "Starmap.md",
@@ -226,7 +227,6 @@
     "Gameplay/Building Grid.md",
     "Aliens.md",
     "Gameplay/Solar Exploration.md",
-    "Art.md",
     "Gameplay/Resources & Resource Mechanics",
     "Gameplay",
     "Music",
