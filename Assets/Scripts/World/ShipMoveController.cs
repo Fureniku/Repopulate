@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,9 +11,6 @@ public class ShipMoveController : MonoBehaviour {
     public float acceleration = 1.0f; 
     public float deceleration = 2.0f;
 
-    [SerializeField] private InputAction forwardInput;
-    [SerializeField] private InputAction yawInput;
-
     private void Awake() {
         rb = GetComponent<Rigidbody>();
     }
@@ -23,7 +18,7 @@ public class ShipMoveController : MonoBehaviour {
     private void Update() {
         if (controlActive) {
 
-            float verticalInput = forwardInput.ReadValue<float>();
+            /*float verticalInput = forwardInput.ReadValue<float>();
             float horizontalInput = yawInput.ReadValue<float>();
 
             // Calculate movement and rotation
@@ -32,8 +27,17 @@ public class ShipMoveController : MonoBehaviour {
 
             // Apply movement and rotation
             rb.MovePosition(rb.position + moveDirection);
-            rb.MoveRotation(rb.rotation * rotation);
+            rb.MoveRotation(rb.rotation * rotation);*/
         }
+    }
+
+    public void HandleMovement(InputAction.CallbackContext context) {
+        
+    }
+
+    public void HandleRotation(InputAction.CallbackContext context) {
+        Quaternion rotation = Quaternion.Euler(context.ReadValue<Vector3>() * 2f * Time.deltaTime);
+        rb.MoveRotation(rb.rotation * rotation);
     }
 
     public void SetActive(bool active) {

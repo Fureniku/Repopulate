@@ -40,15 +40,7 @@ public class DroidController : MonoBehaviour {
 	[SerializeField] private float maxSpeedFall = 25f;
 	[Tooltip("The maximum velocity the droid can move at (on all axis) while in space or zero-G areas")]
 	[SerializeField] private float maxSpeedZeroG = 5f;
-	
-	[Header("Input Settings")]
-	[SerializeField] private InputAction forwardInput;
-	[SerializeField] private InputAction strafeInput;
-	[SerializeField] private InputAction verticalInput;
-	[SerializeField] private InputAction stabiliseInput;
-	[SerializeField] private InputAction jumpInput;
-	[SerializeField] private InputAction switchDroidInput;
-	
+
 	private Vector3 moveDir; //The in-gravity movement input
 	private Vector3 lastPosition; //The last known position when in gravity, used for transitioning velocity to out-of-gravity
 	private List<GravityBase> currentGravities = new();
@@ -68,18 +60,6 @@ public class DroidController : MonoBehaviour {
 		capsuleCollider = GetComponent<CapsuleCollider>();
 		isInGravity = gravitySource != null;
 	}
-
-	void Update() {
-		if (isDroidActive) {
-			if (switchDroidInput.WasPressedThisFrame()) {
-				heldRotation += 90f;
-				if (heldRotation > 360) heldRotation -= 360f;
-			}
-		}
-
-		float verticalMove = isInGravity ? 0 : verticalInput.ReadValue<float>();
-		moveDir = new Vector3(forwardInput.ReadValue<float>(), verticalMove, strafeInput.ReadValue<float>()).normalized;
-	}
 	
 	private void FixedUpdate() {
 		CheckGrounded();
@@ -87,6 +67,37 @@ public class DroidController : MonoBehaviour {
 	}
 	
 	#region Movement controls
+	
+	public void HandleMovement(Vector2 input) {
+		moveDir.x = input.x;
+		moveDir.z = input.y;
+	}
+
+	public void HandleVerticalMovement(float input) {
+		moveDir.y = isInGravity ? 0 : input;
+	}
+
+	public void HandleSwitchDroid(InputAction.CallbackContext context) {
+		
+	}
+
+	public void HandleObjectRotation() {
+		if (isDroidActive) {
+			heldRotation += 90f;
+			if (heldRotation > 360) heldRotation -= 360f;
+		}
+	}
+
+	public void HandleJump() {
+		if (isGrounded && isInGravity) {
+			Debug.Log("Jump!");
+			rb.AddForce(transform.TransformDirection(Vector3.up) * jumpSpeed, ForceMode.Impulse);
+		}
+	}
+
+	public void HandleStabilisation() {
+		rb.velocity = Vector3.MoveTowards(rb.velocity, Vector3.zero, 5f * Time.fixedDeltaTime);
+	}
 
 	private readonly bool physicsMovement = true; //Debug switch to use physics addforce or transform.translate to move character on X
 	
@@ -130,42 +141,18 @@ public class DroidController : MonoBehaviour {
 				rb.velocity = globalDirection;
 			}
 
-			//Jump input
-			if (isGrounded) {
-				if (jumpInput.WasPressedThisFrame()) {
-					Debug.Log("Jump!");
-					rb.AddForce(transform.TransformDirection(Vector3.up) * jumpSpeed, ForceMode.Impulse);
-				}
-			}
-			
 			//Finally, limit velocities within maximum ranges
 			ClampVelocity();
 		} else {
-			if (stabiliseInput.IsPressed()) { 
-				rb.velocity = Vector3.MoveTowards(rb.velocity, Vector3.zero, 5f * Time.fixedDeltaTime);
-			} else {
-				// Check for input to activate the thrusters
-				moveDirection += t.forward * moveDir.z;
-				moveDirection += t.right * moveDir.x;
-				moveDirection += t.up * moveDir.y;
-				
-				// Apply the relative movement
-				rb.AddForce(moveDirection.normalized * (moveSpeedSpace * Time.deltaTime * 10));
-			}
+			// Check for input to activate the thrusters
+			moveDirection += t.forward * moveDir.z;
+			moveDirection += t.right * moveDir.x;
+			moveDirection += t.up * moveDir.y;
+			
+			// Apply the relative movement
+			rb.AddForce(moveDirection.normalized * (moveSpeedSpace * Time.deltaTime * 10));
 		}
 	}
-	
-	/*private float GetVerticalMoveAxis() {
-		float movement = 0;
-		if (Input.GetKey(KeyCode.Space)) {
-			movement++;
-		}
-
-		if (Input.GetKey(KeyCode.LeftControl)) {
-			movement--;
-		}
-		return movement;
-	}*/
 
 	//Check if the character is touching the floor in some way, while within gravity
 	private void CheckGrounded() {

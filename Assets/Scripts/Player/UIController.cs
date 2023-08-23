@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UIController : MonoBehaviour {
 
@@ -11,17 +12,11 @@ public class UIController : MonoBehaviour {
     [SerializeField] private GameObject UIParent;
 
     [SerializeField] private InteractableObject interactedObject;
+
+    [SerializeField] private InputActionAsset inputActionAsset;
     
-    // Start is called before the first frame update
     void Awake() {
         character = GetComponent<CharacterController>();
-    }
-
-    // Update is called once per frame
-    void Update() {
-        /*if (Input.GetKeyDown(KeyCode.Escape)) {
-            CloseUI();
-        }*/
     }
 
     public void CloseUI() {

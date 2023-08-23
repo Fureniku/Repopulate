@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
 
 public class GameManager : MonoSingleton<GameManager> {
@@ -23,5 +24,9 @@ public class GameManager : MonoSingleton<GameManager> {
 
     private void SetShipControlsActive(bool active) {
         shipMoveController.SetActive(active);
+    }
+
+    public PlayerInput GetPlayerInput() {
+        return character.GetComponent<PlayerInput>();
     }
 }
