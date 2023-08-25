@@ -9,15 +9,21 @@ public class ThrusterController : MonoBehaviour {
     [SerializeField] private float currentAngle;
     [SerializeField] private float thrusterStrength = 1f;
     [SerializeField] [Range(0, 1)] private float currentThrust = 0f;
+    [SerializeField] private ParticleSystem engineFlare;
 
     private void OnValidate() {
         SetThrusterAngle();
+        
+    }
+
+    private void Awake() {
     }
 
     // Update is called once per frame
     void Update() {
         if (currentThrust > 0) {
             GameManager.Instance.GetShipController().AddForce(transform.position, (transform.right*-1) * thrusterStrength);
+            SetThrusterAngle();
         }
     }
 
@@ -33,6 +39,10 @@ public class ThrusterController : MonoBehaviour {
         Vector3 rot = transform.rotation.eulerAngles;
 
         transform.rotation = Quaternion.Euler(currentAngle, rot.y, rot.z);
+        
+        ParticleSystem.MainModule engineMain;
+        engineMain = engineFlare.main;
+        engineMain.startLifetime = currentThrust * 5;
     }
 
     private void ResetThruster() {
