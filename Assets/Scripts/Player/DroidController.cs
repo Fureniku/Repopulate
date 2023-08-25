@@ -49,9 +49,14 @@ public class DroidController : MonoBehaviour {
 	//In-space variables
 	private Vector3 currentMomentum;
 	private Vector3 currentDirection;
+	
+	[SerializeField] private float groundedDistance = 2f;
 
-	[SerializeField] private bool isGrounded; //Only when in gravity
-	public bool isInGravity;// { get; private set; } = false;
+	public int forcedNotGroundedCount { get; private set; } = 0; //Allows overlap of forced grounded areas without having to make a whole list of them.
+	public bool forcedNotGrounded { get; private set; } = false;
+
+	public bool isGrounded { get; private set; } = false;
+	public bool isInGravity { get; private set; } = false;
 	public bool isInElevator { get; private set; } = false;
 	private bool isDroidActive = false; //Whether this is the currently controlled droid. Not to be confused with playeractive which locks the camera etc
 
@@ -66,7 +71,7 @@ public class DroidController : MonoBehaviour {
 		CheckGrounded();
 		Movement();
 	}
-	
+
 	#region Movement controls
 	
 	public void HandleMovement(Vector2 input) {
@@ -155,20 +160,20 @@ public class DroidController : MonoBehaviour {
 		}
 	}
 
-	[SerializeField] private float groundedDistance = 2f;
-
-	private bool forcedGrounded = false;
-	private bool forcedGroundedState = false;
-	
-	public void ForceGroundedState(bool forced, bool grounded = true) {
-		forcedGrounded = forced;
-		forcedGroundedState = grounded;
+	public void ForceNotGroundedState(bool forced) {
+		if (forced) {
+			forcedNotGroundedCount++;
+		} else {
+			forcedNotGroundedCount--;
+		}
+		
+		forcedNotGrounded = forcedNotGroundedCount > 0;
 	}
 
 	//Check if the character is touching the floor in some way, while within gravity
 	private void CheckGrounded() {
-		if (forcedGrounded) {
-			isGrounded = forcedGroundedState;
+		if (forcedNotGrounded) {
+			isGrounded = false;
 			return;
 		}
 		
@@ -303,9 +308,7 @@ public class DroidController : MonoBehaviour {
 		}
 	}
 
-	public GravityBase CurrentGravitySource() {
-		return gravitySource;
-	}
+	public GravityBase CurrentGravitySource() => gravitySource;
 
 	#endregion
 

@@ -12,6 +12,9 @@ public class GravityLift : MonoBehaviour {
     [SerializeField] private float maxSlowdownRangeFactor = 0.1f; // Controls how close to the center the slowdown range extends
     [SerializeField] private float dampingForce = 5f;
 
+    [SerializeField][Tooltip("Extend the capsule height a little to compensate for the roundness at the base. Will cause effect to appear slightly below lift.")]
+    private bool capsuleCompensate = false;
+
     private CapsuleCollider cldr;
 
     [SerializeField] private GravLiftVFX vfxObject;
@@ -19,7 +22,7 @@ public class GravityLift : MonoBehaviour {
     private void OnValidate() {
 	    cldr = GetComponent<CapsuleCollider>();
 	    cldr.center = new Vector3(0, height / 2f, 0);
-	    cldr.height = height;
+	    cldr.height = height + (capsuleCompensate ? 10f : 0f);
 	    cldr.radius = radius;
 
 	    if (vfxObject != null) {

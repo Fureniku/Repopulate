@@ -34,9 +34,8 @@ public class CompoundColliderCreator : MonoBehaviour {
         foreach (BoxCollider childCollider in childColliders) {
             // Copy child collider properties
             BoxCollider newCollider = gameObject.AddComponent<BoxCollider>();
-            newCollider.center = childCollider.center;
+            newCollider.center = childCollider.center + childCollider.transform.position;
             newCollider.size = childCollider.size;
-            newCollider.transform.rotation = Quaternion.Euler(0, 0, 45f);
 
             // Disable child colliders
             //childCollider.enabled = false;

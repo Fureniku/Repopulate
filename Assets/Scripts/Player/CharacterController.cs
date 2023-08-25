@@ -22,6 +22,8 @@ public class CharacterController : MonoBehaviour {
     
     private float xRotation = 0.0f;
     private int currentDroidId = 0;
+
+    public DroidController GetCurrentDroid() => currentDroid;
     
     public void HandleSwitch(InputAction.CallbackContext context) {
         input.SwitchCurrentActionMap("Ship");

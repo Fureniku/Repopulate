@@ -9,17 +9,15 @@ public class ColliderHandling : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag.Equals("Player")) {
-            Debug.Log("Player");
             Physics.IgnoreCollision(other, mainCollider);
-            other.GetComponent<DroidController>().ForceGroundedState(true, false);
+            other.GetComponent<DroidController>().ForceNotGroundedState(true);
         }
     }
     
     private void OnTriggerExit(Collider other) {
         if (other.gameObject.tag.Equals("Player")) {
-            Debug.Log("Player");
             Physics.IgnoreCollision(other, mainCollider, false);
-            other.GetComponent<DroidController>().ForceGroundedState(false);
+            other.GetComponent<DroidController>().ForceNotGroundedState(false);
         }
     }
 }
