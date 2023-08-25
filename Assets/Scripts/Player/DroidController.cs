@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -49,7 +50,7 @@ public class DroidController : MonoBehaviour {
 	private Vector3 currentMomentum;
 	private Vector3 currentDirection;
 
-	[SerializeField] private bool isGrounded;// { get; set; } //Only when in gravity
+	[SerializeField] private bool isGrounded; //Only when in gravity
 	public bool isInGravity;// { get; private set; } = false;
 	public bool isInElevator { get; private set; } = false;
 	private bool isDroidActive = false; //Whether this is the currently controlled droid. Not to be confused with playeractive which locks the camera etc
@@ -154,22 +155,37 @@ public class DroidController : MonoBehaviour {
 		}
 	}
 
+	[SerializeField] private float groundedDistance = 2f;
+
+	private bool forcedGrounded = false;
+	private bool forcedGroundedState = false;
+	
+	public void ForceGroundedState(bool forced, bool grounded = true) {
+		forcedGrounded = forced;
+		forcedGroundedState = grounded;
+	}
+
 	//Check if the character is touching the floor in some way, while within gravity
 	private void CheckGrounded() {
-		if (gravitySource == null) {
+		if (forcedGrounded) {
+			isGrounded = forcedGroundedState;
 			return;
 		}
 		
+		if (gravitySource == null) {
+			return;
+		}
+
 		Vector3 pos = transform.position;
 		Vector3 customGravityDirection = gravitySource.GetPullDirection(pos); // Replace this with your own method to get the gravity direction
 
 		Vector3 bottom = pos - customGravityDirection * capsuleCollider.bounds.extents.y;
 
-		LayerMask layerMask = ~LayerMask.GetMask("Player");
+		LayerMask layerMask = LayerMask.GetMask("Floor") | LayerMask.GetMask("Wall");
 		isGrounded = false;
 
 		if (Physics.Raycast(bottom, customGravityDirection, out var hitInfo, Mathf.Infinity, layerMask)) {
-			if (hitInfo.distance < 2.05f) {
+			if (hitInfo.distance < groundedDistance) {
 				isGrounded = true;
 			}
 		}
