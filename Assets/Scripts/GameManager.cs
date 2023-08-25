@@ -29,4 +29,6 @@ public class GameManager : MonoSingleton<GameManager> {
     public PlayerInput GetPlayerInput() {
         return character.GetComponent<PlayerInput>();
     }
+
+    public ShipMoveController GetShipController() => shipMoveController;
 }

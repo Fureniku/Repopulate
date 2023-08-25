@@ -31,6 +31,10 @@ public class ShipMoveController : MonoBehaviour {
         }
     }
 
+    public void AddForce(Vector3 position, Vector3 forceStrength) {
+        rb.AddForceAtPosition(forceStrength * Time.deltaTime, position);
+    }
+
     public void HandleMovement(InputAction.CallbackContext context) {
         
     }
