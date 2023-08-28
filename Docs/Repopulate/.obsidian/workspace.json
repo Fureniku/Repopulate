@@ -49,7 +49,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Gameplay/Ship movement controls.md",
+                "file": "Controls.md",
                 "mode": "source",
                 "source": false
               }
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Gameplay/Ship movement controls.md",
+                "file": "Controls.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Gameplay/Ship movement controls.md",
+                "file": "Controls.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Gameplay/Ship movement controls.md"
+                "file": "Controls.md"
               }
             }
           }
@@ -198,9 +198,10 @@
   },
   "active": "fd0304c18dca0e8e",
   "lastOpenFiles": [
+    "Gameplay/Ship movement controls.md",
+    "Controls.md",
     "Story.md",
     "Gameplay/Gravity Lift.md",
-    "Gameplay/Ship movement controls.md",
     "What we have so far....md",
     "Gameplay/Resources & Resource Mechanics/Items/General Building/Prefab Accommodation.md",
     "Gameplay/Resources & Resource Mechanics/Items/General Building/Gravity Lifts.md",
@@ -225,7 +226,6 @@
     "Code Plans",
     "Gameplay/Internal Station Management.md",
     "Core GDD.md",
-    "Controls.md",
     "Gameplay/Building Grid.md",
     "Gameplay/Resources & Resource Mechanics",
     "Gameplay",

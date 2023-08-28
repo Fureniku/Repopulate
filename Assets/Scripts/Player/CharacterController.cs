@@ -27,6 +27,8 @@ public class CharacterController : MonoBehaviour {
     
     public void HandleSwitch(InputAction.CallbackContext context) {
         input.SwitchCurrentActionMap("Ship");
+        fpCam.gameObject.SetActive(false);
+        GameManager.Instance.GetShipController().SetActive(true);
     }
 
     private void Awake() {

@@ -37,7 +37,7 @@ public class GravLiftVFX : MonoBehaviour {
         
         psMain.startLifetime = lift.GetHeight() / psMain.startSpeed.constant;
         psShape.radius = lift.GetRadius() * 0.625f;
-        psEmission.rateOverTime = lift.GetRadius() * 7.5f;
+        psEmission.rateOverTime = lift.GetRadius() * 3.75f;
 
 
         

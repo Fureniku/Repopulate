@@ -247,15 +247,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Camera View",
-                    "type": "Value",
-                    "id": "e18d2668-2567-49cd-a1c7-fbd9b8d5586f",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Forward Movement",
                     "type": "Value",
                     "id": "acdae8eb-af4c-4e6c-8edd-d0f667554119",
@@ -292,10 +283,46 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Rotation",
+                    "name": "Strafe",
                     "type": "Value",
-                    "id": "dbec21ec-cc75-489a-8211-fa5d95f402b3",
-                    "expectedControlType": "Vector3",
+                    "id": "646aac51-b392-4f92-b3b9-73948cf670da",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RaiseLower",
+                    "type": "Value",
+                    "id": "6c4859bb-ede9-426c-b0d9-89b03089d9a0",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Zoom",
+                    "type": "Value",
+                    "id": "bdd4c263-7503-4bc3-afeb-873a4c0a83be",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "SwitchCamPosition",
+                    "type": "Button",
+                    "id": "226c8157-2891-455e-a409-76c7ca7e9b1a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Camera View",
+                    "type": "Value",
+                    "id": "e18d2668-2567-49cd-a1c7-fbd9b8d5586f",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -310,17 +337,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Exit Ship",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ecee87af-ff24-4742-ad69-e1f86f2ae557",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Camera View",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -371,7 +387,7 @@
                 {
                     "name": "negative",
                     "id": "8c510f17-11f1-4d15-a2a9-a41c8292da1f",
-                    "path": "",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -382,7 +398,7 @@
                 {
                     "name": "positive",
                     "id": "45dcd2de-2318-4ad0-bd2d-119721ac558c",
-                    "path": "",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -404,7 +420,7 @@
                 {
                     "name": "negative",
                     "id": "a9a5da2a-4172-434d-bc38-dea3f16fd441",
-                    "path": "",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -415,7 +431,7 @@
                 {
                     "name": "positive",
                     "id": "c8db8190-1c72-412e-80ae-bea4d7f76aad",
-                    "path": "",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -437,7 +453,7 @@
                 {
                     "name": "negative",
                     "id": "fc0e25af-2258-431c-a900-2751d1a6a100",
-                    "path": "",
+                    "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -448,7 +464,7 @@
                 {
                     "name": "positive",
                     "id": "0f62ea87-1009-4376-a8ed-d90271bfc4ca",
-                    "path": "",
+                    "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -457,81 +473,125 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "3D Vector",
-                    "id": "9f248439-31f0-462f-97f8-2076ba6101fe",
-                    "path": "3DVector(mode=1)",
+                    "name": "1D Axis",
+                    "id": "16ffe97a-cf4e-4756-bdd0-2a21605fabf9",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Rotation",
+                    "action": "Strafe",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
-                    "id": "5350aa01-878c-4889-adc6-f18fbda95ed2",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Rotation",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "616acbd4-a522-446d-8d27-6eec4359fc3e",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Rotation",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "10e4a578-7421-4d5b-8879-a5b78c6bd4c6",
+                    "name": "negative",
+                    "id": "87255215-97f0-4201-9ffc-91143b1a1757",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Rotation",
+                    "action": "Strafe",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "right",
-                    "id": "015596ac-3c4c-4e44-9e61-92d385cbf71c",
+                    "name": "positive",
+                    "id": "db9e275e-50ca-43d4-b2c7-7f19f0400876",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Rotation",
+                    "action": "Strafe",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "forward",
-                    "id": "a8795b02-fa41-4674-a79b-2ff114ba4881",
-                    "path": "<Keyboard>/z",
+                    "name": "1D Axis",
+                    "id": "31418edd-a11d-4e01-ad65-cd5b71bf7344",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Rotation",
+                    "action": "Zoom",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "15a0ac00-b62c-4db0-88df-d3f0d5ce3def",
+                    "path": "<Mouse>/scroll/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "backward",
-                    "id": "a61b7d78-28fc-4928-8e5d-227bdff54b3f",
-                    "path": "<Keyboard>/c",
+                    "name": "negative",
+                    "id": "5ad91431-a1ff-410d-85f3-b9058103d383",
+                    "path": "<Mouse>/scroll/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Rotation",
+                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "3961866e-e3d5-4894-9719-9da12ebc0547",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchCamPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "1301f815-5933-48af-889c-47ce44c17890",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RaiseLower",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "028ab2e4-2c5c-4a56-a0aa-d418b882ce24",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RaiseLower",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "e1bb56e7-ce90-4808-9de5-d690168fdffa",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RaiseLower",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "ecee87af-ff24-4742-ad69-e1f86f2ae557",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Camera View",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
