@@ -2,25 +2,25 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ShipMoveController : MonoBehaviour {
-    
+
     [SerializeField] private bool controlActive;
     [SerializeField] private Camera cam;
 
     [SerializeField] private Rigidbody rb;
     private Vector3 velocity = Vector3.zero;
-    public float maxVelocity = 5.0f;  // Adjust this to your desired max speed
-    public float acceleration = 1.0f; 
+    public float maxVelocity = 5.0f; // Adjust this to your desired max speed
+    public float acceleration = 1.0f;
     public float deceleration = 2.0f;
-    
-    private float strafeInput = 0f;
-    private float raiseLowerInput = 0f;
 
-    private float pitchInput = 0f;
-    private float yawInput = 0f;
-    private float rollInput = 0f;
+    private bool strafeModifier = false;
+
+    private Vector2 rotateInput;
+    private Vector2 strafeInput;
+    private float forwardInput;
 
     [SerializeField] private ThrusterRingController front_ring;
     [SerializeField] private ThrusterRingController rear_ring;
+    [SerializeField] private MainThrusterControl main_thruster;
 
     private void Awake() {
         rb.centerOfMass = (front_ring.transform.position + rear_ring.transform.position) / 2;
@@ -35,79 +35,40 @@ public class ShipMoveController : MonoBehaviour {
 
     private void FixedUpdate() {
         if (controlActive) {
-            if (strafeInput > 0) {
-                Debug.Log("Strafing right");
-                front_ring.ManualBurn(EnumMoveDirection.STRAFE_RIGHT, strafeInput);
-                rear_ring.ManualBurn(EnumMoveDirection.STRAFE_RIGHT, strafeInput);
-            } else if (strafeInput < 0) {
-                Debug.Log("Strafing left");
-                front_ring.ManualBurn(EnumMoveDirection.STRAFE_LEFT, strafeInput);
-                rear_ring.ManualBurn(EnumMoveDirection.STRAFE_LEFT, strafeInput);
-            }
+            Vector2 burnInputFront = GetBurnVector(true);
+            Vector2 burnInputRear = GetBurnVector(false);
 
-            if (raiseLowerInput > 0) {
-                Debug.Log("Raise!");
-                front_ring.ManualBurn(EnumMoveDirection.RAISE, raiseLowerInput);
-                rear_ring.ManualBurn(EnumMoveDirection.RAISE, raiseLowerInput);
-            } else if (raiseLowerInput < 0) {
-                Debug.Log("Lower!");
-                front_ring.ManualBurn(EnumMoveDirection.LOWER, raiseLowerInput);
-                rear_ring.ManualBurn(EnumMoveDirection.LOWER, raiseLowerInput);
-            }
-            
-            if (pitchInput > 0) {
-                Debug.Log("Raise!");
-                front_ring.ManualBurn(EnumMoveDirection.ROTATE_PITCH_POS, pitchInput);
-                rear_ring.ManualBurn(EnumMoveDirection.ROTATE_PITCH_POS, pitchInput);
-            } else if (pitchInput < 0) {
-                Debug.Log("Lower!");
-                front_ring.ManualBurn(EnumMoveDirection.ROTATE_PITCH_NEG, pitchInput);
-                rear_ring.ManualBurn(EnumMoveDirection.ROTATE_PITCH_NEG, pitchInput);
-            }
-            
-            if (yawInput > 0) {
-                Debug.Log("Raise!");
-                front_ring.ManualBurn(EnumMoveDirection.ROTATE_YAW_POS, yawInput);
-                rear_ring.ManualBurn(EnumMoveDirection.ROTATE_YAW_POS, yawInput);
-            } else if (yawInput < 0) {
-                Debug.Log("Lower!");
-                front_ring.ManualBurn(EnumMoveDirection.ROTATE_YAW_NEG, yawInput);
-                rear_ring.ManualBurn(EnumMoveDirection.ROTATE_YAW_NEG, yawInput);
-            }
-            
-            if (rollInput > 0) {
-                Debug.Log("Raise!");
-                front_ring.ManualBurn(EnumMoveDirection.ROTATE_ROLL_POS, rollInput);
-                rear_ring.ManualBurn(EnumMoveDirection.ROTATE_ROLL_POS, rollInput);
-            } else if (rollInput < 0) {
-                Debug.Log("Lower!");
-                front_ring.ManualBurn(EnumMoveDirection.ROTATE_ROLL_NEG, rollInput);
-                rear_ring.ManualBurn(EnumMoveDirection.ROTATE_ROLL_NEG, rollInput);
+            front_ring.ManualBurnVector(burnInputFront);
+            rear_ring.ManualBurnVector(burnInputRear);
+
+            if (forwardInput != 0) {
+                main_thruster.Burn(forwardInput);
             }
         }
     }
 
     public void AddForce(Vector3 position, Vector3 forceStrength) {
-        //Debug.Log($"Adding force {forceStrength} at {position}");
         rb.AddForceAtPosition(forceStrength * Time.deltaTime, position);
-        
         Vector3 endPoint = position + forceStrength.normalized * 20f;
 
         // Draw the debug ray
         Debug.DrawRay(position, endPoint - position, Color.red);
     }
 
-    public void HandleStrafeMovement(InputAction.CallbackContext context) => strafeInput = context.ReadValue<float>();
-    public void HandleRaiseLowerMovement(InputAction.CallbackContext context) => raiseLowerInput = context.ReadValue<float>();
-    
-    public void HandlePitchRotation(InputAction.CallbackContext context) => pitchInput = context.ReadValue<float>();
-    public void HandleYawRotation(InputAction.CallbackContext context) => yawInput = context.ReadValue<float>();
-    public void HandleRollRotation(InputAction.CallbackContext context) => rollInput = context.ReadValue<float>();
+    private Vector2 GetBurnVector(bool frontRing) {
+        Vector2 burnVector = new Vector2(0, 0);
+        Vector2 rotate = rotateInput * (frontRing ? 1 : -1);
 
-    public void HandleRotation(InputAction.CallbackContext context) {
-        Quaternion rotation = Quaternion.Euler(context.ReadValue<Vector3>() * 2f * Time.deltaTime);
-        //rb.MoveRotation(rb.rotation * rotation);
+        burnVector.x = Mathf.Clamp(strafeModifier ? strafeInput.x * -1 : rotate.x, -1, 1);
+        burnVector.y = Mathf.Clamp((strafeModifier ? rotate.y : 0) + strafeInput.y, -1, 1);
+
+        return burnVector;
     }
+
+    public void HandleRotate(InputAction.CallbackContext context) => rotateInput = context.ReadValue<Vector2>();
+    public void HandleStrafe(InputAction.CallbackContext context) => strafeInput = context.ReadValue<Vector2>() * -1;
+    public void HandleForward(InputAction.CallbackContext context) => forwardInput = context.ReadValue<float>();
+    public void HandleStrafeModifier(InputAction.CallbackContext context) => strafeModifier = context.ReadValueAsButton();
 
     public void SetActive(bool active) {
         controlActive = active;

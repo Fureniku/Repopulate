@@ -20,6 +20,8 @@ public class ThrusterController : MonoBehaviour {
 
     private bool burnLast = false;
 
+    private float burnTimeStep = 0;
+
     private void OnValidate() {
         rotationPoint.transform.localRotation = Quaternion.Euler(currentAngle, 0, 0);
     }
@@ -37,6 +39,11 @@ public class ThrusterController : MonoBehaviour {
     }
 
     void FixedUpdate() {
+        if (!burnLast && burnTimeStep > 0) {
+            burnTimeStep -= 0.05f;
+            SetThrusterAngle(0, true, 1.0f - burnTimeStep);
+        }
+        
         burnLast = false;
         if (burnList.Count > 0) {
             ThrusterBurn burn = burnList[0];
@@ -74,9 +81,14 @@ public class ThrusterController : MonoBehaviour {
         if (burnList.Count > 0) {
             return;
         }
-        SetThrusterAngle(angle, false);
-        SetThrusterStrength(thrust);
-        ProcessBurn();
+
+        if (burnTimeStep < 1.0f && !Mathf.Approximately(angle, currentAngle)) {
+            burnTimeStep += 0.05f;
+            SetThrusterAngle(angle, true, burnTimeStep);
+        } else {
+            SetThrusterStrength(thrust);
+            ProcessBurn();
+        }
         burnLast = true;
     }
 
@@ -111,14 +123,15 @@ public class ThrusterController : MonoBehaviour {
     }
 
     private void SetThrusterStrength(float thrust) {
+        if (thrust == 0) {
+            engineFlare.Stop();
+            return;
+        }
+        engineFlare.Play();
         currentThrust = Mathf.Clamp(thrust, 0, 1);
         ParticleSystem.MainModule engineMain;
         engineMain = engineFlare.main;
         engineMain.startLifetime = currentThrust * 5;
-    }
-
-    private void ResetThruster() {
-        currentAngle = 0f;
     }
 
     public ThrusterController Opposite() => opposite;

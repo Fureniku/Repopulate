@@ -62,6 +62,43 @@ public class ThrusterRingController : MonoBehaviour {
                 break;
         }
     }
+
+    public void ManualBurnVector(Vector2 burnVector) {
+        float x = burnVector.x;
+        float y = burnVector.y;
+
+        if (x < 0 && y < 0) {
+            ManualBurn(thruster_down_right, 0, x);
+        }
+        
+        if (x > 0 && y < 0) {
+            ManualBurn(thruster_down_left, 0, x);
+        }
+        
+        if (x < 0 && y > 0) {
+            ManualBurn(thruster_up_right, 0, x);
+        }
+        
+        if (x > 0 && y > 0) {
+            ManualBurn(thruster_up_left, 0, x);
+        }
+
+        if (x < 0) {
+            ManualBurn(thruster_right, 0, x);
+        }
+        
+        if (x > 0) {
+            ManualBurn(thruster_left, 0, x);
+        }
+        
+        if (y < 0) {
+            ManualBurn(thruster_down, 0, y);
+        }
+        
+        if (y > 0) {
+            ManualBurn(thruster_up, 0, y);
+        }
+    }
     
     public void ScheduleBurn(EnumMoveDirection direction, float timeSecs) => ScheduleBurn(direction, 0, timeSecs, 1);
     public void ScheduleBurn(EnumMoveDirection direction, float timeSecs, float strength) => ScheduleBurn(direction, 0, timeSecs, strength);
@@ -146,5 +183,3 @@ public class ThrusterRingController : MonoBehaviour {
         }
     }
 }
-
-

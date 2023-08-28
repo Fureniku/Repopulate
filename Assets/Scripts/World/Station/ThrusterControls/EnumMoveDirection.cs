@@ -11,6 +11,7 @@ public enum EnumMoveDirection {
     STRAFE_RIGHT,
     RAISE,
     LOWER,
+    RAISE_LOWER,
     STABILISE,
     NONE
 }

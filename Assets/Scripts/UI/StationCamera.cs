@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
 
 public class StationCamera : MonoBehaviour {
     
@@ -25,7 +24,7 @@ public class StationCamera : MonoBehaviour {
         RotateCamera();
 
         if (zoom != 0) {
-            distance = Mathf.Clamp(distance + (zoom * Time.deltaTime * 10f), minDistance, maxDistance);
+            distance = Mathf.Clamp(distance + (zoom * Time.deltaTime * -10f), minDistance, maxDistance);
         }
     }
 
@@ -59,8 +58,7 @@ public class StationCamera : MonoBehaviour {
         transform.position = newPosition;
     }
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
         currentXRotation = transform.eulerAngles.x;
     }
 }
