@@ -1,0 +1,3 @@
+The solar system is grid based. First, a tiny scale version of the solar system exists with no rendering, invisible to the player. This is always at 0,0,0. Each directly orbiting object (e.g. planets, but not moons which orbit the planet) calculates its relative gridspace from its current position.
+
+The spacegrid system then checks if any given object is in the same space or a directly neighboring space (the 27 gridspace area including player's current) as the player. If so, it creates a copy of the object which is visible to the player, and moves it along its orbital path. The object will scale in size depending on its distance from the player.
