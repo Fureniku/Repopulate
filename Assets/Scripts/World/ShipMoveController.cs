@@ -74,4 +74,8 @@ public class ShipMoveController : MonoBehaviour {
         controlActive = active;
         cam.gameObject.SetActive(active);
     }
+
+    public GameObject ShipPhysicsObject() {
+        return rb.gameObject;
+    }
 }

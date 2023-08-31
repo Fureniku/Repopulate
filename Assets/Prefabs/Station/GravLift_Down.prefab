@@ -5452,7 +5452,6 @@ MonoBehaviour:
   radius: 5
   centerForce: 25
   maxSlowdownRangeFactor: 0.1
-  dampingForce: 5
   capsuleCompensate: 1
   vfxObject: {fileID: 2382350128147878640}
 --- !u!1 &2382350129204697309

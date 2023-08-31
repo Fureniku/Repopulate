@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlanetManager : MonoBehaviour {
 
-    [SerializeField] public Transform scaleTargetObject; //TODO private later
+    private Transform scaleTargetObject;
     [SerializeField] private float scaleMin = 1;
     [SerializeField] private float scaleMax = 100;
     [SerializeField] private float distanceMin = 1000;
@@ -16,8 +16,8 @@ public class PlanetManager : MonoBehaviour {
     [SerializeField] private PlanetOrbitalSystem orbitSystem;
     
 
-    void Awake() {
-        //scaleTargetObject = GameManager.Instance.GetShipController().transform;
+    void Start() {
+        scaleTargetObject = GameManager.Instance.GetShipController().transform;
     }
 
     public void Create(PlanetOrbitalSystem system) {

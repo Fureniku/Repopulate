@@ -23,11 +23,11 @@ public class DroidController : MonoBehaviour {
 	[Tooltip("Move speed in meters/second")]
 	[SerializeField] private float moveSpeed = 5f;
 	[SerializeField] private float moveSpeedSpace = 25f;
-	[Tooltip("Multiplier on forward move speed when sprinting")]
-	[SerializeField] private float sprintFactor = 2f;
-	[Tooltip("Maximum slope the character can jump on")]
-	[Range(5f, 60f)]
-	[SerializeField] private float slopeLimit = 45f;
+	//[Tooltip("Multiplier on forward move speed when sprinting")]
+	//[SerializeField] private float sprintFactor = 2f;
+	//[Tooltip("Maximum slope the character can jump on")]
+	//[Range(5f, 60f)]
+	//[SerializeField] private float slopeLimit = 45f;
 	[Tooltip("Upward speed to apply when jumping in meters/second")]
 	[SerializeField] private float jumpSpeed = 4f;
 	[Tooltip("The speed at which the droid rotates to correct orientation when entering gravity")]
@@ -35,12 +35,12 @@ public class DroidController : MonoBehaviour {
 	[SerializeField] private float gravitationalCorrectionSpeed = 5f;
 	[Tooltip("The maximum velocity the droid can move at")]
 	[SerializeField] private float maxSpeed = 5f;
-	[Tooltip("The maximum velocity the droid can move at when moving upwards")]
-	[SerializeField] private float maxSpeedUp = 5f;
-	[Tooltip("The maximum velocity the droid can move at when falling (in gravity)")]
-	[SerializeField] private float maxSpeedFall = 25f;
-	[Tooltip("The maximum velocity the droid can move at (on all axis) while in space or zero-G areas")]
-	[SerializeField] private float maxSpeedZeroG = 5f;
+	//[Tooltip("The maximum velocity the droid can move at when moving upwards")]
+	//[SerializeField] private float maxSpeedUp = 5f;
+	//[Tooltip("The maximum velocity the droid can move at when falling (in gravity)")]
+	//[SerializeField] private float maxSpeedFall = 25f;
+	//[Tooltip("The maximum velocity the droid can move at (on all axis) while in space or zero-G areas")]
+	//[SerializeField] private float maxSpeedZeroG = 5f;
 
 	private Vector3 moveDir; //The in-gravity movement input
 	private Vector3 lastPosition; //The last known position when in gravity, used for transitioning velocity to out-of-gravity

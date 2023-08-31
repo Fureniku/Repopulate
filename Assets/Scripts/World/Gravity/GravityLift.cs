@@ -10,7 +10,6 @@ public class GravityLift : MonoBehaviour {
     
     [SerializeField] private float centerForce = 10f;
     [SerializeField] private float maxSlowdownRangeFactor = 0.1f; // Controls how close to the center the slowdown range extends
-    [SerializeField] private float dampingForce = 5f;
 
     [SerializeField][Tooltip("Extend the capsule height a little to compensate for the roundness at the base. Will cause effect to appear slightly below lift.")]
     private bool capsuleCompensate = false;
@@ -42,8 +41,6 @@ public class GravityLift : MonoBehaviour {
         cldr = GetComponent<CapsuleCollider>();
         cldr.isTrigger = true;
     }
-
-    private float innerThreshold = 0.5f;
 
     public void HandleForces(Rigidbody rb) {
 	    float slowRadius = radius * maxSlowdownRangeFactor;

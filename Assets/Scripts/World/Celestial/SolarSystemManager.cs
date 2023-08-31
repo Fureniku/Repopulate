@@ -9,32 +9,33 @@ public class SolarSystemManager : MonoBehaviour {
     [SerializeField] private GameObject planetPrefab;
     [SerializeField] private int planetCount;
     [SerializeField] private Transform originPoint;
-    public Transform debug_scalerObject;
 
-    private float currentPlanetDistance = 25f;
-    private float minDistanceIncrease = 10f;
-    private float maxDistanceIncrease = 15f;
-    private float lastOrbitalSpeed = 25f;
-    private float orbitalReduction = 1f;
+    [SerializeField] private float currentPlanetDistance = 25f;
+    [SerializeField] private float minDistanceIncrease = 10f;
+    [SerializeField] private float maxDistanceIncrease = 15f;
+    [SerializeField] private float lastOrbitalSpeed = 25f;
+    [SerializeField] private float orbitalReduction = 1f;
 
     private List<PlanetOrbitalSystem> celestialObjects = new();
     private List<PlanetOrbitalSystem> visibleObjects = new();
+
+    private GridObjectPosition ship;
     
     // Start is called before the first frame update
     void Start() {
+        ship = GameManager.Instance.GetShipController().ShipPhysicsObject().GetComponent<GridObjectPosition>();
         for (int i = 0; i < planetCount; i++) {
             PlanetOrbitalSystem planet = Instantiate(planetPrefab, transform).GetComponent<PlanetOrbitalSystem>();
             currentPlanetDistance = Random.Range(currentPlanetDistance + minDistanceIncrease, currentPlanetDistance + maxDistanceIncrease);
             lastOrbitalSpeed = Random.Range(Mathf.Min(15f - orbitalReduction*i, lastOrbitalSpeed - orbitalReduction*i), lastOrbitalSpeed);
             planet.Setup(originPoint, 0f, currentPlanetDistance, this);
-            planet.scaleTargetObject = debug_scalerObject;
             celestialObjects.Add(planet);
         }
     }
 
     // Update is called once per frame
     void Update() {
-        Vector2 playerPos = debug_scalerObject.GetComponent<GridObjectPosition>().gridSpace;
+        Vector2 playerPos = ship.GetGridSpace();
         for (int i = 0; i < celestialObjects.Count; i++) {
             PlanetOrbitalSystem celestialObject = celestialObjects[i];
             Vector2 celestialPos = celestialObject.GetComponent<PlanetOrbitalSystem>().GetGridSpace();
@@ -55,7 +56,7 @@ public class SolarSystemManager : MonoBehaviour {
 
         for (int i = 0; i < visibleObjects.Count; i++) {
             GameObject planet = visibleObjects[i].GetPlanet().gameObject;
-            planet.transform.position = visibleObjects[i].transform.position * 10f;
+            planet.transform.position = visibleObjects[i].transform.localPosition * 100f;
         }
     }
 

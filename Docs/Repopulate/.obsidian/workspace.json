@@ -198,9 +198,8 @@
   },
   "active": "fd0304c18dca0e8e",
   "lastOpenFiles": [
-    "Gameplay/Solar Exploration.md",
-    "Code Plans/SpaceGrid.md",
     "Controls.md",
+    "Code Plans/SpaceGrid.md",
     "Gameplay/Ship movement controls.md",
     "Story.md",
     "Gameplay/Gravity Lift.md",
@@ -227,6 +226,7 @@
     "Gameplay/Breeding Programs.md",
     "Code Plans",
     "Gameplay/Internal Station Management.md",
+    "Core GDD.md",
     "Gameplay/Resources & Resource Mechanics",
     "Gameplay",
     "Music",

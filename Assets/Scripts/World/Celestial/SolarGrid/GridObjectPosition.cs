@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class GridObjectPosition : MonoBehaviour {
     
-    public Vector2 gridSpace;
-    [SerializeField] private float gridScale = 100f;
+    [SerializeField] private Vector2 gridSpace;
+    private float gridScale;
+
+    void Start() {
+        gridScale = GameManager.Instance.GetSolarGridScale();
+    }
 
     // Update is called once per frame
     void Update() {
@@ -31,4 +35,6 @@ public class GridObjectPosition : MonoBehaviour {
         
         transform.position = pos;
     }
+
+    public Vector2 GetGridSpace() => gridSpace;
 }
