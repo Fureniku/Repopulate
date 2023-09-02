@@ -25,50 +25,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "What we have so far....md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "e7ee962f9c6a57ea",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "The Genesis.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "fd0304c18dca0e8e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Code Plans/SpaceGrid & The Solar System.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "48bb38b2409bca4d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Gameplay/Resources & Resource Mechanics/Items/Algae Tanks.md",
+                "file": "Gameplay/Station Modules.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -134,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Code Plans/SpaceGrid & The Solar System.md",
+                "file": "Gameplay/Station Modules.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Code Plans/SpaceGrid & The Solar System.md",
+                "file": "Gameplay/Station Modules.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Code Plans/SpaceGrid & The Solar System.md"
+                "file": "Gameplay/Station Modules.md"
               }
             }
           }
@@ -196,37 +160,37 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "fd0304c18dca0e8e",
+  "active": "f4ed6217a4de4b97",
   "lastOpenFiles": [
-    "Controls.md",
-    "Code Plans/SpaceGrid & The Solar System.md",
-    "Gameplay/Ship movement controls.md",
-    "Story.md",
-    "Gameplay/Gravity Lift.md",
+    "Gameplay/Resource Gathering (Space).md",
+    "Gameplay/Resource Gathering (Planet).md",
+    "Gameplay/Solar Exploration.md",
+    "Gameplay/Galactic Exploration.md",
+    "Gameplay/External Station Management.md",
     "What we have so far....md",
+    "The Genesis.md",
+    "Gameplay/Internal Station Management.md",
+    "Gameplay.md",
+    "Music SFX.md",
+    "Naming Conventions.md",
+    "Release, Monetisation etc.md",
+    "Starmap.md",
+    "Story.md",
+    "Code Plans/SpaceGrid & The Solar System.md",
+    "Controls.md",
+    "Gameplay/Ship movement controls.md",
+    "Gameplay/Gravity Lift.md",
     "Gameplay/Resources & Resource Mechanics/Items/General Building/Prefab Accommodation.md",
     "Gameplay/Resources & Resource Mechanics/Items/General Building/Gravity Lifts.md",
     "Gameplay/Resources & Resource Mechanics/Items/General Building/Generic Blocks.md",
     "Gameplay/Resources & Resource Mechanics/Items/Algae Tanks.md",
     "Gameplay/Resources & Resource Mechanics/Items/General Building",
     "Gameplay/Station Modules.md",
-    "Gameplay/External Station Management.md",
     "Code Plans/Module Creation & Interaction.md",
     "Station Design 2.0.md",
-    "The Genesis.md",
-    "Starmap.md",
     "Gameplay/Resources & Resource Mechanics/Energy.md",
-    "Gameplay/Resources & Resource Mechanics/Items/Battery.md",
-    "Gameplay/Resources & Resource Mechanics/Resources.md",
-    "Gameplay/Resources & Resource Mechanics/Items.md",
-    "Gameplay/Resources & Resource Mechanics/Water.md",
-    "Gameplay/Resources & Resource Mechanics/Oxygen.md",
     "Gameplay/Resources & Resource Mechanics/Items",
-    "Music SFX.md",
-    "Gameplay/Breeding Programs.md",
     "Code Plans",
-    "Gameplay/Internal Station Management.md",
-    "Core GDD.md",
     "Gameplay/Resources & Resource Mechanics",
     "Gameplay",
     "Music",
