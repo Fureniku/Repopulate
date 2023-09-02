@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class FakeShipPosition : MonoBehaviour {
 
-    private GridObjectPosition realShip;
+    private SolarPosition realShip;
     
     // Start is called before the first frame update
     void Start() {
-        realShip = GameManager.Instance.GetShipController().ShipPhysicsObject().GetComponent<GridObjectPosition>();
+        realShip = GameManager.Instance.GetShipController().ShipPhysicsObject().GetComponent<SolarPosition>();
     }
 
     // Update is called once per frame

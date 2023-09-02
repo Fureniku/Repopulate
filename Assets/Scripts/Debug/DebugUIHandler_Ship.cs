@@ -10,13 +10,13 @@ public class DebugUIHandler_Ship : MonoBehaviour {
     private List<TMP_Text> texts = new();
 
     private Rigidbody shipRigidbody;
-    private GridObjectPosition gridPos;
+    private SolarPosition gridPos;
     
-    private readonly int uiElementCount = 5;
+    private readonly int uiElementCount = 7;
 
     void Start() {
         shipRigidbody = ship.ShipPhysicsObject().GetComponent<Rigidbody>();
-        gridPos = ship.ShipPhysicsObject().GetComponent<GridObjectPosition>();
+        gridPos = ship.ShipPhysicsObject().GetComponent<SolarPosition>();
         for (int i = 0; i < uiElementCount; i++) {
             texts.Add(Instantiate(debugUIElement, transform).GetComponent<TMP_Text>());
         }
@@ -30,5 +30,7 @@ public class DebugUIHandler_Ship : MonoBehaviour {
         texts[2].SetText($"Grid Position: {gridPos.GetGridSpace()}");
         texts[3].SetText($"Solar Position: {gridPos.GetSolarPosition()}");
         texts[4].SetText($"Position: {ship.transform.position}");
+        texts[5].SetText($"Grid Opposition: {gridPos.GetOpposition()}");
+        texts[6].SetText($"Distance to Solar Origin: {gridPos.GetSolarDistance()}");
     }
 }

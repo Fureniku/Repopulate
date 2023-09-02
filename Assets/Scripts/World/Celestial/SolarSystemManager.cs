@@ -19,11 +19,11 @@ public class SolarSystemManager : MonoBehaviour {
     private List<PlanetOrbitalSystem> celestialObjects = new();
     private List<PlanetOrbitalSystem> visibleObjects = new();
 
-    private GridObjectPosition ship;
+    private SolarPosition ship;
     
     // Start is called before the first frame update
     void Start() {
-        ship = GameManager.Instance.GetShipController().ShipPhysicsObject().GetComponent<GridObjectPosition>();
+        ship = GameManager.Instance.GetShipController().ShipPhysicsObject().GetComponent<SolarPosition>();
         for (int i = 0; i < planetCount; i++) {
             PlanetOrbitalSystem planet = Instantiate(planetPrefab, transform).GetComponent<PlanetOrbitalSystem>();
             currentPlanetDistance = Random.Range(currentPlanetDistance + minDistanceIncrease, currentPlanetDistance + maxDistanceIncrease);
