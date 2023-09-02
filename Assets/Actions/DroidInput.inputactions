@@ -299,6 +299,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleOrbit",
+                    "type": "Button",
+                    "id": "7ddc66e2-f945-45a0-acc5-50193efe453e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchToDroid",
+                    "type": "Button",
+                    "id": "10f2d0e6-ebd0-46b8-b798-65ad5c5974df",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -640,6 +658,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "CameraPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c75b3021-7c4c-41b8-a6e5-371f7d336b6f",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleOrbit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8b4cb8c7-cffc-4817-a8ab-05db5777b61a",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchToDroid",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

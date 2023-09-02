@@ -6,8 +6,8 @@ public class StarManager : MonoBehaviour {
     [SerializeField] private MeshRenderer meshRenderer;
     private Transform lightTarget;
     private GridObjectPosition gop;
-    
-    
+
+
     void Start() {
         lightTarget = GameManager.Instance.GetShipController().gameObject.transform;
         gop = GetComponent<GridObjectPosition>();

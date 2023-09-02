@@ -69,13 +69,52 @@ public class ShipMoveController : MonoBehaviour {
     public void HandleStrafe(InputAction.CallbackContext context) => strafeInput = context.ReadValue<Vector2>() * -1;
     public void HandleForward(InputAction.CallbackContext context) => forwardInput = context.ReadValue<float>();
     public void HandleStrafeModifier(InputAction.CallbackContext context) => strafeModifier = context.ReadValueAsButton();
+    
+    public void HandleSwitchToDroid(InputAction.CallbackContext context) {
+        Debug.Log($"Context: {context.action}. Performed: {context.performed}");
+        if (context.performed) {
+            Debug.Log("performed");
+            SetActive(false);
+            GameManager.Instance.SwitchControlType(EnumControlType.DROID);
+        }
+    }
+    
+    public void HandleToggleOrbit(InputAction.CallbackContext context) {
+        if (context.performed) {
+            Debug.Log("toggling orbit!");
+            if (currentOrbitPlanet != null) {
+                ExitOrbit();
+            }
+            else {
+                EnterOrbit();
+            }
+        }
+    }
 
     public void SetActive(bool active) {
+        Debug.Log($"Ship active: {active}");
         controlActive = active;
         cam.gameObject.SetActive(active);
     }
 
     public GameObject ShipPhysicsObject() {
         return rb.gameObject;
+    }
+
+    public Rigidbody GetRigidbody() => rb;
+
+    public PlanetManager availablePlanet { get; private set; }
+    private PlanetManager currentOrbitPlanet;
+    
+    public void SetAvailablePlanet(PlanetManager planet) {
+        availablePlanet = planet;
+    }
+
+    public void EnterOrbit() {
+        currentOrbitPlanet = availablePlanet;
+    }
+
+    public void ExitOrbit() {
+        currentOrbitPlanet = null;
     }
 }

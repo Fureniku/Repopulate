@@ -49,7 +49,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Code Plans/SpaceGrid.md",
+                "file": "Code Plans/SpaceGrid & The Solar System.md",
                 "mode": "source",
                 "source": false
               }
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Code Plans/SpaceGrid.md",
+                "file": "Code Plans/SpaceGrid & The Solar System.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Code Plans/SpaceGrid.md",
+                "file": "Code Plans/SpaceGrid & The Solar System.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Code Plans/SpaceGrid.md"
+                "file": "Code Plans/SpaceGrid & The Solar System.md"
               }
             }
           }
@@ -199,7 +199,7 @@
   "active": "fd0304c18dca0e8e",
   "lastOpenFiles": [
     "Controls.md",
-    "Code Plans/SpaceGrid.md",
+    "Code Plans/SpaceGrid & The Solar System.md",
     "Gameplay/Ship movement controls.md",
     "Story.md",
     "Gameplay/Gravity Lift.md",

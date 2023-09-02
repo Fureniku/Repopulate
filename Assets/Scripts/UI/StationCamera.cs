@@ -17,6 +17,7 @@ public class StationCamera : MonoBehaviour {
 
     private void Start() {
         target = targetList[0];
+        gameObject.SetActive(false);
     }
 
     private void Update() {

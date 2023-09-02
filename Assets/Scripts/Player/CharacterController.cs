@@ -26,9 +26,8 @@ public class CharacterController : MonoBehaviour {
     public DroidController GetCurrentDroid() => currentDroid;
     
     public void HandleSwitch(InputAction.CallbackContext context) {
-        input.SwitchCurrentActionMap("Ship");
-        fpCam.gameObject.SetActive(false);
-        GameManager.Instance.GetShipController().SetActive(true);
+        SetActive(false);
+        GameManager.Instance.SwitchControlType(EnumControlType.SHIP);
     }
 
     private void Awake() {
@@ -39,6 +38,12 @@ public class CharacterController : MonoBehaviour {
     public void SetPlayerActive(bool active) {
         UnityEngine.Cursor.lockState = active ? CursorLockMode.Locked : CursorLockMode.None;
         isPlayerActive = active;
+    }
+
+    public void SetActive(bool active) {
+        Debug.Log($"Droid active: {active}");
+        fpCam.gameObject.SetActive(active);
+        currentDroid.SetDroidActive(active);
     }
 
     public void HandleActiveToggle(InputAction.CallbackContext context) {

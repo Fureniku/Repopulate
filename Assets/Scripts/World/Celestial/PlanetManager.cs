@@ -38,5 +38,6 @@ public class PlanetManager : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         Debug.Log("Ship entered trigger; switch to planet orbit");
+        GameManager.Instance.GetShipController().SetAvailablePlanet(this);
     }
 }

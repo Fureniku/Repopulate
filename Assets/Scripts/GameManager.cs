@@ -24,6 +24,20 @@ public class GameManager : MonoSingleton<GameManager> {
         shipMoveController.SetActive(active);
     }
 
+    public void SwitchControlType(EnumControlType controlType) {
+        switch (controlType) {
+            case EnumControlType.DROID:
+                Debug.Log("Switching to droid");
+                GetPlayerInput().SwitchCurrentActionMap("General");
+                character.SetActive(true);
+                break;
+            case EnumControlType.SHIP:
+                GetPlayerInput().SwitchCurrentActionMap("Ship");
+                shipMoveController.SetActive(true);
+                break;
+        }
+    }
+
     public PlayerInput GetPlayerInput() {
         return character.GetComponent<PlayerInput>();
     }
@@ -31,4 +45,9 @@ public class GameManager : MonoSingleton<GameManager> {
     public ShipMoveController GetShipController() => shipMoveController;
 
     public float GetSolarGridScale() => solarGridScale;
+}
+
+public enum EnumControlType {
+    DROID,
+    SHIP
 }
