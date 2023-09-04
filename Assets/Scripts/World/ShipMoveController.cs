@@ -22,9 +22,11 @@ public class ShipMoveController : MonoBehaviour {
     [SerializeField] private ThrusterRingController rear_ring;
     [SerializeField] private MainThrusterControl main_thruster;
 
+    private SolarPosition solarPosition;
+
     private void Awake() {
         rb.centerOfMass = (front_ring.transform.position + rear_ring.transform.position) / 2;
-
+        solarPosition = rb.GetComponent<SolarPosition>();
         /*front_ring.ScheduleBurn(EnumMoveDirection.NONE, 2);
         rear_ring.ScheduleBurn(EnumMoveDirection.NONE, 2);
         front_ring.ScheduleBurn(EnumMoveDirection.ROTATE_ROLL_NEG, 5, 1);
@@ -91,6 +93,15 @@ public class ShipMoveController : MonoBehaviour {
         }
     }
 
+    public bool cursorActive { get; private set; } = true;
+
+    public void HandleReleaseCursor(InputAction.CallbackContext context) {
+        if (context.performed) {
+            cursorActive = !cursorActive;
+            UnityEngine.Cursor.lockState = cursorActive ? CursorLockMode.Locked : CursorLockMode.None;
+        }
+    }
+
     public void SetActive(bool active) {
         Debug.Log($"Ship active: {active}");
         controlActive = active;
@@ -117,4 +128,6 @@ public class ShipMoveController : MonoBehaviour {
     public void ExitOrbit() {
         currentOrbitPlanet = null;
     }
+
+    public SolarPosition Position() => solarPosition;
 }

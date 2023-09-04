@@ -35,10 +35,10 @@ public class SolarSystemManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        Vector2 playerPos = ship.GetGridSpace();
+        Vector3Int playerPos = ship.GetGridSpace();
         for (int i = 0; i < celestialObjects.Count; i++) {
             PlanetOrbitalSystem celestialObject = celestialObjects[i];
-            Vector2 celestialPos = celestialObject.GetComponent<PlanetOrbitalSystem>().GetGridSpace();
+            Vector3Int celestialPos = celestialObject.GetComponent<PlanetOrbitalSystem>().GetGridSpace();
             if (visibleObjects.Contains(celestialObject)) {
                 if (celestialPos != playerPos) {
                     Debug.Log("Destroy planet");

@@ -10,7 +10,7 @@ public class PlanetOrbitalSystem : MonoBehaviour {
     [SerializeField] private float orbitSpeed = 50.0f;  // Speed of orbit in degrees per second
     [SerializeField] private float orbitDistance = 5.0f;
     [SerializeField] private Vector3 orbitAngle = new Vector3(0, 1, 0);
-    [SerializeField] private Vector2 gridSpace;
+    [SerializeField] private Vector3Int gridSpace;
 
     [SerializeField] private PlanetManager planetPrefab;
     [SerializeField] private PlanetManager planet;
@@ -34,9 +34,10 @@ public class PlanetOrbitalSystem : MonoBehaviour {
             transform.localPosition = newPosition;
 
             int gridX = (int) Math.Floor(newPosition.x / 10);
+            int gridY = (int) Math.Floor(newPosition.y / 10);
             int gridZ = (int) Math.Floor(newPosition.z / 10);
             
-            gridSpace = new Vector2(gridX, gridZ);
+            gridSpace = new Vector3Int(gridX, gridY, gridZ);
         }
     }
 
@@ -52,7 +53,7 @@ public class PlanetOrbitalSystem : MonoBehaviour {
         Destroy(planet.gameObject);
     }
 
-    public Vector2 GetGridSpace() {
+    public Vector3Int GetGridSpace() {
         return gridSpace;
     }
 }

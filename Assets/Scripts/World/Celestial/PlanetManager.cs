@@ -14,10 +14,13 @@ public class PlanetManager : MonoBehaviour {
     
     [SerializeField] private SolarSystemManager solarSystem;
     [SerializeField] private PlanetOrbitalSystem orbitSystem;
+
+    private SolarPosition solarPosition;
     
 
     void Start() {
         scaleTargetObject = GameManager.Instance.GetShipController().transform;
+        solarPosition = GetComponent<SolarPosition>();
     }
 
     public void Create(PlanetOrbitalSystem system) {

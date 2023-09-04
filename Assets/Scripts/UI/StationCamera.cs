@@ -21,7 +21,10 @@ public class StationCamera : MonoBehaviour {
     }
 
     private void Update() {
-        rotationInput = Mouse.current.delta.ReadValue() * sensitivity;
+        if (GameManager.Instance.GetShipController().cursorActive) {
+            rotationInput = Mouse.current.delta.ReadValue() * sensitivity;
+        }
+
         RotateCamera();
 
         if (zoom != 0) {

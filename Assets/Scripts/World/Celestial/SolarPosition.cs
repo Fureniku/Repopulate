@@ -6,16 +6,11 @@ using Vector3 = UnityEngine.Vector3;
 
 public class SolarPosition : MonoBehaviour {
     
-    [SerializeField] private Vector3 gridSpace;
+    [SerializeField] private Vector3Int gridSpace;
     [SerializeField] private Vector3 solarPosition;
     
     private float gridScale;
     private Vector3 localPosition;
-
-    public SolarPosition(Vector3 grid, Vector3 local) {
-        gridSpace = grid;
-        localPosition = local;
-    }
 
     void Start() {
         gridScale = GameManager.Instance.GetSolarGridScale();
@@ -34,10 +29,10 @@ public class SolarPosition : MonoBehaviour {
         }
         
         transform.position = localPosition;
-        solarPosition = gridSpace * (gridScale * 2) - localPosition*-1;
+        solarPosition = (Vector3)gridSpace * (gridScale * 2) - localPosition*-1;
     }
 
-    public Vector3 GetGridSpace() => gridSpace;
+    public Vector3Int GetGridSpace() => gridSpace;
 
     public Vector3 GetSolarPosition() {
         return solarPosition;
@@ -45,10 +40,48 @@ public class SolarPosition : MonoBehaviour {
 
     //TODO Currently returning in solar space; needs to be in local space.
     public Vector3 GetOpposition() {
-        Vector3 cubeCenter = gridSpace * (gridScale * 2);
+        Vector3 cubeCenter = GetLocalSpaceFromSolar();
         Vector3 directionToOrigin = cubeCenter - Vector3.zero;
         directionToOrigin.Normalize();
         return cubeCenter - directionToOrigin * gridScale;
+    }
+
+    public Vector3 GetOffsetVector(Vector3 otherPos) => solarPosition - otherPos;
+
+    public bool IsDirectNeighbour(Vector3Int otherPos) {
+        return Mathf.Abs(gridSpace.x - otherPos.x) + Mathf.Abs(gridSpace.y - otherPos.y) + Mathf.Abs(gridSpace.z - otherPos.z) <= 1;
+    }
+
+    public Vector3Int GetGridOffset(Vector3Int otherPos) => gridSpace - otherPos;
+    
+    public Vector3Int GetGridOffsetClamped(Vector3Int otherPos) {
+        Vector3 offset = GetGridOffset(otherPos);
+
+        int x = (int) Mathf.Clamp(offset.x, -1, 1);
+        int y = (int) Mathf.Clamp(offset.y, -1, 1);
+        int z = (int) Mathf.Clamp(offset.z, -1, 1);
+
+        return new Vector3Int(x, y, z);
+
+    } 
+
+    //Takes solar scale and strips off gridspace values to give the exact position within the object's local grid.
+    public Vector3 GetLocalSpaceFromSolar() {
+        return solarPosition - GetGridSpaceFromSolar() * (gridScale * 2);
+    }
+
+    public Vector3 GetGridSpaceFromSolar() {
+        Vector3 solPos = solarPosition / (gridScale * 2);
+        int x = Mathf.RoundToInt(solPos.x);
+        int y = Mathf.RoundToInt(solPos.y);
+        int z = Mathf.RoundToInt(solPos.z);
+        return new Vector3(x, y, z);
+    }
+
+    public Vector3 GetDirectionFromPosition(Vector3 otherPos) {
+        Vector3 direction = GetSolarPosition() - otherPos;
+        
+        return direction.normalized;
     }
 
     public float GetSolarDistance() {
@@ -71,5 +104,35 @@ public class SolarPosition : MonoBehaviour {
         Vector3 end = self / scaleFactor;
         float result = Vector3.Distance(start, end) * scaleFactor;*/
         return Vector3.Distance(target, self);
+    }
+
+    public Vector3 GetFakedPosition(Vector3 target, float distance) {
+        return GetFakedPosition(GetSolarPosition(), target, distance);
+    }
+    
+    public Vector3 GetFakedOffset(Vector3 target, float distance) {
+        return GetFakedOffset(GetSolarPosition(), target, distance);
+    }
+
+    public static Vector3 GetFakedPosition(Vector3 self, Vector3 target, float distance) {
+        Debug.DrawLine(self, target, Color.green);
+        return self + (target - self).normalized * distance;
+    }
+
+    public static Vector3 GetFakedOffset(Vector3 self, Vector3 target, float distance) {
+        Vector3 fakedPos = GetFakedPosition(self, target, distance);
+        return self - fakedPos;
+    }
+
+    public static Vector3 GetLocalSpaceFromSolar(Vector3 solarPos) {
+        return solarPos - GetGridSpaceFromSolar(solarPos) * (GameManager.Instance.GetSolarGridScale() * 2);
+    }
+    
+    public static Vector3 GetGridSpaceFromSolar(Vector3 solarPos) {
+        Vector3 solPos = solarPos / (GameManager.Instance.GetSolarGridScale() * 2);
+        int x = Mathf.RoundToInt(solPos.x);
+        int y = Mathf.RoundToInt(solPos.y);
+        int z = Mathf.RoundToInt(solPos.z);
+        return new Vector3(x, y, z);
     }
 }

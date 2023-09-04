@@ -12,7 +12,7 @@ public class DebugUIHandler_Ship : MonoBehaviour {
     private Rigidbody shipRigidbody;
     private SolarPosition gridPos;
     
-    private readonly int uiElementCount = 7;
+    private readonly int uiElementCount = 8;
 
     void Start() {
         shipRigidbody = ship.ShipPhysicsObject().GetComponent<Rigidbody>();
@@ -32,5 +32,6 @@ public class DebugUIHandler_Ship : MonoBehaviour {
         texts[4].SetText($"Position: {ship.transform.position}");
         texts[5].SetText($"Grid Opposition: {gridPos.GetOpposition()}");
         texts[6].SetText($"Distance to Solar Origin: {gridPos.GetSolarDistance()}");
+        texts[7].SetText($"Local from Solar: {gridPos.GetLocalSpaceFromSolar()}");
     }
 }
