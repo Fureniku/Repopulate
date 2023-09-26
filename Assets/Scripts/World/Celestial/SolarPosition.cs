@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class SolarPosition : MonoBehaviour {
-    
+
     [SerializeField] private Vector3Int gridSpace;
     [SerializeField] private Vector3 solarPosition;
     

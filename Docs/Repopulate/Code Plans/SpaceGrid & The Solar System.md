@@ -26,3 +26,10 @@ performance distance scaling notes:
 star position:
 every grid position has a point that's closest to world origin (opposition). Put star there. Scale star with ship distance to origin.
 If grid position is greater than 1 in any axis (check if we can use magnitude for this), offset star by gridSize in direction of world origin to avoid overlapping when ship is in opposition with star
+
+
+
+New idea:
+celestial bodies begin to render when in a direct neighbour gridspace
+
+smaller objects pool and spawn/despawn onto that child as needed and do not rescale
