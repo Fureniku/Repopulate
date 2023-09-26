@@ -1991,7 +1991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2628a827cd1478b4b884117fd01104be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveAmount: {x: 0, y: 0, z: 0}
+  moveAmount: {x: -50, y: 0, z: 0}
 --- !u!1 &232872714
 GameObject:
   m_ObjectHideFlags: 0
@@ -4328,7 +4328,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &613161994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4919,6 +4919,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 10f2d0e6-ebd0-46b8-b798-65ad5c5974df
     m_ActionName: Ship/SwitchToDroid[/Keyboard/l]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 634727218}
+        m_TargetAssemblyTypeName: ShipMoveController, Assembly-CSharp
+        m_MethodName: HandleReleaseCursor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: df804514-fc03-4b82-8686-67158e63021c
+    m_ActionName: Ship/Release Cursor[/Keyboard/f3]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: General
@@ -7440,7 +7456,7 @@ GameObject:
   - component: {fileID: 1218279692}
   - component: {fileID: 1218279691}
   - component: {fileID: 1218279695}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FakePlanet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7538,8 +7554,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planet: {fileID: 995228811}
-  renderDistance: 50000
+  renderDistance: 250000
   alwaysRender: 1
+  minSize: {x: 100, y: 100, z: 100}
 --- !u!198 &1231460120 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 5070876728024040661, guid: a479d47e2682e88409e6d9db6beafacd, type: 3}
@@ -8965,7 +8982,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 512
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

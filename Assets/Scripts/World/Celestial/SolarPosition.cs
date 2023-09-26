@@ -1,8 +1,4 @@
-using System;
-using System.Numerics;
 using UnityEngine;
-using UnityEngine.Profiling;
-using Vector3 = UnityEngine.Vector3;
 
 public class SolarPosition : MonoBehaviour {
     
@@ -13,7 +9,7 @@ public class SolarPosition : MonoBehaviour {
     private Vector3 localPosition;
 
     void Start() {
-        gridScale = GameManager.Instance.GetSolarGridScale();
+        gridScale = GameManager.Instance.GetSolarGridScale(); //Set to 10,000 
     }
 
     void Update() {
@@ -34,10 +30,22 @@ public class SolarPosition : MonoBehaviour {
 
     public Vector3Int GetGridSpace() => gridSpace;
 
-    public Vector3 GetSolarPosition() {
-        return solarPosition;
-    }
+    //Returns the "real" position instead of the current transform.position
+    public Vector3 GetSolarPosition() => solarPosition;
+    
+    //Gets the vector offset between two objects on a solar scale.
+    public Vector3 GetOffsetVector(Vector3 otherPos) => solarPosition - otherPos;
 
+    //Returns true if the other grid is directly touching this grid, or is the same grid.
+    public bool IsDirectNeighbour(Vector3Int otherPos) => GetGridDistance(otherPos) <= 1;
+
+    //Get the number of grid spaces between this and the other position
+    public int GetGridDistance(Vector3Int otherPos) => Mathf.Abs(gridSpace.x - otherPos.x) + Mathf.Abs(gridSpace.y - otherPos.y) + Mathf.Abs(gridSpace.z - otherPos.z);
+    
+    //Get the difference in value between this and the other grid space
+    public Vector3Int GetGridOffset(Vector3Int otherPos) => gridSpace - otherPos;
+    
+    
     //TODO Currently returning in solar space; needs to be in local space.
     public Vector3 GetOpposition() {
         Vector3 cubeCenter = GetLocalSpaceFromSolar();
@@ -45,14 +53,6 @@ public class SolarPosition : MonoBehaviour {
         directionToOrigin.Normalize();
         return cubeCenter - directionToOrigin * gridScale;
     }
-
-    public Vector3 GetOffsetVector(Vector3 otherPos) => solarPosition - otherPos;
-
-    public bool IsDirectNeighbour(Vector3Int otherPos) {
-        return Mathf.Abs(gridSpace.x - otherPos.x) + Mathf.Abs(gridSpace.y - otherPos.y) + Mathf.Abs(gridSpace.z - otherPos.z) <= 1;
-    }
-
-    public Vector3Int GetGridOffset(Vector3Int otherPos) => gridSpace - otherPos;
     
     public Vector3Int GetGridOffsetClamped(Vector3Int otherPos) {
         Vector3 offset = GetGridOffset(otherPos);
@@ -62,7 +62,6 @@ public class SolarPosition : MonoBehaviour {
         int z = (int) Mathf.Clamp(offset.z, -1, 1);
 
         return new Vector3Int(x, y, z);
-
     } 
 
     //Takes solar scale and strips off gridspace values to give the exact position within the object's local grid.
@@ -134,5 +133,9 @@ public class SolarPosition : MonoBehaviour {
         int y = Mathf.RoundToInt(solPos.y);
         int z = Mathf.RoundToInt(solPos.z);
         return new Vector3(x, y, z);
+    }
+
+    public Vector3 GetSolarScaleFromGrid() {
+        return (Vector3)gridSpace * gridScale;
     }
 }
