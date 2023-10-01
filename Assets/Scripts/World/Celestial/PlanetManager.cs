@@ -1,38 +1,18 @@
 using System;
 using UnityEngine;
 
-public class PlanetManager : MonoBehaviour {
-
-    private Transform scaleTargetObject;
-    [SerializeField] private float scaleMin = 1;
-    [SerializeField] private float scaleMax = 100;
-    [SerializeField] private float distanceMin = 1000;
-    [SerializeField] private float distanceMax = 2000;
-    [SerializeField] private float scale;
-    [SerializeField] private float scaleDistance;
-    [SerializeField] private float scaledDistance;
+public class PlanetManager : CelestialBody {
     
-    [SerializeField] private SolarSystemManager solarSystem;
     [SerializeField] private PlanetOrbitalSystem orbitSystem;
 
-    private SolarPosition solarPosition;
     
 
     void Start() {
-        scaleTargetObject = GameManager.Instance.GetShipController().transform;
-        solarPosition = GetComponent<SolarPosition>();
+
     }
 
     public void Create(PlanetOrbitalSystem system) {
         orbitSystem = system;
-    }
-
-    void Update() {
-        scaleDistance = Vector3.Distance(scaleTargetObject.position, transform.position);
-        scaledDistance = Mathf.Clamp01((scaleDistance - distanceMin) / (distanceMax - distanceMin));
-        scale = Mathf.Lerp(scaleMax, scaleMin, scaledDistance);
-
-        transform.localScale = new Vector3(scale, scale, scale);
     }
 
     public PlanetOrbitalSystem GetOrbitSystem() {

@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class FloatingOriginManager : MonoBehaviour {
     
-    [SerializeField] private Transform ship; // Reference to the player spaceship
-    [SerializeField] private Transform solarOrigin;   // Reference to the central point of the system
-    [SerializeField] private float threshold = 10000.0f; // Distance at which the origin will be re-centered
+    [SerializeField] private Transform ship;
+    [SerializeField] private Transform solarOrigin;
+    [SerializeField] private float threshold = 10000.0f;
     
     private Vector3 lastPlayerPosition;
     private Vector3 offset;
@@ -19,7 +19,7 @@ public class FloatingOriginManager : MonoBehaviour {
 
         offset += playerMovement;
 
-        if (offset.magnitude > threshold) {
+        if (offset.magnitude > threshold && !IsShipOrbitingBody()) {
             Vector3 repositionOffset = -offset;
 
             solarOrigin.position += repositionOffset;
@@ -29,5 +29,10 @@ public class FloatingOriginManager : MonoBehaviour {
         }
 
         lastPlayerPosition = ship.position;
+    }
+
+    //TODO check if ships orbitting something. If so we don't want to move solar origin because the ship would move with it.
+    bool IsShipOrbitingBody() {
+        return false;
     }
 }

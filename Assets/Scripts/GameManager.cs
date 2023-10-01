@@ -7,7 +7,7 @@ public class GameManager : MonoSingleton<GameManager> {
     [SerializeField] private Camera shipCam;
     [SerializeField] private CharacterController character;
     [SerializeField] private ShipMoveController shipMoveController;
-    [SerializeField] private float solarGridScale = 10000f;
+    [SerializeField] private SolarSystemManager solarSystem;
     
     public void SwitchCamera() { 
         SetCameraState(!fpCam.gameObject.activeSelf);
@@ -44,7 +44,9 @@ public class GameManager : MonoSingleton<GameManager> {
     
     public ShipMoveController GetShipController() => shipMoveController;
 
-    public float GetSolarGridScale() => solarGridScale;
+    public SolarSystemManager GetSolarSystem() {
+        return solarSystem;
+    }
 }
 
 public enum EnumControlType {

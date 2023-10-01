@@ -55,7 +55,6 @@ public class MainThrusterControl : MonoBehaviour {
     }
 
     public void Burn(float thrust) {
-        Debug.Log($"Burning: {thrust}");
         if (burnList.Count > 0) {
             return;
         }

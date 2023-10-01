@@ -7,31 +7,36 @@ public class DebugUIHandler_Ship : MonoBehaviour {
     [SerializeField] private ShipMoveController ship;
     [SerializeField] private GameObject debugUIElement;
 
-    private List<TMP_Text> texts = new();
+    private readonly List<TMP_Text> texts = new();
+    private readonly Dictionary<string, TMP_Text> debugLines = new Dictionary<string, TMP_Text>();
 
-    private Rigidbody shipRigidbody;
-    private SolarPosition gridPos;
-    
-    private readonly int uiElementCount = 8;
+    [SerializeField] private Rigidbody shipRigidbody;
+    [SerializeField] private SolarSystemManager solarSystem;
 
-    void Start() {
+    void Awake() {
         shipRigidbody = ship.ShipPhysicsObject().GetComponent<Rigidbody>();
-        gridPos = ship.ShipPhysicsObject().GetComponent<SolarPosition>();
-        for (int i = 0; i < uiElementCount; i++) {
-            texts.Add(Instantiate(debugUIElement, transform).GetComponent<TMP_Text>());
-        }
+        solarSystem = GameManager.Instance.GetSolarSystem();
         
+        texts.Add(CreateEntry("Speed"));
+        texts.Add(CreateEntry("AngularVelocity"));
+        texts.Add(CreateEntry("Position"));
+        texts.Add(CreateEntry("DistanceToOrigin"));
+
+        foreach (TMP_Text textComponent in texts) {
+            debugLines[textComponent.name] = textComponent;
+        }
     }
 
-    // Update is called once per frame
     void Update() {
-        texts[0].SetText($"Speed: {shipRigidbody.velocity.magnitude}");
-        texts[1].SetText($"Angular Velocity: {shipRigidbody.angularVelocity}");
-        texts[2].SetText($"Grid Position: {gridPos.GetGridSpace()}");
-        texts[3].SetText($"Solar Position: {gridPos.GetSolarPosition()}");
-        texts[4].SetText($"Position: {ship.transform.position}");
-        texts[5].SetText($"Grid Opposition: {gridPos.GetOpposition()}");
-        texts[6].SetText($"Distance to Solar Origin: {gridPos.GetSolarDistance()}");
-        texts[7].SetText($"Local from Solar: {gridPos.GetLocalSpaceFromSolar()}");
+        debugLines["Speed"].SetText($"Speed: {shipRigidbody.velocity.magnitude}");
+        debugLines["AngularVelocity"].SetText($"Angular Velocity: {shipRigidbody.angularVelocity}");
+        debugLines["Position"].SetText($"Position: {ship.transform.position}");
+        debugLines["DistanceToOrigin"].SetText($"Distance to origin: {Vector3.Distance(ship.transform.position, solarSystem.transform.position)}");
+    }
+
+    private TMP_Text CreateEntry(string entryName) {
+        TMP_Text text = Instantiate(debugUIElement, transform).GetComponent<TMP_Text>();
+        text.gameObject.name = entryName;
+        return text;
     }
 }
