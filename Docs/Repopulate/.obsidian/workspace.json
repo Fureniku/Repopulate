@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Code Plans/SpaceGrid & The Solar System.md",
+                "file": "Code Plans/Sample Scaling Estimates.md",
                 "mode": "source",
                 "source": false
               }
@@ -98,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Code Plans/SpaceGrid & The Solar System.md",
+                "file": "Code Plans/Sample Scaling Estimates.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Code Plans/SpaceGrid & The Solar System.md",
+                "file": "Code Plans/Sample Scaling Estimates.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +138,17 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Code Plans/SpaceGrid & The Solar System.md"
+                "file": "Code Plans/Sample Scaling Estimates.md"
+              }
+            }
+          },
+          {
+            "id": "7523d8a41436d31a",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency"
               }
             }
           }
@@ -162,10 +172,13 @@
   },
   "active": "f4ed6217a4de4b97",
   "lastOpenFiles": [
+    "Gameplay/Solar Exploration.md",
+    "Code Plans/Sample Scaling Estimates.md",
+    "Code Plans/SpaceGrid & The Solar System.md",
+    "Gameplay/Resources & Resource Mechanics/Resources.md",
     "Gameplay/Station Modules.md",
     "Gameplay/Resource Gathering (Space).md",
     "Gameplay/Resource Gathering (Planet).md",
-    "Gameplay/Solar Exploration.md",
     "Gameplay/Galactic Exploration.md",
     "Gameplay/External Station Management.md",
     "What we have so far....md",
@@ -177,7 +190,6 @@
     "Release, Monetisation etc.md",
     "Starmap.md",
     "Story.md",
-    "Code Plans/SpaceGrid & The Solar System.md",
     "Controls.md",
     "Gameplay/Ship movement controls.md",
     "Gameplay/Gravity Lift.md",
@@ -187,8 +199,6 @@
     "Gameplay/Resources & Resource Mechanics/Items/Algae Tanks.md",
     "Gameplay/Resources & Resource Mechanics/Items/General Building",
     "Code Plans/Module Creation & Interaction.md",
-    "Station Design 2.0.md",
-    "Gameplay/Resources & Resource Mechanics/Energy.md",
     "Gameplay/Resources & Resource Mechanics/Items",
     "Code Plans",
     "Gameplay/Resources & Resource Mechanics",
