@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Repopulate.World;
 using UnityEngine;
 
 public class CelestialBodyController : MonoBehaviour {
@@ -10,36 +9,33 @@ public class CelestialBodyController : MonoBehaviour {
     private Transform _ship;
 
     private float _closestDistance;
-    
-    [Tooltip("The rotation/orbit speed in degrees per second. 1 = 5 mins for one orbit (year)")]
-    [SerializeField] private float _orbitSpeed = 1f; // Adjust this to change the rotation speed (degrees per second)
-    
-    [Header("Dynamic Rescaling")]
-    [SerializeField] private bool _canDynamiclyRescale = true;
-    [Tooltip("The distance where scale will be at maximum, and no longer increase")]
-    [SerializeField] private float _minDistance = 5000f;
-    [Tooltip("The distance at which scale for the object would be minimum.")]
-    [SerializeField] private float _maxDistance = 100000f;
-    [Tooltip("The distance from the *planets surface* (not centre) where scale should be max")]
-    [SerializeField] private float _scaleMax;
-    [SerializeField] private float _scaleMin;
-    
-    void Start() {
+
+    private CelestialData _data;
+    private bool _initialized = false;
+
+    public void SetData(CelestialData data) {
+        _data = data;
         _solarSystem = GameManager.Instance.GetSolarSystem();
         _celestialBody = GetComponentInChildren<CelestialBody>();
         _ship = GameManager.Instance.GetShipController().transform;
-        _closestDistance = _minDistance/2 + _scaleMax;
+        _closestDistance = _data.OrbitSpeed / 2 + _data.MaximumScale;
+
+        _celestialBody.transform.localPosition = new Vector3(data.Distance, 0, 0);
+        _celestialBody.transform.localScale = Vector3.one * data.MaximumScale;
+        _initialized = true;
     }
 
     void FixedUpdate() {
-        if (_orbitSpeed >= 0) {
-            float rotationAmount = _orbitSpeed * Time.deltaTime;
+        if (!_initialized) return;
+        if (_data.OrbitSpeed >= 0) {
+            float rotationAmount = _data.OrbitSpeed * Time.deltaTime;
             transform.Rotate(Vector3.up, rotationAmount);
         }
     }
 
     void Update() {
-        if (_canDynamiclyRescale) {
+        if (!_initialized) return;
+        if (_data.CanDynamicallyRescale) {
             _celestialBody.transform.localScale = GetScale();
         }
     }
@@ -47,8 +43,8 @@ public class CelestialBodyController : MonoBehaviour {
     //Adjust the scale based on distance
     protected virtual Vector3 GetScale() {
         float dist = Vector3.Distance(_ship.position, _celestialBody.transform.position);
-        float scaledDistance = Mathf.Clamp01((dist - _closestDistance) / (_maxDistance - _closestDistance));
-        float scale = Mathf.Lerp(_scaleMax, _scaleMin, scaledDistance);
+        float scaledDistance = Mathf.Clamp01((dist - _closestDistance) / (_data.MaximumDistance - _closestDistance));
+        float scale = Mathf.Lerp(_data.MaximumScale, _data.MinimumScale, scaledDistance);
         return Vector3.one * scale;
     }
 
