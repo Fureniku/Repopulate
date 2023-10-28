@@ -30,13 +30,13 @@ public class SolarSystemManager : MonoBehaviour {
     [SerializeField] private GameObject _dwarfPlanet;
     
     [Header("Celestial bodies")]
-    [SerializeField] private List<CelestialData> celestialData = new();
+    [SerializeField] private List<CelestialData> _celestialData = new();
 
     // Start is called before the first frame update
     void Start() {
-        for (int i = 0; i < celestialData.Count; i++) {
+        for (int i = 0; i < _celestialData.Count; i++) {
             GameObject go = null;
-            switch (celestialData[i].BodyType) {
+            switch (_celestialData[i].BodyType) {
                 case CelestialType.STAR:
                     go = Instantiate(_star, transform);
                     break;
@@ -58,8 +58,10 @@ public class SolarSystemManager : MonoBehaviour {
             }
 
             if (go != null) {
-                go.name = celestialData[i].Name + " Controller";
-                celestialData[i].SetData(go.GetComponent<CelestialBodyController>());   
+                go.name = _celestialData[i].Name + " Controller";
+                CelestialBodyController cbc = go.GetComponent<CelestialBodyController>();
+                _celestialData[i].SetData(cbc);
+                cbc.CelestialBody.name = _celestialData[i].Name;
             }
         }
     }
@@ -67,14 +69,13 @@ public class SolarSystemManager : MonoBehaviour {
     private void OnValidate() {
         float seconds = _yearScale * 60;
         float dps = 360 / seconds;
-        for (int i = 0; i < celestialData.Count; i++) {
-            celestialData[i].SetCalculatedSpeed(dps);
+        for (int i = 0; i < _celestialData.Count; i++) {
+            _celestialData[i].SetCalculatedSpeed(dps);
         }
     }
 
-    // Update is called once per frame
-    void Update() {
-        
+    public List<CelestialData> GetCelestialBodies() {
+        return _celestialData;
     }
 
     public float GetTimeScale() {

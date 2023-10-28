@@ -13,6 +13,8 @@ public class CelestialBodyController : MonoBehaviour {
     private CelestialData _data;
     private bool _initialized = false;
 
+    public CelestialBody CelestialBody => _celestialBody;
+
     public void SetData(CelestialData data) {
         _data = data;
         _solarSystem = GameManager.Instance.GetSolarSystem();

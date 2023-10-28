@@ -31,8 +31,10 @@ namespace Repopulate.World {
 		public float MaximumDistance => _maxDistance;
 		public float MinimumScale => _scaleMin;
 		public float MaximumScale => _scaleMax;
+		public CelestialBodyController CelestialController { get; private set; }
 
 		public void SetData(CelestialBodyController controller) {
+			CelestialController = controller;
 			controller.SetData(this);
 		}
 
