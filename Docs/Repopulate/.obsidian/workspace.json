@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Gameplay/Time Scaling.md",
+                "file": "Gameplay/Station Modules.md",
                 "mode": "source",
                 "source": false
               }
@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "UI/Ship View UI.md",
+                "file": "Gameplay/Station Modules.md",
                 "mode": "source",
                 "source": false
               }
@@ -110,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "UI/Ship View UI.md",
+                "file": "Gameplay/Station Modules.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "UI/Ship View UI.md",
+                "file": "Gameplay/Station Modules.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "UI/Ship View UI.md"
+                "file": "Gameplay/Station Modules.md"
               }
             }
           },
@@ -182,16 +182,17 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "bb947c6576be991d",
+  "active": "2aa300ab46863e0b",
   "lastOpenFiles": [
-    "UI",
+    "Gameplay/Station Rings.md",
+    "Gameplay/Station Modules.md",
     "Gameplay/Time Scaling.md",
+    "Gameplay/Resources & Resource Mechanics/Resources.md",
+    "UI",
     "UI/Ship View UI.md",
     "Code Plans/Sample Scaling Estimates.md",
     "Gameplay/Solar Exploration.md",
     "Code Plans/SpaceGrid & The Solar System.md",
-    "Gameplay/Resources & Resource Mechanics/Resources.md",
-    "Gameplay/Station Modules.md",
     "Gameplay/Resource Gathering (Space).md",
     "Gameplay/Resource Gathering (Planet).md",
     "Gameplay/Galactic Exploration.md",

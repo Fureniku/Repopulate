@@ -11,6 +11,8 @@ public class ShipView : MonoBehaviour {
 
     private RectTransform _rect;
     public Transform ClosestVisibleObject { get; private set; }
+    
+    Plane[] planes;
 
     void Awake() {
         _rect = GetComponent<RectTransform>();
@@ -29,6 +31,16 @@ public class ShipView : MonoBehaviour {
                                   Vector3.Distance(_rect.position, currentClosest.position) > Vector3.Distance(_rect.position, bodyTransform.position)) ? bodyTransform : currentClosest;
             }
         }
+        
+        planes = GeometryUtility.CalculateFrustumPlanes(_overlayCamera);
+        if (currentClosest != null && GeometryUtility.TestPlanesAABB(planes, currentClosest.gameObject.GetComponent<Collider>().bounds))
+        {
+            Debug.Log(currentClosest.gameObject.name + " has been detected!");
+        }
+        else
+        {
+            Debug.Log("Nothing has been detected");
+        }
 
         if (currentClosest != null) {
             PositionTooltip(currentClosest);
@@ -39,15 +51,10 @@ public class ShipView : MonoBehaviour {
         ClosestVisibleObject = currentClosest;
     }
 
-    private Vector3 smoothScreenPosition;
-    private const float smoothingFactor = 0.1f;
-
-    void PositionTooltip(Transform currentClosest)
+    void PositionTooltip(Transform target)
     {
         _celestialTargetter.gameObject.SetActive(true);
-        Vector3 targetScreenPosition = _overlayCamera.WorldToScreenPoint(currentClosest.position);
-        smoothScreenPosition = Vector3.Lerp(smoothScreenPosition, targetScreenPosition, smoothingFactor);
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(_rect, smoothScreenPosition, null, out Vector2 localPosition);
-        _celestialTargetter.anchoredPosition = localPosition;
+        Vector3 targetScreenPosition = _overlayCamera.WorldToScreenPoint(target.position);
+        _celestialTargetter.position = new Vector3(targetScreenPosition.x, targetScreenPosition.y, 0);
     }
 }

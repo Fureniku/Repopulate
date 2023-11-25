@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider))]
 public class GravitySourceLine : GravityBase {
     
     [Tooltip("The first point. Gravity's centre is a line between Gravity Source B and this.")]
@@ -13,10 +12,14 @@ public class GravitySourceLine : GravityBase {
     [Tooltip("If the object is further than this, gravity has no effect")]
     [SerializeField] private float maxEffectDistance;
     
+    private BoxCollider cldr;
+    
     void Awake() {
 	    gravityDistance = Vector3.Distance(gravitySourceA, gravitySourceB);
+	    cldr = GetComponent<BoxCollider>();
+	    cldr.isTrigger = true;
     }
-    
+
     //Adjust gravitational positions to move with the gravitational object
     private Vector3 GravitySourceA() {
 	    return gravitySourceA + transform.position;

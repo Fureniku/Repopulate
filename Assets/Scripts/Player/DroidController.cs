@@ -60,6 +60,8 @@ public class DroidController : MonoBehaviour {
 	public bool isInElevator { get; private set; } = false;
 	private bool isDroidActive = false; //Whether this is the currently controlled droid. Not to be confused with playeractive which locks the camera etc
 
+	public bool grounded;
+	
 	void Awake() {
 		UpdateSelection();
 		rb = GetComponent<Rigidbody>();
@@ -70,6 +72,7 @@ public class DroidController : MonoBehaviour {
 	private void FixedUpdate() {
 		CheckGrounded();
 		Movement();
+		grounded = isGrounded;
 	}
 
 	#region Movement controls
