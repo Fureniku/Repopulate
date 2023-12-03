@@ -21,6 +21,10 @@ public class PreviewItem : MonoBehaviour {
 		go = goIn;
 		CombineMeshes();
 	}
+
+	public GameObject GetObject() {
+		return go;
+	}
 	
 	void OnEnable()  {
 		ScrollBarHandler.OnScrolled += UpdateObject;

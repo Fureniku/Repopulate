@@ -3,15 +3,11 @@ using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 
-public class DebugUIHandler_Ship : MonoBehaviour {
+public class DebugUIHandlerShip : DebugUIHandlerBase {
 
     [SerializeField] private ShipMoveController ship;
-    [SerializeField] private GameObject debugUIElement;
     [SerializeField] private ShipView _shipView;
-
-    private readonly List<TMP_Text> texts = new();
-    private readonly Dictionary<string, TMP_Text> debugLines = new Dictionary<string, TMP_Text>();
-
+    
     private Rigidbody shipRigidbody;
     private SolarSystemManager solarSystem;
 
@@ -21,7 +17,7 @@ public class DebugUIHandler_Ship : MonoBehaviour {
     private float DistanceToOrigin => Vector3.Distance(ship.transform.position, solarSystem.transform.position);
     private string ClosestVisibleObject => _shipView.ClosestVisibleObject == null ? "None Found" : _shipView.ClosestVisibleObject.name; 
 
-    void Awake() {
+    protected override void SetupTexts() {
         shipRigidbody = ship.ShipPhysicsObject().GetComponent<Rigidbody>();
         solarSystem = GameManager.Instance.GetSolarSystem();
         
@@ -30,13 +26,9 @@ public class DebugUIHandler_Ship : MonoBehaviour {
         texts.Add(CreateEntry(nameof(ShipPosition)));
         texts.Add(CreateEntry(nameof(DistanceToOrigin)));
         texts.Add(CreateEntry(nameof(ClosestVisibleObject)));
-
-        foreach (TMP_Text textComponent in texts) {
-            debugLines[textComponent.name] = textComponent;
-        }
     }
 
-    void Update() {
+    protected override void UpdateTexts() {
         UpdateText(nameof(ShipSpeed), $"Speed: {ShipSpeed}");
         UpdateText(nameof(AngularVelocity), $"Angular Velocity: {AngularVelocity}");
         UpdateText(nameof(ShipPosition), $"Position: {ShipPosition}");
@@ -44,13 +36,5 @@ public class DebugUIHandler_Ship : MonoBehaviour {
         UpdateText(nameof(ClosestVisibleObject), $"Closest visible object: {ClosestVisibleObject}");
     }
 
-    private TMP_Text CreateEntry(string entryName) {
-        TMP_Text text = Instantiate(debugUIElement, transform).GetComponent<TMP_Text>();
-        text.gameObject.name = entryName;
-        return text;
-    }
-
-    private void UpdateText(string entry, string text) {
-        debugLines[entry].SetText(text);
-    }
+    
 }
