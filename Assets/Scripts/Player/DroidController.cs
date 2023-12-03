@@ -16,6 +16,8 @@ public class DroidController : MonoBehaviour {
 	[SerializeField] private GravityBase gravitySource;
 
 	[SerializeField] private CharacterController characterController;
+	
+	[SerializeField] private Transform footPoint;
 
 	[Header("Control settings")]
 	[Tooltip("Realistic space controls with momentum. Set to false for precise transform controls.")]
@@ -175,30 +177,23 @@ public class DroidController : MonoBehaviour {
 
 	//Check if the character is touching the floor in some way, while within gravity
 	private void CheckGrounded() {
-		if (forcedNotGrounded) {
-			isGrounded = false;
+		isGrounded = false;
+		if (forcedNotGrounded || gravitySource == null) {
 			return;
 		}
-		
-		if (gravitySource == null) {
-			return;
-		}
-
-		Vector3 pos = transform.position;
-		Vector3 customGravityDirection = gravitySource.GetPullDirection(pos); // Replace this with your own method to get the gravity direction
-
-		Vector3 bottom = pos - customGravityDirection * capsuleCollider.bounds.extents.y;
 
 		LayerMask layerMask = LayerMask.GetMask("Floor") | LayerMask.GetMask("Wall");
-		isGrounded = false;
-
-		if (Physics.Raycast(bottom, customGravityDirection, out var hitInfo, Mathf.Infinity, layerMask)) {
-			if (hitInfo.distance < groundedDistance) {
+		Collider[] hitColliders = Physics.OverlapSphere(footPoint.position, 2f, layerMask);
+		int colliderCount = hitColliders.Length;
+		for (int i = 0; i < colliderCount; i++) {
+			Collider col = hitColliders[i];
+			Vector3 footPos = footPoint.position;
+			if (Vector3.Distance(footPos, col.ClosestPoint(footPos)) < groundedDistance) {
 				isGrounded = true;
 			}
 		}
 	}
-	
+
 	private void ClampVelocity() {
 		Vector3 velocityIn = rb.velocity;
 		float currentSpeed = velocityIn.magnitude;
@@ -345,5 +340,9 @@ public class DroidController : MonoBehaviour {
 		} else {
 			isInElevator = false;
 		}
+	}
+
+	public void OnDrawGizmos() {
+		Gizmos.DrawSphere(footPoint.position, 0.5f);
 	}
 }
