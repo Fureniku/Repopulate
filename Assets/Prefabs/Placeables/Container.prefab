@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1482030462163654852}
   - component: {fileID: -2542280703576830943}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Container
   m_TagString: PlaceableObject
   m_Icon: {fileID: 0}
@@ -45,11 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec59daf2a4c80e248bea1b89ee7a5a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 4, y: 2, z: 2}
-  mustBeGrounded: 1
-  wallMount: 0
-  rotationOrigin: {fileID: 3330992724306575114}
-  visibleObjects: []
+  showDebugSizeBox: 0
+  item: {fileID: 0}
 --- !u!1 &5058287274878027966
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,7 +59,7 @@ GameObject:
   - component: {fileID: 3723854916468558498}
   - component: {fileID: 1743973170368170750}
   - component: {fileID: 1745689517888028833}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ContainerObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}

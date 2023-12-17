@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GridCollider : MonoBehaviour {
-
-    [SerializeField] private BuildingGrid grid;
+public class GridCollider : BuildableBase {
     
     // Start is called before the first frame update
     void Awake() {
@@ -29,9 +25,5 @@ public class GridCollider : MonoBehaviour {
         }
 
         return foundGrid;
-    }
-
-    public BuildingGrid GetGrid() {
-        return grid;
     }
 }

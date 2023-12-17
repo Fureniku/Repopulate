@@ -158,22 +158,54 @@ public class BuildingGrid : MonoBehaviour {
         return modifiedRotation;
     }
 
-    public void PlaceBlock(Vector3Int gridSpace, Item item, float rotation) {
+    public void TryPlaceBlock(Vector3Int gridSpace, Item item, float rotation, Direction dir) {
         // Check if the block's grid space is available
-        if (CheckGridSpaceAvailability(gridSpace, Vector3Int.one, rotation)) {
-            GameObject block = item.Get();
-            
-            GameObject newBlock = Instantiate(block, GetPlacementPosition(gridSpace, item), GetPlacementRotation(rotation));
-            newBlock.transform.SetParent(transform);
-            newBlock.GetComponent<PlaceableObject>().Place(this);
-            
-            // Occupy the grid space
-            ModifyGridSpaceOccupancy(gridSpace, newBlock.GetComponent<PlaceableObject>().GetItem().GetSize(), rotation, true);
-            OnGridChanged();
+        if (CheckGridSpaceAvailability(gridSpace, Vector3Int.one, rotation)) { //TODO size
+            PlaceBlock(gridSpace, item, rotation);
         } else {
-            //TODO UI feedback
-            Debug.Log($"Invalid or occupied space {gridSpace} - replace me with UI feedback!");
+            switch (dir) {
+                case Direction.X_POS:
+                    gridSpace.x++;
+                    break;
+                case Direction.X_NEG:
+                    gridSpace.x--;
+                    break;
+                case Direction.Y_POS:
+                    gridSpace.y++;
+                    break;
+                case Direction.Y_NEG:
+                    gridSpace.y--;
+                    break;
+                case Direction.Z_POS:
+                    gridSpace.z++;
+                    break;
+                case Direction.Z_NEG:
+                    gridSpace.z--;
+                    break;
+                case Direction.NONE:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
+            }
+            if (CheckGridSpaceAvailability(gridSpace, Vector3Int.one, rotation)) {
+                PlaceBlock(gridSpace, item, rotation);
+            } else {
+                //TODO UI feedback
+                Debug.Log($"Invalid or occupied space {gridSpace} - replace me with UI feedback!");
+            }
         }
+    }
+
+    public void PlaceBlock(Vector3Int gridSpace, Item item, float rotation) {
+        GameObject block = item.Get();
+            
+        GameObject newBlock = Instantiate(block, GetPlacementPosition(gridSpace, item), GetPlacementRotation(rotation));
+        newBlock.transform.SetParent(transform);
+        newBlock.GetComponent<PlaceableObject>().Place(this);
+            
+        // Occupy the grid space
+        ModifyGridSpaceOccupancy(gridSpace, newBlock.GetComponent<PlaceableObject>().GetItem().GetSize(), rotation, true);
+        OnGridChanged();
     }
 
     public void RemoveBlock(GameObject block) {

@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PreviewItem : MonoBehaviour {
 
-	[SerializeField] private GameObject go;
+	[SerializeField] private GameObject itemObject;
 	[SerializeField] private Material invalidPlace;
 	[SerializeField] private Material validPlace;
 	[SerializeField] private DroidController droid;
@@ -18,12 +19,12 @@ public class PreviewItem : MonoBehaviour {
 			Debug.LogWarning("Trying to set null object for PreviewItem");
 			return;
 		}
-		go = goIn;
+		itemObject = goIn;
 		CombineMeshes();
 	}
 
 	public GameObject GetObject() {
-		return go;
+		return itemObject;
 	}
 	
 	void OnEnable()  {
@@ -41,28 +42,23 @@ public class PreviewItem : MonoBehaviour {
 	}
 	
 	public void UpdatePreview(Camera cam) {
-		if (go == null) {
+		if (itemObject == null) {
 			return;
 		}
 		
-		Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+		Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
 		
 		if (Physics.Raycast(ray, out RaycastHit hit, placeableRange, LayerMask.GetMask("BuildingGrid"))) {
 			meshRenderer.enabled = true;
 			BuildingGrid targetGrid = null;
-			if (hit.transform.parent.GetComponent<PlaceableObject>() != null) { //TODO not ideal; won't work if there's nested children in more complex objects.
-				targetGrid = hit.transform.parent.GetComponent<PlaceableObject>().GetParentGrid();
-			}
-
-			if (hit.transform.GetComponent<GridCollider>() != null) {
-				targetGrid = hit.transform.GetComponent<GridCollider>().GetGrid();
-			}
-
-			if (targetGrid == null) {
-				Debug.LogError($"You forgot to add a GridCollider or PlaceableObject component to {hit.transform.name}, so nothing works!!");
+			if (hit.transform.GetComponent<BuildableBase>() != null) { //TODO not ideal; won't work if there's nested children in more complex objects.
+				targetGrid = hit.transform.GetComponent<BuildableBase>().GetGrid();
+			} else {
+				Debug.LogError($"You forgot to add a BuildableBase child component to {hit.transform.name}, so nothing works!!");
+				return;
 			}
 			
-			PlaceableObject placeable = go.GetComponent<PlaceableObject>();
+			PlaceableObject placeable = itemObject.GetComponent<PlaceableObject>();
 
 			Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
 
@@ -85,7 +81,7 @@ public class PreviewItem : MonoBehaviour {
 	}
 	
     private void CombineMeshes() {
-        MeshFilter[] meshFilters = go.GetComponentsInChildren<MeshFilter>();
+        MeshFilter[] meshFilters = itemObject.GetComponentsInChildren<MeshFilter>();
         
         Mesh combinedMesh = new Mesh();
         

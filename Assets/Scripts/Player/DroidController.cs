@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using NUnit.Framework.Constraints;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,7 +9,6 @@ public class DroidController : MonoBehaviour {
 	[SerializeField] private float heldRotation = 0;
 	
 	[SerializeField] private Rigidbody rb;
-	[SerializeField] private CapsuleCollider capsuleCollider;
 
 	[SerializeField] private GravityBase gravitySource;
 
@@ -67,10 +64,9 @@ public class DroidController : MonoBehaviour {
 	void Awake() {
 		UpdateSelection();
 		rb = GetComponent<Rigidbody>();
-		capsuleCollider = GetComponent<CapsuleCollider>();
 		isInGravity = gravitySource != null;
 	}
-	
+
 	private void FixedUpdate() {
 		CheckGrounded();
 		Movement();
@@ -182,7 +178,7 @@ public class DroidController : MonoBehaviour {
 			return;
 		}
 
-		LayerMask layerMask = LayerMask.GetMask("Floor") | LayerMask.GetMask("Wall");
+		LayerMask layerMask = Constants.MASK_STANDABLE;
 		Collider[] hitColliders = Physics.OverlapSphere(footPoint.position, 2f, layerMask);
 		int colliderCount = hitColliders.Length;
 		for (int i = 0; i < colliderCount; i++) {
@@ -316,7 +312,6 @@ public class DroidController : MonoBehaviour {
 		if (gravity != null) {
 			isInGravity = true;
 			currentGravities.Add(gravity);
-			Debug.Log($"Adding {gravity} to list of gravities. Total now {currentGravities.Count}");
 		}
 	}
 
@@ -325,7 +320,6 @@ public class DroidController : MonoBehaviour {
 
 		if (gravity != null) {
 			currentGravities.Remove(gravity);
-			Debug.Log($"Removing {gravity} from list of gravities. Total now {currentGravities.Count}");
 		}
 	}
 
