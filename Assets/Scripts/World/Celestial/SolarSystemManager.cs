@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Repopulate.World;
 using UnityEngine;
 
 public class SolarSystemManager : MonoBehaviour {
@@ -10,54 +12,70 @@ public class SolarSystemManager : MonoBehaviour {
     [SerializeField] private int planetCount;
     [SerializeField] private Transform originPoint;
 
+    [Tooltip("How many real minutes should one Earth-type year take")]
+    [SerializeField] private float _yearScale = 1460;
+
     [SerializeField] private float currentPlanetDistance = 25f;
     [SerializeField] private float minDistanceIncrease = 10f;
     [SerializeField] private float maxDistanceIncrease = 15f;
     [SerializeField] private float lastOrbitalSpeed = 25f;
     [SerializeField] private float orbitalReduction = 1f;
 
-    private List<PlanetOrbitalSystem> celestialObjects = new();
-    private List<PlanetOrbitalSystem> visibleObjects = new();
-
-    private SolarPosition ship;
+    [Header("Prefabs")]
+    [SerializeField] private GameObject _star;
+    [SerializeField] private GameObject _planet;
+    [SerializeField] private GameObject _moon;
+    [SerializeField] private GameObject _asteroid;
+    [SerializeField] private GameObject _comet;
+    [SerializeField] private GameObject _dwarfPlanet;
     
+    [Header("Celestial bodies")]
+    [SerializeField] private List<CelestialData> _celestialData = new();
+
     // Start is called before the first frame update
     void Start() {
-        ship = GameManager.Instance.GetShipController().ShipPhysicsObject().GetComponent<SolarPosition>();
-        for (int i = 0; i < planetCount; i++) {
-            PlanetOrbitalSystem planet = Instantiate(planetPrefab, transform).GetComponent<PlanetOrbitalSystem>();
-            currentPlanetDistance = Random.Range(currentPlanetDistance + minDistanceIncrease, currentPlanetDistance + maxDistanceIncrease);
-            lastOrbitalSpeed = Random.Range(Mathf.Min(15f - orbitalReduction*i, lastOrbitalSpeed - orbitalReduction*i), lastOrbitalSpeed);
-            planet.Setup(originPoint, 0f, currentPlanetDistance, this);
-            celestialObjects.Add(planet);
+        for (int i = 0; i < _celestialData.Count; i++) {
+            GameObject go = null;
+            switch (_celestialData[i].BodyType) {
+                case CelestialType.STAR:
+                    go = Instantiate(_star, transform);
+                    break;
+                case CelestialType.PLANET_ROCK:
+                    go = Instantiate(_planet, transform);
+                    break;
+                case CelestialType.PLANET_GAS:
+                    go = Instantiate(_planet, transform);
+                    break;
+                case CelestialType.ASTEROID:
+                    go = Instantiate(_asteroid, transform);
+                    break;
+                case CelestialType.COMET:
+                    go = Instantiate(_comet, transform);
+                    break;
+                case CelestialType.PLANET_DWARF:
+                    go = Instantiate(_dwarfPlanet, transform);
+                    break;
+            }
+
+            if (go != null) {
+                go.name = _celestialData[i].Name + " Controller";
+                CelestialBodyController cbc = go.GetComponent<CelestialBodyController>();
+                _celestialData[i].SetData(cbc);
+                cbc.CelestialBody.name = _celestialData[i].Name;
+            }
         }
     }
 
-    // Update is called once per frame
-    void Update() {
-        Vector3Int playerPos = ship.GetGridSpace();
-        for (int i = 0; i < celestialObjects.Count; i++) {
-            PlanetOrbitalSystem celestialObject = celestialObjects[i];
-            Vector3Int celestialPos = celestialObject.GetComponent<PlanetOrbitalSystem>().GetGridSpace();
-            if (visibleObjects.Contains(celestialObject)) {
-                if (celestialPos != playerPos) {
-                    Debug.Log("Destroy planet");
-                    visibleObjects.Remove(celestialObject);
-                    celestialObject.DestroyPlanet();
-                }
-            } else {
-                if (celestialPos == playerPos) {
-                    Debug.Log("Create planet");
-                    celestialObject.CreatePlanet();
-                    visibleObjects.Add(celestialObject);
-                }
-            }
+    private void OnValidate() {
+        float seconds = _yearScale * 60;
+        float dps = 360 / seconds;
+        for (int i = 0; i < _celestialData.Count; i++) {
+            _celestialData[i].SetCalculatedSpeed(dps);
         }
+    }
 
-        for (int i = 0; i < visibleObjects.Count; i++) {
-            GameObject planet = visibleObjects[i].GetPlanet().gameObject;
-            planet.transform.position = visibleObjects[i].transform.localPosition * 100f;
-        }
+    public List<CelestialData> GetCelestialBodies() {
+        return _celestialData;
     }
 
     public float GetTimeScale() {

@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using NUnit.Framework.Constraints;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,11 +9,12 @@ public class DroidController : MonoBehaviour {
 	[SerializeField] private float heldRotation = 0;
 	
 	[SerializeField] private Rigidbody rb;
-	[SerializeField] private CapsuleCollider capsuleCollider;
 
 	[SerializeField] private GravityBase gravitySource;
 
 	[SerializeField] private CharacterController characterController;
+	
+	[SerializeField] private Transform footPoint;
 
 	[Header("Control settings")]
 	[Tooltip("Realistic space controls with momentum. Set to false for precise transform controls.")]
@@ -60,16 +59,18 @@ public class DroidController : MonoBehaviour {
 	public bool isInElevator { get; private set; } = false;
 	private bool isDroidActive = false; //Whether this is the currently controlled droid. Not to be confused with playeractive which locks the camera etc
 
+	public bool grounded;
+	
 	void Awake() {
 		UpdateSelection();
 		rb = GetComponent<Rigidbody>();
-		capsuleCollider = GetComponent<CapsuleCollider>();
 		isInGravity = gravitySource != null;
 	}
-	
+
 	private void FixedUpdate() {
 		CheckGrounded();
 		Movement();
+		grounded = isGrounded;
 	}
 
 	#region Movement controls
@@ -172,30 +173,23 @@ public class DroidController : MonoBehaviour {
 
 	//Check if the character is touching the floor in some way, while within gravity
 	private void CheckGrounded() {
-		if (forcedNotGrounded) {
-			isGrounded = false;
-			return;
-		}
-		
-		if (gravitySource == null) {
-			return;
-		}
-
-		Vector3 pos = transform.position;
-		Vector3 customGravityDirection = gravitySource.GetPullDirection(pos); // Replace this with your own method to get the gravity direction
-
-		Vector3 bottom = pos - customGravityDirection * capsuleCollider.bounds.extents.y;
-
-		LayerMask layerMask = LayerMask.GetMask("Floor") | LayerMask.GetMask("Wall");
 		isGrounded = false;
+		if (forcedNotGrounded || gravitySource == null) {
+			return;
+		}
 
-		if (Physics.Raycast(bottom, customGravityDirection, out var hitInfo, Mathf.Infinity, layerMask)) {
-			if (hitInfo.distance < groundedDistance) {
+		LayerMask layerMask = Constants.MASK_STANDABLE;
+		Collider[] hitColliders = Physics.OverlapSphere(footPoint.position, 2f, layerMask);
+		int colliderCount = hitColliders.Length;
+		for (int i = 0; i < colliderCount; i++) {
+			Collider col = hitColliders[i];
+			Vector3 footPos = footPoint.position;
+			if (Vector3.Distance(footPos, col.ClosestPoint(footPos)) < groundedDistance) {
 				isGrounded = true;
 			}
 		}
 	}
-	
+
 	private void ClampVelocity() {
 		Vector3 velocityIn = rb.velocity;
 		float currentSpeed = velocityIn.magnitude;
@@ -318,7 +312,6 @@ public class DroidController : MonoBehaviour {
 		if (gravity != null) {
 			isInGravity = true;
 			currentGravities.Add(gravity);
-			Debug.Log($"Adding {gravity} to list of gravities. Total now {currentGravities.Count}");
 		}
 	}
 
@@ -327,7 +320,6 @@ public class DroidController : MonoBehaviour {
 
 		if (gravity != null) {
 			currentGravities.Remove(gravity);
-			Debug.Log($"Removing {gravity} from list of gravities. Total now {currentGravities.Count}");
 		}
 	}
 
@@ -342,5 +334,9 @@ public class DroidController : MonoBehaviour {
 		} else {
 			isInElevator = false;
 		}
+	}
+
+	public void OnDrawGizmos() {
+		Gizmos.DrawSphere(footPoint.position, 0.5f);
 	}
 }

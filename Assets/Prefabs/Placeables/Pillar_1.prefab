@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2187904420691561020}
   - component: {fileID: 2187904420691561021}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Pillar_1
   m_TagString: PlaceableObject
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5691826214795474293}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: RotationOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 6364565462349865321}
   - component: {fileID: 8069501672689921740}
   - component: {fileID: 5194997061049293318}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Pillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

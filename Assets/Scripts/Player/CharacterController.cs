@@ -104,32 +104,34 @@ public class CharacterController : MonoBehaviour {
             // Set the camera to always look in the direction of Object A's forward vector.
             fpCam.transform.localRotation = Quaternion.identity;
         }
+        
+        currentDroid.UpdatePreview(fpCam);
     }
 
     public void ResetCamera() {
         fpCam.transform.localRotation = Quaternion.identity;
     }
-
-
     
     public void HandlePlaceObject(InputAction.CallbackContext context) {
-        Debug.Log("Starting placement");
-        if (currentDroid.GetPreviewItem().IsPlaceable()) {
-            Debug.Log("its placeable!");
-            Vector2 mousePosition = Mouse.current.position.ReadValue();
-            Ray ray = fpCam.ScreenPointToRay(mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
-                BuildingGrid targetGrid = hit.transform.GetComponent<GridCollider>().GetGrid();
+        if (context.started) {
+            Debug.LogWarning($"Starting placement from {transform.name} (right click triggered)");
+            if (currentDroid.GetPreviewItem().IsPlaceable()) {
+                Vector2 mousePosition = Mouse.current.position.ReadValue();
+                Ray ray = fpCam.ScreenPointToRay(mousePosition);
+                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Constants.MASK_BUILDABLE)) {
+                    Debug.Log($"Attempting to place a block in the grid after clicking {hit.transform.name}");
+                    Direction dir = ColliderUtilities.GetHitFace(hit.normal);
+                    BuildingGrid targetGrid = hit.transform.GetComponent<BuildableBase>().GetGrid();
     
-                if (targetGrid != null) {
-                    PlaceBlock(targetGrid, targetGrid.GetHitSpace(hit.point));
+                    if (targetGrid != null) {
+                        PlaceBlock(targetGrid, targetGrid.GetHitSpace(hit.point), dir);
+                    }
                 }
             }
         }
     }
 
-    private void PlaceBlock(BuildingGrid targetGrid, Vector3Int gridPosition) {
-        Debug.Log("why is all this commented out i really need to clean up my code");
+    private void PlaceBlock(BuildingGrid targetGrid, Vector3Int gridPosition, Direction dir) {
         //Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
         //if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
 
@@ -149,7 +151,7 @@ public class CharacterController : MonoBehaviour {
             }
 
             // Place the block
-            targetGrid.PlaceBlock(gridPosition, currentDroid.GetHeldItem(), currentDroid.GetHeldRotation());
+            targetGrid.TryPlaceBlock(gridPosition, currentDroid.GetHeldItem(), currentDroid.GetHeldRotation(), dir);
        //}
     }
 }

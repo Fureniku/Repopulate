@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1586145548690292378}
   - component: {fileID: 4748308284185219358}
   - component: {fileID: 2061999288676595914}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 8007410026116599451}
   - component: {fileID: 2058941499874516985}
   - component: {fileID: 8081643441388192845}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Area Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -324,7 +324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 136381968099273203}
   - component: {fileID: 4835902470755211477}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: WallLight
   m_TagString: PlaceableObject
   m_Icon: {fileID: 0}

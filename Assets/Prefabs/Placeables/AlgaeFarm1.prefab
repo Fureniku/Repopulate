@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8054073359127889988}
   - component: {fileID: 2610342390315771999}
   - component: {fileID: 2694991506385823743}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 8229707912164173745}
   - component: {fileID: 3850440055129250991}
   - component: {fileID: 4494103660179047138}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Caps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 4511945896559034819}
   - component: {fileID: 4791001959105972894}
   - component: {fileID: 3589160637863017910}
-  m_Layer: 8
+  m_Layer: 14
   m_Name: Tanks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 5661035487808240656}
   - component: {fileID: 492931236781777059}
   - component: {fileID: 3200096352361078013}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Point Light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -477,7 +477,8 @@ GameObject:
   - component: {fileID: 6746418196245584605}
   - component: {fileID: 107592285966079195}
   - component: {fileID: -924178002190525433}
-  m_Layer: 0
+  - component: {fileID: 3142465886772855722}
+  m_Layer: 14
   m_Name: AlgaeFarm1
   m_TagString: PlaceableObject
   m_Icon: {fileID: 0}
@@ -516,6 +517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec59daf2a4c80e248bea1b89ee7a5a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grid: {fileID: 0}
   showDebugSizeBox: 0
   item: {fileID: 11400000, guid: 4171680838cf7584dbf218148a924fd0, type: 2}
 --- !u!114 &-924178002190525433
@@ -531,6 +533,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   producedAmount: 50
+--- !u!65 &3142465886772855722
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6855721786531555465}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 3, z: 1}
+  m_Center: {x: 2, y: 1.5, z: 0.5}
 --- !u!1 &8675450669256819624
 GameObject:
   m_ObjectHideFlags: 0
@@ -542,7 +557,7 @@ GameObject:
   - component: {fileID: 6795403285590337249}
   - component: {fileID: 916209100399665775}
   - component: {fileID: 4600316318507267876}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Algae
   m_TagString: Untagged
   m_Icon: {fileID: 0}
