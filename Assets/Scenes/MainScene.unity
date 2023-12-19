@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.0036981925, g: 0.0056150854, b: 0.01763621, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: cb6c78588ab9059428292e664b058114, type: 2}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: d43d914419efd7b40b3a1949a9bcb943, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -739,7 +739,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb3f85c7bd65d54499751e942931ff78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObject: {fileID: 0}
   invalidPlace: {fileID: 2100000, guid: 12d45c9fe86d91b41bd3de9970305c6f, type: 2}
   validPlace: {fileID: 2100000, guid: 3a552eea9c2512844a8d1bb9aa79c67e, type: 2}
   droid: {fileID: 1595712873}
@@ -4879,6 +4878,166 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: df804514-fc03-4b82-8686-67158e63021c
     m_ActionName: Ship/Release Cursor[/Keyboard/f3]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1928587995}
+        m_TargetAssemblyTypeName: ScrollBarHandler, Assembly-CSharp
+        m_MethodName: HandleScroll
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 60c94304-45a7-4d19-8223-4dbce0f551df
+    m_ActionName: General/ScrollBar[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1928587995}
+        m_TargetAssemblyTypeName: ScrollBarHandler, Assembly-CSharp
+        m_MethodName: HandleHotbarKey
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b5eaf624-dd86-4bd1-9b8d-e55d35ec031c
+    m_ActionName: General/HotBar1[/Keyboard/1]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1928587995}
+        m_TargetAssemblyTypeName: ScrollBarHandler, Assembly-CSharp
+        m_MethodName: HandleHotbarKey
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7eb410fe-d96f-494d-848d-4da9d684f594
+    m_ActionName: General/HotBar2[/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1928587995}
+        m_TargetAssemblyTypeName: ScrollBarHandler, Assembly-CSharp
+        m_MethodName: HandleHotbarKey
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 85482ed8-71a0-476d-a1ec-9410c26123ab
+    m_ActionName: General/HotBar3[/Keyboard/3]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1928587995}
+        m_TargetAssemblyTypeName: ScrollBarHandler, Assembly-CSharp
+        m_MethodName: HandleHotbarKey
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 73d64a21-4a1b-4a05-a12d-84cf0a2e3c5a
+    m_ActionName: General/HotBar4[/Keyboard/4]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1928587995}
+        m_TargetAssemblyTypeName: ScrollBarHandler, Assembly-CSharp
+        m_MethodName: HandleHotbarKey
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e70fa16a-b057-468e-8c6c-7639d9bcbfcb
+    m_ActionName: General/HotBar5[/Keyboard/5]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1928587995}
+        m_TargetAssemblyTypeName: ScrollBarHandler, Assembly-CSharp
+        m_MethodName: HandleHotbarKey
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9a6919f6-0284-4467-9e13-8f7105774558
+    m_ActionName: General/HotBar6[/Keyboard/6]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1928587995}
+        m_TargetAssemblyTypeName: ScrollBarHandler, Assembly-CSharp
+        m_MethodName: HandleHotbarKey
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 215ce80d-02ab-4411-a0e8-9f8eb09d624f
+    m_ActionName: General/HotBar7[/Keyboard/7]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1928587995}
+        m_TargetAssemblyTypeName: ScrollBarHandler, Assembly-CSharp
+        m_MethodName: HandleHotbarKey
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3a3204d4-ebb4-41df-a0b7-5b2387d6f0fa
+    m_ActionName: General/HotBar8[/Keyboard/8]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1928587995}
+        m_TargetAssemblyTypeName: ScrollBarHandler, Assembly-CSharp
+        m_MethodName: HandleHotbarKey
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 29e74109-0563-43a7-a34f-c34d8e3dfc65
+    m_ActionName: General/HotBar9[/Keyboard/9]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: General
@@ -8409,6 +8568,110 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 798482343704833665, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: showDebugSizeBox
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[0].size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[0].size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[4].size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[4].size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[5].size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[5].size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[5].size.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[6].size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[6].size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[6].size.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[7].size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[7].size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[7].size.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[0].position.z
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[1].position.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[5].position.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[5].position.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[5].position.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[6].position.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[6].position.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[6].position.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[7].position.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[7].position.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584648016479865619, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: occupiedSlots.Array.data[7].position.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3086668207741701801, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -11655,6 +11918,7 @@ MonoBehaviour:
   character: {fileID: 644350861}
   shipMoveController: {fileID: 634727218}
   solarSystem: {fileID: 246409560}
+  emptyItem: {fileID: 11400000, guid: ea4e9315a5cec72438c7955be86150d1, type: 2}
 --- !u!4 &1783198910
 Transform:
   m_ObjectHideFlags: 0

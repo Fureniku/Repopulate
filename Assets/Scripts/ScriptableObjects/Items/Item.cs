@@ -11,11 +11,13 @@ public class Item : ScriptableObject {
 	[SerializeField] private Category category;
 	
 	[Header("Placement Data")]
-	[SerializeField] private Vector3Int size;
+	[SerializeField] private Vector3Int size = Vector3Int.one;
 	[SerializeField] private Vector3 rotationOrigin;
 	[SerializeField] private bool mustBeGrounded = false;
 	[SerializeField] private bool wallMount = false;
 	[SerializeField] private bool mustBeOnCeiling = false;
+	[SerializeField] private bool placeable = true;
+	[SerializeField] private bool destroyable = true;
 
 	[Header("Prefab Information")]
 	[SerializeField] private PlaceableObject prefab;
@@ -40,23 +42,11 @@ public class Item : ScriptableObject {
 	public int GetY() { return size.y; }
 	public int GetZ() { return size.z; }
 
-	public bool MustBeGrounded() {
-		return mustBeGrounded;
-	}
-
-	public bool WallMounted() {
-		return wallMount;
-	}
-
-	public bool MustBeOnCeiling() {
-		return mustBeOnCeiling;
-	}
-
-	public string GetItemName() {
-		return itemName;
-	}
-
-	public string GetItemUnlocalizedName() {
-		return itemName;
-	}
+	public bool MustBeGrounded => mustBeGrounded;
+	public bool WallMounted => wallMount;
+	public bool MustBeOnCeiling => mustBeOnCeiling;
+	public string GetItemName => itemName;
+	public string GetItemUnlocalizedName => itemName;
+	public bool IsPlaceable => placeable;
+	public bool IsDestroyable => destroyable;
 }

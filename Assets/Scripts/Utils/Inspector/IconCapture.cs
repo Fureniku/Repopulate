@@ -57,8 +57,8 @@ public class IconCapture : MonoBehaviour {
         Texture2D croppedTexture = CropTexture(texture);
 
         byte[] bytes = croppedTexture.EncodeToPNG();
-        string name = item.GetItemUnlocalizedName();
-        System.IO.File.WriteAllBytes(Application.dataPath + $"/Textures/Icons/{name}.png", bytes); // Save image as PNG in project directory
+        string iconName = item.GetItemUnlocalizedName;
+        System.IO.File.WriteAllBytes(Application.dataPath + $"/Textures/Icons/{iconName}.png", bytes); // Save image as PNG in project directory
 
         camera.targetTexture = null;
         renderTexture.Release();

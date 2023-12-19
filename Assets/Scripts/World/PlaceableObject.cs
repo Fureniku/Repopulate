@@ -36,7 +36,6 @@ public class PlaceableObject : BuildableBase {
             if (grid != null) {
                 grid.RemoveOccupiedSlot(space);
                 Vector3Int approxPosition = Vector3Int.RoundToInt(transform.localPosition);
-                Debug.Log($"approximating position as {approxPosition}");
                 transform.localPosition = approxPosition;
                 space.position = approxPosition;
                 space.size = item.GetSize();

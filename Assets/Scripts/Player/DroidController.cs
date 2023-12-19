@@ -229,7 +229,7 @@ public class DroidController : MonoBehaviour {
 		Debug.Log($"UpdateSelection! scrollbar selection: {scrollbar.GetHeldItem().name}");
 		Debug.Log($"UpdateSelection! scrollbar item SO: {scrollbar.GetHeldItem().Get().name}");
 		
-		heldItem.SetObject(scrollbar.GetHeldItem().Get());
+		heldItem.SetObject(scrollbar.GetHeldItem());
 	}
 
 	public void UpdatePreview(Camera cam) {

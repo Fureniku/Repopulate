@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ScrollBarHandler : MonoBehaviour {
@@ -22,24 +23,39 @@ public class ScrollBarHandler : MonoBehaviour {
         UpdateSlot(4);
     }
 
-    void Update() {
-        /*float mouseScroll = Input.mouseScrollDelta.y;
-
-        if (mouseScroll > 0) {
-            SelectSlot(selectedId-1);
-        } else if (mouseScroll < 0) {
-            SelectSlot(selectedId+1);
+    public void HandleScroll(InputAction.CallbackContext context) {
+        if (context.started) {
+            float scroll = context.ReadValue<Vector2>().y;
+            
+            if (scroll > 0) {
+                SelectSlot(selectedId-1);
+            } else if (scroll < 0) {
+                SelectSlot(selectedId+1);
+            }
         }
+    }
+    
+    public void HandleHotbarKey(InputAction.CallbackContext context) {
+        if (context.started) {
+            int slotIndex = context.action.name switch
+            {
+                "HotBar1" => 0,
+                "HotBar2" => 1,
+                "HotBar3" => 2,
+                "HotBar4" => 3,
+                "HotBar5" => 4,
+                "HotBar6" => 5,
+                "HotBar7" => 6,
+                "HotBar8" => 7,
+                "HotBar9" => 8,
+                // Add more cases if needed
+                _ => -1 // Default case, if none of the above matches
+            };
 
-        if (Input.GetKeyDown(KeyCode.Alpha1)) { SelectSlot(0); }
-        if (Input.GetKeyDown(KeyCode.Alpha2)) { SelectSlot(1); }
-        if (Input.GetKeyDown(KeyCode.Alpha3)) { SelectSlot(2); }
-        if (Input.GetKeyDown(KeyCode.Alpha4)) { SelectSlot(3); }
-        if (Input.GetKeyDown(KeyCode.Alpha5)) { SelectSlot(4); }
-        if (Input.GetKeyDown(KeyCode.Alpha6)) { SelectSlot(5); }
-        if (Input.GetKeyDown(KeyCode.Alpha7)) { SelectSlot(6); }
-        if (Input.GetKeyDown(KeyCode.Alpha8)) { SelectSlot(7); }
-        if (Input.GetKeyDown(KeyCode.Alpha9)) { SelectSlot(8); }*/
+            if (slotIndex != -1) {
+                SelectSlot(slotIndex);
+            }
+        }
     }
 
     public void UpdateSlot(int id) {
@@ -49,16 +65,12 @@ public class ScrollBarHandler : MonoBehaviour {
     }
 
     public void SelectSlot(int id) {
-        if (id == slots.Length + 1) {
+        if (id >= slots.Length) {
             selectedId = 0;
-        } else if (id == -1) {
-            selectedId = slots.Length;
-        } else if (id >= 0 && id <= slots.Length) {
-            selectedId = id;
         } else if (id < 0) {
-            selectedId = 0;
+            selectedId = slots.Length-1;
         } else {
-            selectedId = slots.Length;
+            selectedId = id;
         }
         UpdateSelectionBox();
         OnScrolled();

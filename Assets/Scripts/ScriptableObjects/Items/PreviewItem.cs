@@ -5,7 +5,9 @@ using UnityEngine.InputSystem;
 
 public class PreviewItem : MonoBehaviour {
 
-	[SerializeField] private GameObject itemObject;
+	private Item _item;
+	private GameObject _itemObject;
+	
 	[SerializeField] private Material invalidPlace;
 	[SerializeField] private Material validPlace;
 	[SerializeField] private DroidController droid;
@@ -14,17 +16,23 @@ public class PreviewItem : MonoBehaviour {
 	
 	private bool canPlaceNow = true; //Updated with the preview, changes the material shading and also allows/disallows placement.
 
-	public void SetObject(GameObject goIn) {
-		if (goIn == null) {
-			Debug.LogWarning("Trying to set null object for PreviewItem");
+	public void SetObject(Item item) {
+		if (item == null) {
+			_item = GameManager.Instance.EmptyItem;
+			_itemObject = _item.Get();
 			return;
 		}
-		itemObject = goIn;
+		_item = item;
+		_itemObject = _item.Get();
 		CombineMeshes();
 	}
 
+	public Item GetItem() {
+		return _item;
+	}
+
 	public GameObject GetObject() {
-		return itemObject;
+		return _itemObject;
 	}
 	
 	void OnEnable()  {
@@ -38,11 +46,11 @@ public class PreviewItem : MonoBehaviour {
 
 	void UpdateObject() {
 		Debug.Log("Calling update object from event");
-		SetObject(droid.GetHeldItem().Get());
+		SetObject(droid.GetHeldItem());
 	}
 	
 	public void UpdatePreview(Camera cam) {
-		if (itemObject == null) {
+		if (_itemObject == null || _item == GameManager.Instance.EmptyItem) {
 			return;
 		}
 		
@@ -58,7 +66,7 @@ public class PreviewItem : MonoBehaviour {
 				return;
 			}
 			
-			PlaceableObject placeable = itemObject.GetComponent<PlaceableObject>();
+			PlaceableObject placeable = _itemObject.GetComponent<PlaceableObject>();
 
 			Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
 			if (!targetGrid.CheckGridSpaceAvailability(gridPosition)) {
@@ -70,7 +78,7 @@ public class PreviewItem : MonoBehaviour {
 
 			canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeable.GetItem().GetSize(), droid.GetHeldRotation());
 
-			if (placeable.GetItem().MustBeGrounded() && gridPosition.y > 0) {
+			if (placeable.GetItem().MustBeGrounded && gridPosition.y > 0) {
 				canPlaceNow = false;
 			}
 			meshRenderer.material = canPlaceNow ? validPlace : invalidPlace;
@@ -80,11 +88,11 @@ public class PreviewItem : MonoBehaviour {
 	}
 
 	public bool IsPlaceable() {
-		return canPlaceNow;
+		return _item.IsPlaceable && canPlaceNow;
 	}
 	
     private void CombineMeshes() {
-        MeshFilter[] meshFilters = itemObject.GetComponentsInChildren<MeshFilter>();
+        MeshFilter[] meshFilters = _itemObject.GetComponentsInChildren<MeshFilter>();
         
         Mesh combinedMesh = new Mesh();
         

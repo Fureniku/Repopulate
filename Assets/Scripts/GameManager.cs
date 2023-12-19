@@ -8,6 +8,11 @@ public class GameManager : MonoSingleton<GameManager> {
     [SerializeField] private CharacterController character;
     [SerializeField] private ShipMoveController shipMoveController;
     [SerializeField] private SolarSystemManager solarSystem;
+
+    [SerializeField] private Item emptyItem;
+
+    //An empty item with no logic, model or assets, used instead of null for missing items or unoccupied scrollbar slots
+    public Item EmptyItem => emptyItem;
     
     public void SwitchCamera() { 
         SetCameraState(!fpCam.gameObject.activeSelf);

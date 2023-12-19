@@ -11,7 +11,8 @@ public class Scrollbar : ScriptableObject {
 
 	public Item GetHeldItem() {
 		if (slots[currentSlot] == null) {
-			return null;
+			Debug.Log("Getting null slot, defaulting to empty item");
+			return GameManager.Instance.EmptyItem;
 		}
 		Debug.Log("Getting item in slot " + currentSlot);
 		Debug.Log("Item is " + slots[currentSlot].Get().name);
