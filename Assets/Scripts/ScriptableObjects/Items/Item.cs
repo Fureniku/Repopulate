@@ -15,6 +15,7 @@ public class Item : ScriptableObject {
 	[SerializeField] private Vector3 rotationOrigin;
 	[SerializeField] private bool mustBeGrounded = false;
 	[SerializeField] private bool wallMount = false;
+	[SerializeField] private bool mustBeOnCeiling = false;
 
 	[Header("Prefab Information")]
 	[SerializeField] private PlaceableObject prefab;
@@ -45,6 +46,10 @@ public class Item : ScriptableObject {
 
 	public bool WallMounted() {
 		return wallMount;
+	}
+
+	public bool MustBeOnCeiling() {
+		return mustBeOnCeiling;
 	}
 
 	public string GetItemName() {

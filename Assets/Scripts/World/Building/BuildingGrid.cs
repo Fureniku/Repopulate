@@ -1,14 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BuildingGrid : MonoBehaviour {
+
+    [SerializeField]
+    struct PrefillObjects {
+        
+    }
     
     [SerializeField] private Vector3Int gridSize;
 
     private bool[,,] gridSpaces; // Represents the availability of each grid space
 
-    [SerializeField] public GridSize[] occupiedSlots;
+    [SerializeField] public List<GridSize> occupiedSlots;
 
     [SerializeField] private bool showDebugGrid = true;
 
@@ -34,6 +40,18 @@ public class BuildingGrid : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public void RemoveOccupiedSlot(GridSize slot) {
+        occupiedSlots.Remove(slot);
+        OnValidate();
+    }
+
+    public void AttemptAddOccupiedSlot(GridSize slot) {
+        if (!occupiedSlots.Contains(slot)) {
+            occupiedSlots.Add(slot);
+        }
+        OnValidate();
     }
 
     public List<GameObject> GetAllAttachedObjects() {
@@ -129,9 +147,9 @@ public class BuildingGrid : MonoBehaviour {
         return new Vector3Int(startX, startGridSpace.y, startZ);
     }
     
-    private void ModifyGridSpaceOccupancy(Vector3Int startGridSpace, Vector3Int size, float rotation, bool occupied) {
-        Vector3Int rotatedSize = GetRotatedGridSize(size, rotation);
-        Vector3Int rotatedStart = GetRotatedGridPosition(startGridSpace, rotatedSize, rotation);
+    private void ModifyGridSpaceOccupancy(GridSize occupancy, bool occupied) {
+        Vector3Int rotatedSize = occupancy.size;
+        Vector3Int rotatedStart = occupancy.position;
         
         // Release the occupied grid spaces of a block
         for (int x = rotatedStart.x; x < rotatedStart.x + rotatedSize.x; x++) {
@@ -156,6 +174,16 @@ public class BuildingGrid : MonoBehaviour {
         Quaternion modifiedRotation = originalRotation * Quaternion.Euler(0, rotation, 0);
 
         return modifiedRotation;
+    }
+
+    public GridSize GetFinalPlacementOccupancy(Vector3Int size, Vector3Int startGridSpace, float rotation) {
+        Vector3Int rotatedSize = GetRotatedGridSize(size, rotation);
+        Vector3Int rotatedStart = GetRotatedGridPosition(startGridSpace, rotatedSize, rotation);
+
+        return new GridSize {
+            size = rotatedSize,
+            position = rotatedStart
+        };
     }
 
     public void TryPlaceBlock(Vector3Int gridSpace, Item item, float rotation, Direction dir) {
@@ -198,13 +226,13 @@ public class BuildingGrid : MonoBehaviour {
 
     public void PlaceBlock(Vector3Int gridSpace, Item item, float rotation) {
         GameObject block = item.Get();
-            
         GameObject newBlock = Instantiate(block, GetPlacementPosition(gridSpace, item), GetPlacementRotation(rotation));
+        GridSize occupancy = GetFinalPlacementOccupancy(newBlock.GetComponent<PlaceableObject>().GetItem().GetSize(), gridSpace, rotation);
         newBlock.transform.SetParent(transform);
-        newBlock.GetComponent<PlaceableObject>().Place(this);
+        newBlock.GetComponent<PlaceableObject>().Place(this, occupancy);
             
         // Occupy the grid space
-        ModifyGridSpaceOccupancy(gridSpace, newBlock.GetComponent<PlaceableObject>().GetItem().GetSize(), rotation, true);
+        ModifyGridSpaceOccupancy(occupancy, true);
         OnGridChanged();
     }
 

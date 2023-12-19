@@ -7,6 +7,8 @@ public class PlaceableObject : BuildableBase {
     private Material lastMat;
     private BoxCollider _collider;
     [SerializeField] private bool showDebugSizeBox;
+    [Tooltip("True if this object is placed alongside the parent prefab. Will update its stats in-editor!")]
+    [SerializeField] private bool prefabPlaced = false;
 
     [Header("Prefab Information")]
     [SerializeField] private Item item;
@@ -21,14 +23,35 @@ public class PlaceableObject : BuildableBase {
             _collider.center = new Vector3(x, y, z);
             _collider.size = item.GetSize();
         }
+
+        if (prefabPlaced) {
+            if (grid == null) {
+                if (transform.parent.TryGetComponent(out BuildingGrid parentGrid)) {
+                    grid = parentGrid;
+                } else {
+                    Debug.LogError($"{transform.name} cannot find a grid on parent {transform.parent.name}");
+                }
+            }
+
+            if (grid != null) {
+                grid.RemoveOccupiedSlot(space);
+                Vector3Int approxPosition = Vector3Int.RoundToInt(transform.localPosition);
+                Debug.Log($"approximating position as {approxPosition}");
+                transform.localPosition = approxPosition;
+                space.position = approxPosition;
+                space.size = item.GetSize();
+                grid.AttemptAddOccupiedSlot(space);
+            }
+        }
     }
 
     public Item GetItem() {
         return item;
     }
     
-    public void Place(BuildingGrid newGrid) {
+    public void Place(BuildingGrid newGrid, GridSize occupiedSpace) {
         grid = newGrid;
+        space = occupiedSpace;
     }
 
     public void SetRotation(Quaternion rotation) {
