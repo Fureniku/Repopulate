@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 public class BuildingGrid : MonoBehaviour {
 
@@ -43,14 +46,29 @@ public class BuildingGrid : MonoBehaviour {
     }
 
     public void RemoveOccupiedSlot(GridSize slot) {
-        occupiedSlots.Remove(slot);
+        if (!occupiedSlots.Remove(slot)) {
+            for (int i = 0; i < occupiedSlots.Count; i++) {
+                if (occupiedSlots[i].size == slot.size && occupiedSlots[i].position == slot.position) {
+                    occupiedSlots.RemoveAt(i);
+                    OnValidate();
+                    return;
+                }
+            }
+        }
         OnValidate();
     }
 
     public void AttemptAddOccupiedSlot(GridSize slot) {
-        if (!occupiedSlots.Contains(slot)) {
-            occupiedSlots.Add(slot);
+        if (occupiedSlots.Contains(slot)) {
+            return;
         }
+        
+        for (int i = 0; i < occupiedSlots.Count; i++) {
+            if (occupiedSlots[i].size == slot.size && occupiedSlots[i].position == slot.position) {
+                return;
+            }
+        }
+        occupiedSlots.Add(slot);
         OnValidate();
     }
 
@@ -94,6 +112,10 @@ public class BuildingGrid : MonoBehaviour {
 
     public Vector3Int IntFromVec3(Vector3 vec3) {
         return new Vector3Int((int)Math.Floor(vec3.x), (int)Math.Floor(vec3.y), (int)Math.Floor(vec3.z));
+    }
+
+    public bool CheckGridSpaceAvailability(Vector3Int gridSpace) {
+        return !gridSpaces[gridSpace.x, gridSpace.y, gridSpace.z];
     }
 
     public bool CheckGridSpaceAvailability(Vector3Int startGridSpace, Vector3Int size, float rotation) {
@@ -186,35 +208,41 @@ public class BuildingGrid : MonoBehaviour {
         };
     }
 
+    public Vector3Int GetOffsetGridSpace(Vector3Int gridSpace, Direction dir) {
+        switch (dir) {
+            case Direction.X_POS:
+                gridSpace.x++;
+                break;
+            case Direction.X_NEG:
+                gridSpace.x--;
+                break;
+            case Direction.Y_POS:
+                gridSpace.y++;
+                break;
+            case Direction.Y_NEG:
+                gridSpace.y--;
+                break;
+            case Direction.Z_POS:
+                gridSpace.z++;
+                break;
+            case Direction.Z_NEG:
+                gridSpace.z--;
+                break;
+            case Direction.NONE:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
+        }
+
+        return gridSpace;
+    }
+
     public void TryPlaceBlock(Vector3Int gridSpace, Item item, float rotation, Direction dir) {
         // Check if the block's grid space is available
         if (CheckGridSpaceAvailability(gridSpace, Vector3Int.one, rotation)) { //TODO size
             PlaceBlock(gridSpace, item, rotation);
         } else {
-            switch (dir) {
-                case Direction.X_POS:
-                    gridSpace.x++;
-                    break;
-                case Direction.X_NEG:
-                    gridSpace.x--;
-                    break;
-                case Direction.Y_POS:
-                    gridSpace.y++;
-                    break;
-                case Direction.Y_NEG:
-                    gridSpace.y--;
-                    break;
-                case Direction.Z_POS:
-                    gridSpace.z++;
-                    break;
-                case Direction.Z_NEG:
-                    gridSpace.z--;
-                    break;
-                case Direction.NONE:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
-            }
+            gridSpace = GetOffsetGridSpace(gridSpace, dir);
             if (CheckGridSpaceAvailability(gridSpace, Vector3Int.one, rotation)) {
                 PlaceBlock(gridSpace, item, rotation);
             } else {

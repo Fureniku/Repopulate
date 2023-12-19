@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e40d9dafe1793644d8c82e02288c3210, type: 3}
   m_Name: CeilingLight_2x1
   m_EditorClassIdentifier: 
-  itemName: wall_light_1
+  itemName: ceiling_light
   category: {fileID: 11400000, guid: 415e3d2377c5520439dd7af74c45d261, type: 2}
-  size: {x: 1, y: 2, z: 1}
+  size: {x: 2, y: 1, z: 1}
   rotationOrigin: {x: 0, y: 0, z: 0}
   mustBeGrounded: 0
   wallMount: 1
-  prefab: {fileID: 4835902470755211477, guid: 32cbfbfafa15ce849b83111230b95007, type: 3}
+  mustBeOnCeiling: 1
+  prefab: {fileID: 1501392048288777145, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
   icon: {fileID: 0}

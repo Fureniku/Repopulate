@@ -153,5 +153,7 @@ public class CharacterController : MonoBehaviour {
             // Place the block
             targetGrid.TryPlaceBlock(gridPosition, currentDroid.GetHeldItem(), currentDroid.GetHeldRotation(), dir);
        //}
+       //Update the preview after placing a block
+       currentDroid.UpdatePreview(fpCam);
     }
 }

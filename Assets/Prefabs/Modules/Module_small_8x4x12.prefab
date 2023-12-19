@@ -50,13 +50,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSize: {x: 8, y: 4, z: 12}
   occupiedSlots:
+  - position: {x: 3, y: 3, z: 1}
+    size: {x: 2, y: 1, z: 1}
   - position: {x: 3, y: 3, z: 6}
     size: {x: 2, y: 1, z: 1}
   - position: {x: 3, y: 3, z: 11}
-    size: {x: 2, y: 1, z: 1}
-  - position: {x: 3, y: 3, z: 1}
-    size: {x: 2, y: 1, z: 1}
-  - position: {x: 3, y: 3, z: 1}
     size: {x: 2, y: 1, z: 1}
   showDebugGrid: 1
 --- !u!1 &2928918207987979288
@@ -408,6 +406,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: CeilingLight_2x1_mid
       objectReference: {fileID: 0}
+    - target: {fileID: 1501392048288777145, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
+      propertyPath: grid
+      value: 
+      objectReference: {fileID: 1584648016479865619}
+    - target: {fileID: 1501392048288777145, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
+      propertyPath: prefabPlaced
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501392048288777145, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
+      propertyPath: space.position.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501392048288777145, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
+      propertyPath: space.position.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501392048288777145, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
+      propertyPath: space.position.z
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
 --- !u!4 &2098486587339048851 stripped
@@ -469,6 +487,26 @@ PrefabInstance:
     - target: {fileID: 644249695149303615, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
       propertyPath: m_Name
       value: CeilingLight_2x1_front
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501392048288777145, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
+      propertyPath: grid
+      value: 
+      objectReference: {fileID: 1584648016479865619}
+    - target: {fileID: 1501392048288777145, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
+      propertyPath: prefabPlaced
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501392048288777145, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
+      propertyPath: space.position.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501392048288777145, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
+      propertyPath: space.position.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501392048288777145, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
+      propertyPath: space.position.z
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
@@ -543,6 +581,14 @@ PrefabInstance:
     - target: {fileID: 1501392048288777145, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
       propertyPath: space.size.x
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501392048288777145, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
+      propertyPath: space.size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501392048288777145, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
+      propertyPath: showDebugSizeBox
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1501392048288777145, guid: 289271b69f3f5af40a7ae2cd2d95342f, type: 3}
       propertyPath: space.position.x

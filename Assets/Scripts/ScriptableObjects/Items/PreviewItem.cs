@@ -46,9 +46,9 @@ public class PreviewItem : MonoBehaviour {
 			return;
 		}
 		
-		Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+		Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 		
-		if (Physics.Raycast(ray, out RaycastHit hit, placeableRange, LayerMask.GetMask("BuildingGrid"))) {
+		if (Physics.Raycast(ray, out RaycastHit hit, placeableRange, Constants.MASK_BUILDABLE)) {
 			meshRenderer.enabled = true;
 			BuildingGrid targetGrid = null;
 			if (hit.transform.GetComponent<BuildableBase>() != null) { //TODO not ideal; won't work if there's nested children in more complex objects.
@@ -61,6 +61,9 @@ public class PreviewItem : MonoBehaviour {
 			PlaceableObject placeable = itemObject.GetComponent<PlaceableObject>();
 
 			Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
+			if (!targetGrid.CheckGridSpaceAvailability(gridPosition)) {
+				gridPosition = targetGrid.GetOffsetGridSpace(gridPosition, ColliderUtilities.GetHitFace(hit.normal));
+			}
 
 			transform.position = targetGrid.GetPlacementPosition(gridPosition, placeable.GetItem());
 			transform.rotation = targetGrid.GetPlacementRotation(droid.GetHeldRotation());
