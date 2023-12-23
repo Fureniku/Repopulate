@@ -33,14 +33,14 @@ public class ShipView : MonoBehaviour {
         }
         
         planes = GeometryUtility.CalculateFrustumPlanes(_overlayCamera);
-        if (currentClosest != null && GeometryUtility.TestPlanesAABB(planes, currentClosest.gameObject.GetComponent<Collider>().bounds))
+        /*if (currentClosest != null && GeometryUtility.TestPlanesAABB(planes, currentClosest.gameObject.GetComponent<Collider>().bounds))
         {
             Debug.Log(currentClosest.gameObject.name + " has been detected!");
         }
         else
         {
             Debug.Log("Nothing has been detected");
-        }
+        }*/
 
         if (currentClosest != null) {
             PositionTooltip(currentClosest);

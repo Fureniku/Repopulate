@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class DebugUIHandlerDroid : DebugUIHandlerBase {
 
-    [SerializeField] private CharacterController character;
-
-    private DroidController droid;
+    [SerializeField] private DroidController droid;
     
     private bool Grounded => droid.isGrounded;
     private bool ForceNotGrounded => droid.forcedNotGrounded;
@@ -23,7 +21,6 @@ public class DebugUIHandlerDroid : DebugUIHandlerBase {
     }
 
     protected override void UpdateTexts() {
-        droid = character.GetCurrentDroid();
         UpdateText(nameof(Grounded), $"Grounded:: {Grounded}");
         UpdateText(nameof(ForceNotGrounded), $"Forced Grounded: {ForceNotGrounded}, count: {droid.forcedNotGroundedCount}");
         UpdateText(nameof(IsInGravity), $"In Gravity: {IsInGravity}");

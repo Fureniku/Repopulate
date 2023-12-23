@@ -4,16 +4,15 @@ using UnityEngine.InputSystem;
 
 public class DroidController : MonoBehaviour {
 
+	[SerializeField] private Camera _fpCam;
 	[SerializeField] private PreviewItem heldItem;
 	[SerializeField] private Scrollbar scrollbar;
 	[SerializeField] private float heldRotation = 0;
+	[SerializeField] private UIController _uiController;
 	
 	[SerializeField] private Rigidbody rb;
-
 	[SerializeField] private GravityBase gravitySource;
-
 	[SerializeField] private CharacterController characterController;
-	
 	[SerializeField] private Transform footPoint;
 
 	[Header("Control settings")]
@@ -57,7 +56,10 @@ public class DroidController : MonoBehaviour {
 	public bool isGrounded { get; private set; } = false;
 	public bool isInGravity { get; private set; } = false;
 	public bool isInElevator { get; private set; } = false;
-	private bool isDroidActive = false; //Whether this is the currently controlled droid. Not to be confused with playeractive which locks the camera etc
+	private bool isControlActive = true; //Whether the controls (movement/look) are currently active. Disabled while a UI is open etc
+	private bool isDroidActive = false; //Whether this droid currently has a controller TODO improve
+
+	public bool IsDroidActive => isDroidActive;
 
 	public bool grounded;
 	
@@ -68,6 +70,9 @@ public class DroidController : MonoBehaviour {
 	}
 
 	private void FixedUpdate() {
+		if (!isControlActive) {
+			return;
+		}
 		CheckGrounded();
 		Movement();
 		grounded = isGrounded;
@@ -84,10 +89,6 @@ public class DroidController : MonoBehaviour {
 		moveDir.y = isInGravity ? 0 : input;
 	}
 
-	public void HandleSwitchDroid(InputAction.CallbackContext context) {
-		
-	}
-
 	public void HandleObjectRotation() {
 		if (isDroidActive) {
 			heldRotation += 90f;
@@ -96,7 +97,7 @@ public class DroidController : MonoBehaviour {
 	}
 
 	public void HandleJump() {
-		if (isGrounded && isInGravity) {
+		if (isGrounded && isInGravity && isControlActive) {
 			Debug.Log("Jump!");
 			rb.AddForce(transform.TransformDirection(Vector3.up) * jumpSpeed, ForceMode.Impulse);
 		}
@@ -159,6 +160,10 @@ public class DroidController : MonoBehaviour {
 			// Apply the relative movement
 			rb.AddForce(moveDirection.normalized * (moveSpeedSpace * Time.deltaTime * 10));
 		}
+	}
+
+	public void HandleUIControlInput(InputAction.CallbackContext context) {
+		_uiController.ScrollBar.HandleUIInput(context);
 	}
 
 	public void ForceNotGroundedState(bool forced) {
@@ -232,8 +237,12 @@ public class DroidController : MonoBehaviour {
 		heldItem.SetObject(scrollbar.GetHeldItem());
 	}
 
-	public void UpdatePreview(Camera cam) {
-		heldItem.UpdatePreview(cam);
+	public Camera GetCamera() {
+		return _fpCam;
+	}
+	
+	public void UpdatePreview() {
+		heldItem.UpdatePreview(_fpCam);
 	}
 
 	public PreviewItem GetPreviewItem() {
@@ -247,12 +256,15 @@ public class DroidController : MonoBehaviour {
 	public float GetHeldRotation() {
 		return heldRotation;
 	}
-	
-
 	#endregion
+
+	public void SetControlsActive(bool active) {
+		isControlActive = active;
+	}
 	
 	public void SetDroidActive(bool active) {
 		isDroidActive = active;
+		_fpCam.gameObject.SetActive(active);
 	}
 
 	public void UpdateRotation(Vector3 newRot) {

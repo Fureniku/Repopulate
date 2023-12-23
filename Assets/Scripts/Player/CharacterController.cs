@@ -13,7 +13,6 @@ public class CharacterController : MonoBehaviour {
     [Header("Gameplay stuff")]
     [SerializeField] private DroidController currentDroid;
     [SerializeField] private UIController uiController;
-    [SerializeField] private List<GameObject> droidList;
 
     [SerializeField] private PlayerInput input;
     
@@ -24,6 +23,12 @@ public class CharacterController : MonoBehaviour {
     private int currentDroidId = 0;
 
     public DroidController GetCurrentDroid() => currentDroid;
+
+    public void SetDroid(DroidController newDroid) {
+        currentDroid = newDroid;
+        fpCam = newDroid.GetCamera();
+        transform.SetParent(newDroid.transform, false);
+    }
     
     public void HandleSwitch(InputAction.CallbackContext context) {
         SetActive(false);
@@ -58,18 +63,12 @@ public class CharacterController : MonoBehaviour {
         currentDroid.HandleVerticalMovement(context.ReadValue<float>());
     }
 
+    public Camera GetCurrentCamera() {
+        return fpCam;
+    }
+
     public void HandleSwitchDroid(InputAction.CallbackContext context) {
-        currentDroid.SetDroidActive(false);
-        if (currentDroidId < droidList.Count-1) {
-            currentDroidId++;
-        } else {
-            currentDroidId = 0;
-        }
-
-        transform.SetParent(droidList[currentDroidId].transform, false);
-        transform.localRotation = Quaternion.identity;
-
-        currentDroid.SetDroidActive(true);
+        GameManager.Instance.GetDroidManager.AssignNextAvailableDroid(this);
     }
 
     public void HandleObjectRotation(InputAction.CallbackContext context) {
@@ -105,11 +104,19 @@ public class CharacterController : MonoBehaviour {
             fpCam.transform.localRotation = Quaternion.identity;
         }
         
-        currentDroid.UpdatePreview(fpCam);
+        currentDroid.UpdatePreview();
     }
 
     public void ResetCamera() {
         fpCam.transform.localRotation = Quaternion.identity;
+    }
+
+    public void HandleScroll() {
+        
+    }
+
+    public void HandleUIInput(InputAction.CallbackContext context) {
+        currentDroid.HandleUIControlInput(context);
     }
     
     public void HandlePlaceObject(InputAction.CallbackContext context) {
@@ -154,6 +161,6 @@ public class CharacterController : MonoBehaviour {
             targetGrid.TryPlaceBlock(gridPosition, currentDroid.GetHeldItem(), currentDroid.GetHeldRotation(), dir);
        //}
        //Update the preview after placing a block
-       currentDroid.UpdatePreview(fpCam);
+       currentDroid.UpdatePreview();
     }
 }

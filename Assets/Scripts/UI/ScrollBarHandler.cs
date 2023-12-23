@@ -23,6 +23,19 @@ public class ScrollBarHandler : MonoBehaviour {
         UpdateSlot(4);
     }
 
+    public void HandleUIInput(InputAction.CallbackContext context) {
+        if (context.action.name.Contains("HotBar")) {
+            HandleHotbarKey(context);
+            return;
+        }
+
+        switch (context.action.name) {
+            case "ScrollBar":
+                HandleScroll(context);
+                return;
+        }
+    }
+
     public void HandleScroll(InputAction.CallbackContext context) {
         if (context.started) {
             float scroll = context.ReadValue<Vector2>().y;

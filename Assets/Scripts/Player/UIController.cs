@@ -1,33 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UI;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class UIController : MonoBehaviour {
 
-    [SerializeField] private CharacterController character;
-    
-    [SerializeField] private GameObject activeUI;
-    [SerializeField] private GameObject UIParent;
+    [SerializeField] private DroidController droid;
+    [SerializeField] private ScrollBarHandler _scrollBarHandler;
+    private GameObject activeUI;
+    private InteractableObject interactedObject;
 
-    [SerializeField] private InteractableObject interactedObject;
-
-    [SerializeField] private InputActionAsset inputActionAsset;
-    
-    void Awake() {
-        character = GetComponent<CharacterController>();
-    }
+    public ScrollBarHandler ScrollBar => _scrollBarHandler;
 
     public void CloseUI() {
-        character.SetPlayerActive(true);
+        droid.SetControlsActive(true);
         DestroyImmediate(activeUI);
     }
 
     public void OpenNewUI(GameObject ui) {
-        character.SetPlayerActive(false);
+        droid.SetControlsActive(false);
         DestroyImmediate(activeUI);
-        activeUI = Instantiate(ui.gameObject, UIParent.transform);
+        activeUI = Instantiate(ui.gameObject, transform);
         activeUI.GetComponent<DynamicInteractedUI>().SetUIController(this);
         
     }
