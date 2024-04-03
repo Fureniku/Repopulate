@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Overall class for all droids, regardless of controller
 public class DroidManager : MonoBehaviour
 {
     [SerializeField] private List<DroidController> droidList;
@@ -19,12 +20,12 @@ public class DroidManager : MonoBehaviour
             return;
         }
         currentDroid.SetDroidActive(false);
-        DroidController newDroid = FindNextTrueObject(currentDroidId);
+        DroidController newDroid = FindNextAvailableDroid(currentDroidId);
         character.SetDroid(newDroid);
         newDroid.SetDroidActive(true);
     }
     
-    private DroidController FindNextTrueObject(int startIndex)
+    private DroidController FindNextAvailableDroid(int startIndex)
     {
         int currentIndex = startIndex;
 
@@ -43,11 +44,5 @@ public class DroidManager : MonoBehaviour
 
     public void AddNewDroid(DroidController droid) {
         droidList.Add(droid);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

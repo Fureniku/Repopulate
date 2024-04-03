@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8161479858922590431}
   - component: {fileID: 8161479858922590425}
-  - component: {fileID: 8161479858922590424}
   - component: {fileID: 8161479858922590426}
   m_Layer: 0
   m_Name: PlayerController
@@ -46,25 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db799d9fe5bce44781eb1830e3f1760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fpCam: {fileID: 0}
   mouseSensitivity: 3.5
   currentDroid: {fileID: 0}
-  uiController: {fileID: 8161479858922590424}
-  input: {fileID: 8161479858922590426}
---- !u!114 &8161479858922590424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8161479858922590430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9512e3fac2ca586449c4da644295db37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  droid: {fileID: 0}
-  _scrollBarHandler: {fileID: 0}
 --- !u!114 &8161479858922590426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,7 +74,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8161479858922590424}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIController, Assembly-CSharp
         m_MethodName: CloseUI
         m_Mode: 1

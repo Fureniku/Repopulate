@@ -4,17 +4,19 @@ using UnityEngine.InputSystem;
 
 public class GameManager : MonoSingleton<GameManager> {
 
-    [SerializeField] private Camera shipCam;
-    [SerializeField] private CharacterController character;
-    [SerializeField] private ShipMoveController shipMoveController;
-    [SerializeField] private SolarSystemManager solarSystem;
+    [SerializeField] private Camera _shipCam;
+    [SerializeField] private CharacterController _character;
+    [SerializeField] private ShipMoveController _shipMoveController;
+    [SerializeField] private SolarSystemManager _solarSystem;
     
-    [SerializeField] private Item emptyItem;
+    [SerializeField] private Item _emptyItem;
 
     private DroidManager _droidManager;
 
+    public const float MouseSensitivity = 3.5f;
+
     //An empty item with no logic, model or assets, used instead of null for missing items or unoccupied scrollbar slots
-    public Item EmptyItem => emptyItem;
+    public Item EmptyItem => _emptyItem;
     public DroidManager GetDroidManager => _droidManager;
 
     void Start() {
@@ -23,17 +25,16 @@ public class GameManager : MonoSingleton<GameManager> {
     
     public void SwitchCamera() { 
         //TODO SetCameraState(!fpCam.gameObject.activeSelf);
-        SetShipControlsActive(shipCam.gameObject.activeSelf);
+        SetShipControlsActive(_shipCam.gameObject.activeSelf);
     }
 
     private void SetCameraState(bool fpActive) {
-        character.GetCurrentCamera().gameObject.SetActive(fpActive);
-        shipCam.gameObject.SetActive(!fpActive);
-        character.SetPlayerActive(fpActive);
+        _shipCam.gameObject.SetActive(!fpActive);
+        _character.SetPlayerActive(fpActive);
     }
 
     private void SetShipControlsActive(bool active) {
-        shipMoveController.SetActive(active);
+        _shipMoveController.SetActive(active);
     }
 
     public void SwitchControlType(EnumControlType controlType) {
@@ -41,27 +42,29 @@ public class GameManager : MonoSingleton<GameManager> {
             case EnumControlType.DROID:
                 Debug.Log("Switching to droid");
                 GetPlayerInput().SwitchCurrentActionMap("General");
-                character.SetActive(true);
+                _character.SetActive(true);
                 break;
             case EnumControlType.SHIP:
                 GetPlayerInput().SwitchCurrentActionMap("Ship");
-                shipMoveController.SetActive(true);
+                _shipMoveController.SetActive(true);
                 break;
         }
     }
 
     public PlayerInput GetPlayerInput() {
-        return character.GetComponent<PlayerInput>();
+        return _character.GetComponent<PlayerInput>();
     }
     
-    public ShipMoveController GetShipController() => shipMoveController;
+    public ShipMoveController GetShipController() => _shipMoveController;
 
     public SolarSystemManager GetSolarSystem() {
-        return solarSystem;
+        return _solarSystem;
     }
 }
 
 public enum EnumControlType {
-    DROID,
-    SHIP
+    DROID, //Any droid within controllable range
+    SHIP, //The ship itself, to move around
+    AI, //The AI, for bridge control and overviews
+    NETWORK //The AI, for rapid machine control
 }

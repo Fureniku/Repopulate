@@ -212,7 +212,7 @@ public class DroidController : MonoBehaviour {
 	}
 	#endregion
 
-	#region Item Stuff
+	#region Block Placement
 	public void UpdateSelection() {
 		if (heldItem == null) {
 			Debug.LogWarning($"Trying to update held item for {name} but held item object is null.");
@@ -237,10 +237,6 @@ public class DroidController : MonoBehaviour {
 		heldItem.SetObject(scrollbar.GetHeldItem());
 	}
 
-	public Camera GetCamera() {
-		return _fpCam;
-	}
-	
 	public void UpdatePreview() {
 		heldItem.UpdatePreview(_fpCam);
 	}
@@ -255,6 +251,90 @@ public class DroidController : MonoBehaviour {
 
 	public float GetHeldRotation() {
 		return heldRotation;
+	}
+	
+	public void HandlePlaceObject(InputAction.CallbackContext context) {
+        if (context.started) {
+            Debug.LogWarning($"Starting placement from {transform.name} (right click triggered)");
+            if (heldItem.IsPlaceable()) {
+                Vector2 mousePosition = Mouse.current.position.ReadValue();
+                Ray ray = _fpCam.ScreenPointToRay(mousePosition);
+                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Constants.MASK_BUILDABLE)) {
+                    Debug.Log($"Attempting to place a block in the grid after clicking {hit.transform.name}");
+                    Direction dir = ColliderUtilities.GetHitFace(hit.normal);
+                    BuildingGrid targetGrid = hit.transform.GetComponent<BuildableBase>().GetGrid();
+    
+                    if (targetGrid != null) {
+                        PlaceBlock(targetGrid, targetGrid.GetHitSpace(hit.point), dir);
+                    }
+                }
+            }
+        }
+    }
+
+    private void PlaceBlock(BuildingGrid targetGrid, Vector3Int gridPosition, Direction dir) {
+        //Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
+        //if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
+
+            //Debug.Log($"GridPos: {gridPosition.x}, {gridPosition.y}, {gridPosition.z}, name of hit object: {hit.transform.name}, exact hit: {hit.point}");
+
+            // Check if there's already a block at the target grid position
+            //bool isOccupied = targetGrid.CheckGridSpaceAvailability(gridPosition, Vector3Int.one);
+
+            // Check if there's an adjacent block in any direction
+            //bool hasAdjacentBlock = targetGrid.HasAdjacentBlock(gridPosition);
+
+            //if (isOccupied && hasAdjacentBlock)
+            {
+                // Place against the side or top of an existing block
+                //Vector3Int adjacentPosition = targetGrid.GetAdjacentPosition(gridPosition);
+                //finalPosition = targetGrid.GridToWorldPosition(adjacentPosition) + Vector3.up;
+            }
+
+            // Place the block
+            targetGrid.TryPlaceBlock(gridPosition, scrollbar.GetHeldItem(), heldRotation, dir);
+       //}
+       //Update the preview after placing a block
+       UpdatePreview();
+    }
+	#endregion
+	
+	#region Camwra
+	public Camera GetCamera() {
+		return _fpCam;
+	}
+	
+	public void SetCameraStatus(bool camOn) {
+		_fpCam.enabled = camOn;
+	}
+	
+	private float xRotation = 0.0f;
+	
+	public void HandleCamera(InputAction.CallbackContext context) {
+		Vector2 input = context.ReadValue<Vector2>();
+        
+		float mouseX = input.x * GameManager.MouseSensitivity * Time.deltaTime;
+		float mouseY = input.y * GameManager.MouseSensitivity * Time.deltaTime;
+
+		xRotation -= mouseY;
+        
+		if (isInGravity) {
+			xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+			_fpCam.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+			UpdateRotation(Vector3.up * mouseX);
+		} else {
+			transform.localRotation *= Quaternion.Euler(-mouseY, mouseX, 0f);
+
+			// Set the camera to always look in the direction of Object A's forward vector.
+			_fpCam.transform.localRotation = Quaternion.identity;
+		}
+        
+		UpdatePreview();
+	}
+	
+	public void ResetCamera() {
+		_fpCam.transform.localRotation = Quaternion.identity;
 	}
 	#endregion
 
@@ -318,6 +398,7 @@ public class DroidController : MonoBehaviour {
 
 	#endregion
 
+	#region Interactions
 	private void OnTriggerEnter(Collider other) {
 		GravityBase gravity = other.GetComponent<GravityBase>();
 
@@ -347,8 +428,11 @@ public class DroidController : MonoBehaviour {
 			isInElevator = false;
 		}
 	}
+	#endregion
 
+	#region Debug
 	public void OnDrawGizmos() {
 		Gizmos.DrawSphere(footPoint.position, 0.5f);
 	}
+	#endregion
 }
