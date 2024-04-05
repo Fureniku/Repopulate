@@ -39,6 +39,15 @@ public class CharacterController : MonoBehaviour {
         currentDroid.SetDroidActive(active);
     }
 
+    public void HandleOpenInventory(InputAction.CallbackContext context) {
+        if (context.performed) {
+            Debug.Log("Toggling inventory?!");
+            isPlayerDroidActive = !isPlayerDroidActive;
+            Cursor.lockState = isPlayerDroidActive ? CursorLockMode.Locked : CursorLockMode.None;
+            currentDroid.InventoryVisible(!isPlayerDroidActive);
+        }
+    }
+
     public void HandleActiveToggle(InputAction.CallbackContext context) {
         SetPlayerActive(!isPlayerDroidActive);
     }
@@ -64,8 +73,9 @@ public class CharacterController : MonoBehaviour {
     }
     
     public void HandleCamera(InputAction.CallbackContext context) {
-        if (!isPlayerDroidActive || UnityEngine.Cursor.lockState != CursorLockMode.Locked) return;
-        currentDroid.HandleCamera(context);
+        if (isPlayerDroidActive && Cursor.lockState == CursorLockMode.Locked) {
+            currentDroid.HandleCamera(context);
+        }
     }
 
     public void ResetCamera() {

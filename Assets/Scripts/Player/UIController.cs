@@ -5,6 +5,8 @@ public class UIController : MonoBehaviour {
 
     [SerializeField] private DroidController droid;
     [SerializeField] private ScrollBarHandler _scrollBarHandler;
+    [SerializeField] private GameObject _inventory;
+    
     private GameObject activeUI;
     private InteractableObject interactedObject;
 
@@ -29,5 +31,9 @@ public class UIController : MonoBehaviour {
     
     public InteractableObject GetInteractedObject() {
         return interactedObject;
+    }
+    
+    public void InventoryVisible(bool visible) {
+        _inventory.SetActive(visible);
     }
 }

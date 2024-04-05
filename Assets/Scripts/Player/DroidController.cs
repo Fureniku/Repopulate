@@ -351,6 +351,14 @@ public class DroidController : MonoBehaviour {
 		transform.Rotate(newRot);
 	}
 	
+	#region Inventory
+
+	public void InventoryVisible(bool visible) {
+		_uiController.InventoryVisible(visible);
+	}
+	
+	#endregion
+	
 	#region Gravity
 	private void Gravity() {
 		Vector3 pos = transform.position;

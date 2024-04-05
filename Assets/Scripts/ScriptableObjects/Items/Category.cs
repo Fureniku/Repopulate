@@ -5,6 +5,10 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Category : ScriptableObject {
 
-	[SerializeField] private string categoryName;
+	[SerializeField] private string _categoryName;
+
+	public string GetName() {
+		return _categoryName;
+	}
 
 }
