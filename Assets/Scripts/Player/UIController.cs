@@ -1,3 +1,4 @@
+using TMPro;
 using UI;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class UIController : MonoBehaviour {
     [SerializeField] private DroidController droid;
     [SerializeField] private ScrollBarHandler _scrollBarHandler;
     [SerializeField] private GameObject _inventory;
+    [SerializeField] private TMP_InputField _input;
     
     private GameObject activeUI;
     private InteractableObject interactedObject;
@@ -35,5 +37,7 @@ public class UIController : MonoBehaviour {
     
     public void InventoryVisible(bool visible) {
         _inventory.SetActive(visible);
+        _input.gameObject.SetActive(visible);
+        
     }
 }

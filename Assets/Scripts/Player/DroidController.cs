@@ -15,6 +15,8 @@ public class DroidController : MonoBehaviour {
 	[SerializeField] private CharacterController characterController;
 	[SerializeField] private Transform footPoint;
 
+	[SerializeField] private InventoryManager _inventory;
+
 	[Header("Control settings")]
 	[Tooltip("Realistic space controls with momentum. Set to false for precise transform controls.")]
 	[SerializeField] private bool spaceControls;
@@ -77,6 +79,13 @@ public class DroidController : MonoBehaviour {
 		Movement();
 		grounded = isGrounded;
 	}
+	
+	#region Inventory
+
+	public bool Give(Resource resource, int count) {
+		return _inventory.GiveResource(resource, count);
+	}
+	#endregion
 
 	#region Movement controls
 	

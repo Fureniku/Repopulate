@@ -19,6 +19,7 @@ public class ItemRegistry : ScriptableObject {
         }
     }
 
+    public Item EMPTY;
     public Item ALGAE_FARM_1;
     public Item PILLAR_1;
     public Item BATTERY_1;
@@ -29,6 +30,7 @@ public class ItemRegistry : ScriptableObject {
     public List<Item> GetItemList() {
         List<Item> itemList = new();
 
+        itemList.Add(EMPTY);
         itemList.Add(ALGAE_FARM_1);
         itemList.Add(PILLAR_1);
         itemList.Add(BATTERY_1);

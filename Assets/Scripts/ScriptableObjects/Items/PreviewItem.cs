@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PreviewItem : MonoBehaviour {
 
-	private Item _item;
-	private GameObject _itemObject;
+	private Item _item = ItemRegistry.Instance.EMPTY;
+	private GameObject _itemObject = ItemRegistry.Instance.EMPTY.Get();
 	
 	[SerializeField] private Material invalidPlace;
 	[SerializeField] private Material validPlace;
@@ -32,6 +32,11 @@ public class PreviewItem : MonoBehaviour {
 	}
 
 	public GameObject GetObject() {
+		if (_itemObject == null) {
+			Debug.LogError("PreviewItem._itemObject is currently null! Fixing and returning empty.");
+			_itemObject = ItemRegistry.Instance.EMPTY.Get();
+			return ItemRegistry.Instance.EMPTY.Get();
+		}
 		return _itemObject;
 	}
 	

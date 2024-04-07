@@ -14,9 +14,9 @@ public class SlotTooltip : MonoBehaviour {
     }
 
     public void SetInfo(Resource resource, int count) {
-        _resourceName.SetText(resource.GetName());
-        _resourceCategory.SetText(resource.GetCategory().GetName());
-        _resourceDesc.SetText(resource.GetDescription());
+        _resourceName.SetText(resource.Name);
+        _resourceCategory.SetText(resource.Category.GetName());
+        _resourceDesc.SetText(resource.Description);
         _resourceCount.SetText($"{count}");
     }
 }

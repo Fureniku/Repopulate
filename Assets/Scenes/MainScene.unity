@@ -10455,7 +10455,6 @@ MonoBehaviour:
   _character: {fileID: 1994502526}
   _shipMoveController: {fileID: 634727218}
   _solarSystem: {fileID: 246409560}
-  _emptyItem: {fileID: 0}
 --- !u!4 &1783198910
 Transform:
   m_ObjectHideFlags: 0
@@ -12315,13 +12314,14 @@ GameObject:
   m_Component:
   - component: {fileID: 2046640252}
   - component: {fileID: 2046640251}
+  - component: {fileID: 2046640253}
   m_Layer: 0
   m_Name: Debugger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2046640251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12329,7 +12329,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2046640250}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f473e19b3618014e868fc164ea02274, type: 3}
   m_Name: 
@@ -12349,6 +12349,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2046640253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046640250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65da9d18ac3de014599f4962a5aa63b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2050201137
 GameObject:
   m_ObjectHideFlags: 0

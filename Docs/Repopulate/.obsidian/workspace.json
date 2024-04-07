@@ -30,9 +30,19 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "7b029c878cd953e1",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.5.12"
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -172,7 +182,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "2aa300ab46863e0b",
+  "active": "7b029c878cd953e1",
   "lastOpenFiles": [
     "Gameplay/Station Modules.md",
     "Gameplay/Droids.md",

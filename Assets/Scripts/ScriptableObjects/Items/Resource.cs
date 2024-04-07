@@ -3,8 +3,9 @@ using UnityEngine;
 
 [CreateAssetMenu]
 public class Resource : ScriptableObject {
-    
+
     [Header("Resource Information")]
+    [SerializeField] private int _id;
     [SerializeField] private string _resourceName;
     [SerializeField] private string _description;
     [SerializeField] private Category _category;
@@ -19,21 +20,11 @@ public class Resource : ScriptableObject {
     [SerializeField] private int _sizeExtraLarge;
     [SerializeField] private int _sizeMaximum;
 
-    public string GetName() {
-        return _resourceName;
-    }
-    
-    public Category GetCategory() {
-        return _category;
-    }
-    
-    public string GetDescription() {
-        return _description;
-    }
-
-    public Sprite GetSprite() {
-        return _icon;
-    }
+    public string Name => _resourceName;
+    public Category Category => _category;
+    public string Description => _description;
+    public int ID => _id;
+    public Sprite Sprite => _icon;
 
     public int SlotCapacity(EnumSlotSizes size) {
         if (!_stackable) {

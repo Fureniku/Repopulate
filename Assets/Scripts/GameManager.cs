@@ -8,15 +8,13 @@ public class GameManager : MonoSingleton<GameManager> {
     [SerializeField] private CharacterController _character;
     [SerializeField] private ShipMoveController _shipMoveController;
     [SerializeField] private SolarSystemManager _solarSystem;
-    
-    [SerializeField] private Item _emptyItem;
 
     private DroidManager _droidManager;
 
     public const float MouseSensitivity = 3.5f;
 
     //An empty item with no logic, model or assets, used instead of null for missing items or unoccupied scrollbar slots
-    public Item EmptyItem => _emptyItem;
+    public Item EmptyItem => ItemRegistry.Instance.EMPTY;
     public DroidManager GetDroidManager => _droidManager;
 
     void Start() {

@@ -41,7 +41,6 @@ public class CharacterController : MonoBehaviour {
 
     public void HandleOpenInventory(InputAction.CallbackContext context) {
         if (context.performed) {
-            Debug.Log("Toggling inventory?!");
             isPlayerDroidActive = !isPlayerDroidActive;
             Cursor.lockState = isPlayerDroidActive ? CursorLockMode.Locked : CursorLockMode.None;
             currentDroid.InventoryVisible(!isPlayerDroidActive);
@@ -53,23 +52,33 @@ public class CharacterController : MonoBehaviour {
     }
 
     public void HandleMovement(InputAction.CallbackContext context) {
-        currentDroid.HandleMovement(context.ReadValue<Vector2>());
+        if (isPlayerDroidActive) {
+            currentDroid.HandleMovement(context.ReadValue<Vector2>());
+        }
     }
 
     public void HandleSwitchDroid(InputAction.CallbackContext context) {
-        GameManager.Instance.GetDroidManager.AssignNextAvailableDroid(this);
+        if (isPlayerDroidActive) {
+            GameManager.Instance.GetDroidManager.AssignNextAvailableDroid(this);
+        }
     }
 
     public void HandleObjectRotation(InputAction.CallbackContext context) {
-        currentDroid.HandleObjectRotation();
+        if (isPlayerDroidActive) {
+            currentDroid.HandleObjectRotation();
+        }
     }
 
     public void HandleJump(InputAction.CallbackContext context) {
-        currentDroid.HandleJump();
+        if (isPlayerDroidActive) {
+            currentDroid.HandleJump();
+        }
     }
 
     public void HandleStabilisation(InputAction.CallbackContext context) {
-        currentDroid.HandleStabilisation();
+        if (isPlayerDroidActive) {
+            currentDroid.HandleStabilisation();
+        }
     }
     
     public void HandleCamera(InputAction.CallbackContext context) {
@@ -83,10 +92,15 @@ public class CharacterController : MonoBehaviour {
     }
 
     public void HandleUIInput(InputAction.CallbackContext context) {
-        currentDroid.HandleUIControlInput(context);
+        if (isPlayerDroidActive) {
+            currentDroid.HandleUIControlInput(context);
+        }
     }
     
     public void HandlePlaceObject(InputAction.CallbackContext context) {
-        currentDroid.HandlePlaceObject(context);
+        if (isPlayerDroidActive) {
+            currentDroid.HandlePlaceObject(context);
+        }
+        
     }
 }

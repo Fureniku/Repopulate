@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5568037fb30540c44910486979efaedd, type: 3}
   m_Name: Item_Registry
   m_EditorClassIdentifier: 
+  EMPTY: {fileID: 11400000, guid: ea4e9315a5cec72438c7955be86150d1, type: 2}
   ALGAE_FARM_1: {fileID: 11400000, guid: 4171680838cf7584dbf218148a924fd0, type: 2}
   PILLAR_1: {fileID: 11400000, guid: 14cde73593cd024418beee0933904a23, type: 2}
   BATTERY_1: {fileID: 11400000, guid: be785791c7fbc014d92ad8ebccf829fe, type: 2}
