@@ -1,5 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3908641556233697300
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 782090549151368921}
+  - component: {fileID: 8604372103246591587}
+  m_Layer: 3
+  m_Name: ItemInventory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &782090549151368921
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3908641556233697300}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4290571542892684369}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8604372103246591587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3908641556233697300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1896a4ae238fa548beeaa072ac9fb3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slotCount: 30
+  _slotSize: 2
+  _slotParent: {fileID: 3738597555387159125}
+  _slotPrefab: {fileID: 8457711200723988334, guid: f663a0a1b862cd24385951de79708869, type: 3}
 --- !u!1 &4290571541127608934
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,6 +408,7 @@ Transform:
   - {fileID: 4290571542915913365}
   - {fileID: 4290571541482753486}
   - {fileID: 4290571541474410096}
+  - {fileID: 782090549151368921}
   - {fileID: 5961276954289090756}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -451,7 +500,7 @@ MonoBehaviour:
   gravitySource: {fileID: 0}
   characterController: {fileID: 0}
   footPoint: {fileID: 4290571541474410096}
-  _inventory: {fileID: 5583004260061744672}
+  _inventory: {fileID: 8604372103246591587}
   spaceControls: 0
   moveSpeed: 5
   moveSpeedSpace: 25
@@ -704,10 +753,22 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2377204208117762600, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2518846294961375853, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
       propertyPath: droid
       value: 
       objectReference: {fileID: 4290571542892684374}
+    - target: {fileID: 2895806199855721597, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2895806199855721597, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4381241852597423962, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -894,7 +955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6436300344052614158, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6436300344052614158, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
       propertyPath: m_AnchorMax.x
@@ -968,8 +1029,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8448980359694656257, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8448980359694656257, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8448980359694656257, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -7
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5085179752967158506, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
+--- !u!1 &1155218209339075188 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2008825433362226878, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
+  m_PrefabInstance: {fileID: 858182851213178058}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5080835124819038718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155218209339075188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8d6559b6582ce646954eb2da8679690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1156029666762405633 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2009707260351808459, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
@@ -981,17 +1072,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5583004260061744672 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5085179752967158506, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
+--- !u!1 &3738597555387159125 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4038262575460935327, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
   m_PrefabInstance: {fileID: 858182851213178058}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1896a4ae238fa548beeaa072ac9fb3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &5961276954289090756 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6436300344052614158, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}

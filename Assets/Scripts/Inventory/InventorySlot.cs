@@ -1,54 +1,54 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler  {
-	
-	[SerializeField] private SlotTooltip _tooltip;
-	[SerializeField] private int _stackCount;
-	[SerializeField] private TMP_Text _count;
-	[SerializeField] private Image _icon;
+public class InventorySlot : MonoBehaviour {
 	
 	public EnumSlotSizes SlotSize { get; set; }
 	public Resource Resource { get; set; }
+	public int StackCount { get; set; }
 
-	public void OnPointerEnter(PointerEventData eventData) {
-		if (Resource != null && Resource != ResourceRegistry.Instance.EMPTY) {
-			RefreshSlot();
-			_tooltip.gameObject.SetActive(true);
+	public InventoryData _data;
+	
+	public InventoryData Data {
+		get { return _data; }
+		set {
+			_data = value;
+			PropertyMediator.Instance.UpdateProperty("DataTest", _data);
 		}
-	}
-
-	public void OnPointerExit(PointerEventData eventData) {
-		_tooltip.gameObject.SetActive(false);
-	}
-
-	public void RefreshSlot() {
-		_count.SetText($"{_stackCount}");
-		_tooltip.SetInfo(Resource, _stackCount);
-		_icon.sprite = Resource.Sprite;
-		Debug.Log($"Refreshed slot, with {Resource.Name} and the sprite should be {Resource.Sprite.name}");
 	}
 
 	//TODO lots of prototype logic for inventories! it's all client-side for now.
 	public int GetAvailableSpace() {
-		return Resource.SlotCapacity(SlotSize) - _stackCount;
+		return Resource.SlotCapacity(SlotSize) - StackCount;
 	}
 
 	public void PutResource(Resource res, int count) {
 		if (Resource == ResourceRegistry.Instance.EMPTY) {
 			Debug.Log($"Inserting new stack {res.Name} into slot");
 			Resource = res;
-			_stackCount = count;
+			StackCount = count;
 		}
 		else if (Resource.ID == res.ID) {
 			Debug.Log("Increasing existing stack size");
-			_stackCount += count;
+			StackCount += count;
 		}
 
-		if (_stackCount > Resource.SlotCapacity(SlotSize)) {
-			_stackCount = Resource.SlotCapacity(SlotSize);
+		if (StackCount > Resource.SlotCapacity(SlotSize)) {
+			StackCount = Resource.SlotCapacity(SlotSize);
 		}
+
+		Data = new InventoryData(Resource, StackCount);
+		Debug.Log("Raised the data?");
+	}
+	
+	//raise a change here...
+}
+
+public class InventoryData {
+	public Resource Resource { get; private set; }
+	public int StackCount { get; private set; }
+
+	public InventoryData(Resource res, int count) {
+		Resource = res;
+		StackCount = count;
 	}
 }

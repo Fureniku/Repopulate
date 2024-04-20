@@ -30,7 +30,7 @@ public class InventoryManager : MonoBehaviour {
         }
     }
 
-    void Update() {
+    /*void Update() {
         if (_isDirty) {
             for (int i = 0; i < _slots.Count; i++) {
                 Debug.Log($"Refreshing slot {i}");
@@ -39,7 +39,7 @@ public class InventoryManager : MonoBehaviour {
 
             _isDirty = false;
         }
-    }
+    }*/
 
     public void MarkDirty() {
         _isDirty = true;
