@@ -19,7 +19,7 @@ public class PropertyMediator : MonoBehaviour {
         }
     }
 
-    public void RegisterProperty(string propertyName, object value) {
+    /*public void RegisterProperty(string propertyName, object value) {
         _propertyMap[propertyName] = value;
     }
 
@@ -28,11 +28,22 @@ public class PropertyMediator : MonoBehaviour {
             return _propertyMap[propertyName];
         }
         return null;
+    }*/
+
+    public void UpdateProperty(string propertyName, object value, Transform origin) {
+        _propertyMap[propertyName] = value;
+        Debug.Log($"Updated property {propertyName}, its now {_propertyMap[propertyName]}");
+        NotifyPropertyChanged(propertyName, value, origin);
     }
 
-    public void UpdateProperty(string propertyName, object value) {
-        _propertyMap[propertyName] = value;
-        NotifyPropertyChanged(propertyName, value);
+    private void NotifyPropertyChanged(string propertyName, object value, Transform origin) {
+        OnPropertyChanged?.Invoke(propertyName, value);
+        // Propagate the change downwards through the hierarchy
+        foreach (Transform child in transform) {
+            if (child != origin) {
+                NotifyPropertyChanged(propertyName, value, child);
+            }
+        }
     }
 
     public event Action<string, object> OnPropertyChanged;

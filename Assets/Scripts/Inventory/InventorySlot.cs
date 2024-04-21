@@ -1,20 +1,12 @@
 using UnityEngine;
 
-public class InventorySlot : MonoBehaviour {
+public class InventorySlot : ModelBase {
 	
 	public EnumSlotSizes SlotSize { get; set; }
 	public Resource Resource { get; set; }
 	public int StackCount { get; set; }
 
-	public InventoryData _data;
-	
-	public InventoryData Data {
-		get { return _data; }
-		set {
-			_data = value;
-			PropertyMediator.Instance.UpdateProperty("DataTest", _data);
-		}
-	}
+	public InventoryData InvData { get; set; }
 
 	//TODO lots of prototype logic for inventories! it's all client-side for now.
 	public int GetAvailableSpace() {
@@ -36,7 +28,8 @@ public class InventorySlot : MonoBehaviour {
 			StackCount = Resource.SlotCapacity(SlotSize);
 		}
 
-		Data = new InventoryData(Resource, StackCount);
+		InvData = new InventoryData(Resource, StackCount);
+		RaiseProperty(nameof(InvData), InvData);
 		Debug.Log("Raised the data?");
 	}
 	

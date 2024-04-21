@@ -750,7 +750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1896a4ae238fa548beeaa072ac9fb3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slotCount: 30
+  _slotCount: 5
   _slotSize: 2
   _slotParent: {fileID: 3878411375337284517}
   _slotPrefab: {fileID: 8457711200723988334, guid: f663a0a1b862cd24385951de79708869, type: 3}

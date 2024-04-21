@@ -1,23 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ImageBinding : MonoBehaviour
+public class ImageBinding : BindingBase
 {
-    [SerializeField] private string propertyName;
     [SerializeField] private Image _img;
-
-    private void Start() {
-        PropertyMediator.Instance.OnPropertyChanged += OnPropertyUpdated;
-    }
-
-    private void OnPropertyUpdated(string propName, object value) {
-        if (propName == propertyName && value is InventoryData data) {
-            Debug.Log("Received the data in the image binding!!");
-            _img.sprite = data.Resource.Sprite;
+    
+    void Start() {
+        if (_img == null) {
+            _img = GetComponent<Image>();
         }
     }
 
-    private void OnDestroy() {
-        PropertyMediator.Instance.OnPropertyChanged -= OnPropertyUpdated;
+    protected override void SetData(object value) {
+        if (value is Sprite data) {
+            Debug.Log("Received the data in the image binding!!");
+            _img.sprite = data;
+        }
+        else {
+            Debug.Log($"Image binding received data, but it was wrong. It was {value.GetType()}");
+        }
     }
 }

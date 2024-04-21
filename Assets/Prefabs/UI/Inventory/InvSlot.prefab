@@ -611,6 +611,7 @@ GameObject:
   - component: {fileID: 7092465698957491491}
   - component: {fileID: 808886769195346542}
   - component: {fileID: 1512589955222454997}
+  - component: {fileID: 7381331080701109148}
   m_Layer: 5
   m_Name: StackCount
   m_TagString: Untagged
@@ -735,6 +736,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7381331080701109148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4107107730004143150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e54aad97c936d04d97445cc06c590db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _propertyName: StackCount
+  _text: {fileID: 1512589955222454997}
 --- !u!1 &4981686837438232961
 GameObject:
   m_ObjectHideFlags: 0
@@ -1536,10 +1551,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0663487d5c170a46896baa29d0cfddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _propertyName: InvData
   _tooltip: {fileID: 956756329750197562}
-  _count: {fileID: 1512589955222454997}
-  _icon: {fileID: 5559176120538263000}
-  _slot: {fileID: 1420337038150991876}
 --- !u!1 &8507817063544472136
 GameObject:
   m_ObjectHideFlags: 0
@@ -1929,7 +1942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad011bc5ae8d31449bdad3d2c8ae74f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  propertyName: DataTest
+  _propertyName: SlotIcon
   _img: {fileID: 5559176120538263000}
 --- !u!1 &8875753194346118926
 GameObject:
