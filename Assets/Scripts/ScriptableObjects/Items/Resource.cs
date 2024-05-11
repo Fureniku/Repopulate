@@ -4,8 +4,12 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Resource : ScriptableObject {
 
-    [Header("Resource Information")]
+    [Header("Metadata")]
     [SerializeField] private int _id;
+    [SerializeField] private EnumResourceTags[] _tags;
+    [SerializeField] private string _unlocalizedName;
+    
+    [Header("Resource Information")]
     [SerializeField] private string _resourceName;
     [SerializeField] private string _description;
     [SerializeField] private Category _category;
@@ -20,6 +24,7 @@ public class Resource : ScriptableObject {
     [SerializeField] private int _sizeExtraLarge;
     [SerializeField] private int _sizeMaximum;
 
+    public string UnlocalizedName => _unlocalizedName;
     public string Name => _resourceName;
     public Category Category => _category;
     public string Description => _description;

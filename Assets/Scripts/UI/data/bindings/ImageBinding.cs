@@ -5,7 +5,7 @@ public class ImageBinding : BindingBase
 {
     [SerializeField] private Image _img;
     
-    void Start() {
+    protected override void Setup() {
         if (_img == null) {
             _img = GetComponent<Image>();
         }

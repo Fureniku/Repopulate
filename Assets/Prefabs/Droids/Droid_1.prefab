@@ -937,6 +937,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6111275417776387880, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
+      propertyPath: _input
+      value: 
+      objectReference: {fileID: 1156029666762405633}
     - target: {fileID: 6323867564047152382, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
       propertyPath: droid
       value: 

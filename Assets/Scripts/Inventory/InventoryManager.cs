@@ -8,10 +8,9 @@ public class InventoryManager : MonoBehaviour {
     [SerializeField] private GameObject _slotParent;
     [SerializeField] private GameObject _slotPrefab;
 
-    private List<InventorySlot> _slots = new();
+    [SerializeField] private List<InventorySlot> _slots = new();
 
     private bool _initialized = false;
-    private bool _isDirty = false;
 
     void Awake() {
         if (!_initialized) {
@@ -30,29 +29,8 @@ public class InventoryManager : MonoBehaviour {
         }
     }
 
-    /*void Update() {
-        if (_isDirty) {
-            for (int i = 0; i < _slots.Count; i++) {
-                Debug.Log($"Refreshing slot {i}");
-                _slots[i].RefreshSlot();
-            }
-
-            _isDirty = false;
-        }
-    }*/
-
-    public void MarkDirty() {
-        _isDirty = true;
-    }
-
     public bool GiveResource(Resource res, int count, bool simulate = false) {
         Debug.Log($"Attempting to give {count} x {res.Name}. There are {_slots.Count} slots available in this inventory.");
-        if (_initialized) {
-            Debug.Log("The inventory IS initialized. Its name is {name}");
-        }
-        else {
-            Debug.Log($"The inventory is NOT initialized. Its name is {name}");
-        }
         int remain = count;
         for (int i = 0; i < _slots.Count; i++) {
             InventorySlot slot = _slots[i];
@@ -63,7 +41,6 @@ public class InventoryManager : MonoBehaviour {
                     if (!simulate) {
                         slot.PutResource(res, remain);
                     }
-                    MarkDirty();
                     Debug.Log("success! increased existing stack");
                     return true;
                 }
@@ -80,7 +57,6 @@ public class InventoryManager : MonoBehaviour {
                     if (!simulate) {
                         slot.PutResource(res, remain);
                     }
-                    MarkDirty();
                     Debug.Log("success! placed new stack");
                     return true;
                 }
@@ -93,8 +69,28 @@ public class InventoryManager : MonoBehaviour {
 
         if (remain != count) {
             Debug.Log("Incomplete Give used! We need to handle this edge case.");
-            MarkDirty();
         }
         return false;
+    }
+
+    
+    
+    
+    
+    int Insert(InventorySlot slot, int available, int remain, Resource res, bool simulate = false) {
+        Debug.Log($"Attempting to insert to slot. Slot capacity is {available}");
+        if (available > remain) {
+            if (!simulate) {
+                slot.PutResource(res, remain);
+            }
+            Debug.Log("success! placed new stack");
+            return 0;
+        }
+        if (available > 0) {
+            slot.PutResource(res, available);
+            remain -= available;
+        }
+
+        return remain;
     }
 }

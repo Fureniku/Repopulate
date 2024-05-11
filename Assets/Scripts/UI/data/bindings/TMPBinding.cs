@@ -5,7 +5,7 @@ public class TMPBinding : BindingBase {
 	
 	[SerializeField] private TMP_Text _text;
 
-	void Start() {
+	protected override void Setup() {
 		if (_text == null) {
 			_text = GetComponent<TMP_Text>();
 		}

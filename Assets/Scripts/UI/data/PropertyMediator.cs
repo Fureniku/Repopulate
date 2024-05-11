@@ -32,7 +32,6 @@ public class PropertyMediator : MonoBehaviour {
 
     public void UpdateProperty(string propertyName, object value, Transform origin) {
         _propertyMap[propertyName] = value;
-        Debug.Log($"Updated property {propertyName}, its now {_propertyMap[propertyName]}");
         NotifyPropertyChanged(propertyName, value, origin);
     }
 

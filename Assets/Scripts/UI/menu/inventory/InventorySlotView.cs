@@ -8,6 +8,7 @@ public class InventorySlotView : ViewModelBase, IPointerEnterHandler, IPointerEx
 	private Resource _resource;
 	private int _stackCount;
 
+	public bool TooltipActive { get; private set; }
 	public string ItemName => _resource.Name;
 	public string ItemDescription => _resource.Description;
 	public string StackCount => _stackCount.ToString();
@@ -15,17 +16,23 @@ public class InventorySlotView : ViewModelBase, IPointerEnterHandler, IPointerEx
 
 	public void OnPointerEnter(PointerEventData eventData) {
 		if (_resource != null && _resource != ResourceRegistry.Instance.EMPTY) {
-			_tooltip.gameObject.SetActive(true);
+			TooltipActive = true;
+			RaiseProperty(nameof(TooltipActive), TooltipActive);
 		}
 	}
 
 	public void OnPointerExit(PointerEventData eventData) {
-		_tooltip.gameObject.SetActive(false);
+		TooltipActive = false;
+		RaiseProperty(nameof(TooltipActive), TooltipActive);
+	}
+
+	public void TempSetData(object data) {
+		SetData(data);
 	}
 	
 	protected override void SetData(object value) {
 		if (value is InventoryData data) {
-			Debug.Log("Received inventory data!");
+			Debug.Log($"Received inventory data! This object is {transform.name}");
 			_resource = data.Resource;
 			_stackCount = data.StackCount;
 			
@@ -40,5 +47,20 @@ public class InventorySlotView : ViewModelBase, IPointerEnterHandler, IPointerEx
 
 		//_tooltip.SetInfo(_resource, _stackCount);
 		Debug.Log($"Refreshed slot, with {_resource.Name} and the sprite should be {_resource.Sprite.name}");
+	}
+	
+	private void Start() {
+		OnPropertyChanged += OnPropertyUpdated;
+	}
+	
+	private void OnDestroy() {
+		OnPropertyChanged -= OnPropertyUpdated;
+	}
+	
+	private void OnPropertyUpdated(string propName, object value) {
+		//Debug.LogWarning($"Inv Slot View {name} received property change on {propName}");
+		//if (propName == _propertyName) {
+			//SetData(value);
+		//}
 	}
 }

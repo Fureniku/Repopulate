@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d6e493fdd6b3dfd45adfb4df68baaf15, type: 3}
-  m_Name: ResourceRaw
+  m_Name: Resources
   m_EditorClassIdentifier: 
-  _categoryName: 
+  _categoryName: Resources

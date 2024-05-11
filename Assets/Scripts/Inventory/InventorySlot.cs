@@ -1,12 +1,19 @@
+using System;
 using UnityEngine;
 
-public class InventorySlot : ModelBase {
+public class InventorySlot : MonoBehaviour {
 	
 	public EnumSlotSizes SlotSize { get; set; }
 	public Resource Resource { get; set; }
 	public int StackCount { get; set; }
 
-	public InventoryData InvData { get; set; }
+	public InventoryData InvData;
+
+	private InventorySlotView _view;
+
+	void Start() {
+		_view = GetComponent<InventorySlotView>();
+	}
 
 	//TODO lots of prototype logic for inventories! it's all client-side for now.
 	public int GetAvailableSpace() {
@@ -29,16 +36,17 @@ public class InventorySlot : ModelBase {
 		}
 
 		InvData = new InventoryData(Resource, StackCount);
-		RaiseProperty(nameof(InvData), InvData);
-		Debug.Log("Raised the data?");
+		//RaiseProperty(nameof(InvData), InvData);
+		//Debug.Log("Raised the data?");
+		Debug.Log($"========= Slot {name} is going to do the temporary data setting call");
+		_view.TempSetData(InvData);
 	}
-	
-	//raise a change here...
 }
 
+[Serializable]
 public class InventoryData {
-	public Resource Resource { get; private set; }
-	public int StackCount { get; private set; }
+	public Resource Resource;
+	public int StackCount;
 
 	public InventoryData(Resource res, int count) {
 		Resource = res;

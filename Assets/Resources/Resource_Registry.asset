@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EMPTY: {fileID: 11400000, guid: 7cef0e3d1dff5b443aefc2a9bee19661, type: 2}
   RAW_IRON_ORE: {fileID: 11400000, guid: 6089118e49c7fdd448f039e89d3c39e0, type: 2}
+  RAW_GOLD_ORE: {fileID: 11400000, guid: 1ca18a3ae5367e740bd078df1d40ad67, type: 2}
+  RAW_CARBON_ORE: {fileID: 11400000, guid: 011cad9ef51a6be438f30a07f120be7a, type: 2}
+  RAW_COPPER_ORE: {fileID: 11400000, guid: 109c67edaec2c6e4db68aaa16d493f26, type: 2}
+  RAW_URANIUM_ORE: {fileID: 11400000, guid: f4d5bb17c30d6d54daca36eb085c640c, type: 2}

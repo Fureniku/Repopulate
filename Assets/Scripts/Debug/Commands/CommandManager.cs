@@ -20,7 +20,13 @@ public class CommandManager : MonoBehaviour {
     }
 
     public static void HandleCommand(object source, string command, string[] args = null) {
-        Debug.Log($"Handling command {command} from {source.GetType()} with args {args}");
+        if (args == null) {
+            Debug.Log($"Handling command {command} from {source.GetType()} with no args");
+        }
+        else {
+            Debug.Log($"Handling command {command} from {source.GetType()} with args {args}");
+        }
+        
         switch (source) {
             case DroidController droid:
                 Debug.Log("Handling droid command");
