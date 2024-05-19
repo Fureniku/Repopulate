@@ -3,15 +3,17 @@ using UnityEngine.EventSystems;
 
 public class InventorySlotView : ViewModelBase, IPointerEnterHandler, IPointerExitHandler
 {
-	[SerializeField] private SlotTooltip _tooltip;
-
 	private Resource _resource;
 	private int _stackCount;
+	private EnumSlotSizes _slotSize;
 
 	public bool TooltipActive { get; private set; }
 	public string ItemName => _resource.Name;
+	public string ItemCategory => _resource.Category.GetName();
 	public string ItemDescription => _resource.Description;
-	public string StackCount => _stackCount.ToString();
+	public string StackCount => $"{_stackCount} / {_resource.SlotCapacity(_slotSize)}";
+	public bool HasExtraInformation { get; private set; } = false;
+	public string ExtraInfo => "";
 	public Sprite SlotIcon => _resource.Sprite;
 
 	public void OnPointerEnter(PointerEventData eventData) {
@@ -35,18 +37,18 @@ public class InventorySlotView : ViewModelBase, IPointerEnterHandler, IPointerEx
 			Debug.Log($"Received inventory data! This object is {transform.name}");
 			_resource = data.Resource;
 			_stackCount = data.StackCount;
+			_slotSize = data.SlotSize;
 			
 			RaiseProperty(nameof(ItemName), ItemName);
+			RaiseProperty(nameof(ItemCategory), ItemCategory);
 			RaiseProperty(nameof(ItemDescription), ItemDescription);
 			RaiseProperty(nameof(StackCount), StackCount);
 			RaiseProperty(nameof(SlotIcon), _resource.Sprite);
+			Debug.Log($"Raised slot data with name [{ItemName}], description [{ItemDescription}] and count [{StackCount}]. Probably an icon too.");
 		}
 		else {
 			Debug.Log($"wasn't inventory data. It was {value.GetType()}");
 		}
-
-		//_tooltip.SetInfo(_resource, _stackCount);
-		Debug.Log($"Refreshed slot, with {_resource.Name} and the sprite should be {_resource.Sprite.name}");
 	}
 	
 	private void Start() {

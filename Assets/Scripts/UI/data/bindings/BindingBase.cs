@@ -1,3 +1,5 @@
+using System;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 public abstract class BindingBase : MonoBehaviour
@@ -6,7 +8,6 @@ public abstract class BindingBase : MonoBehaviour
 	[SerializeField] protected ViewModelBase _viewModel;
 	
 	private void Start() {
-		Debug.Log($"<color=#FFFF00>Subscribing {name} to OnPropertyChanged listener, listening for property {_propertyName}</color>");
 		_viewModel.OnPropertyChanged += OnPropertyUpdated;
 		Setup();
 	}
@@ -16,12 +17,18 @@ public abstract class BindingBase : MonoBehaviour
 	}
 
 	protected void OnPropertyUpdated(string propName, object value) {
-		Debug.LogWarning($"{name} received property change on {propName}, listening to {_propertyName}");
 		if (string.CompareOrdinal(propName, _propertyName) == 0) {
 			SetData(value);
 		}
 	}
-	
+
+	private void OnEnable() {
+		object dataObj = _viewModel.FindProperty(_propertyName);
+		if (dataObj != null) {
+			SetData(dataObj);
+		}
+	}
+
 	protected abstract void SetData(object value);
 	protected abstract void Setup();
 }

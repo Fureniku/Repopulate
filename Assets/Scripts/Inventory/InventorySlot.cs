@@ -22,12 +22,10 @@ public class InventorySlot : MonoBehaviour {
 
 	public void PutResource(Resource res, int count) {
 		if (Resource == ResourceRegistry.Instance.EMPTY) {
-			Debug.Log($"Inserting new stack {res.Name} into slot");
 			Resource = res;
 			StackCount = count;
 		}
 		else if (Resource.ID == res.ID) {
-			Debug.Log("Increasing existing stack size");
 			StackCount += count;
 		}
 
@@ -35,7 +33,7 @@ public class InventorySlot : MonoBehaviour {
 			StackCount = Resource.SlotCapacity(SlotSize);
 		}
 
-		InvData = new InventoryData(Resource, StackCount);
+		InvData = new InventoryData(Resource, StackCount, SlotSize);
 		//RaiseProperty(nameof(InvData), InvData);
 		//Debug.Log("Raised the data?");
 		Debug.Log($"========= Slot {name} is going to do the temporary data setting call");
@@ -47,9 +45,11 @@ public class InventorySlot : MonoBehaviour {
 public class InventoryData {
 	public Resource Resource;
 	public int StackCount;
+	public EnumSlotSizes SlotSize;
 
-	public InventoryData(Resource res, int count) {
+	public InventoryData(Resource res, int count, EnumSlotSizes slotSize) {
 		Resource = res;
 		StackCount = count;
+		SlotSize = slotSize;
 	}
 }

@@ -18,7 +18,6 @@ public class ActiveBinding : BindingBase {
     }
 
     protected override void SetData(object value) {
-        Debug.Log($"Active binding received value [{value}]");
         if (value is bool active) {
             _target.SetActive(active);
         }
