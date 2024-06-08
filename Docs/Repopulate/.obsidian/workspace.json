@@ -4,45 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "d3901c6a40bf196f",
+        "id": "79d9fe759ac25861",
         "type": "tabs",
         "children": [
           {
-            "id": "96852a28f6e9e70a",
+            "id": "e6b6f0f31e3e0c2e",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Gameplay/Resources & Resource Mechanics/Resources.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2aa300ab46863e0b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Gameplay/Droids.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "7b029c878cd953e1",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.5.12"
-              }
+              "type": "empty",
+              "state": {}
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -108,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Gameplay/Droids.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -125,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Gameplay/Droids.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -147,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Gameplay/Droids.md"
-              }
+              "state": {}
             }
           },
           {
@@ -182,10 +151,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "7b029c878cd953e1",
+  "active": "e6b6f0f31e3e0c2e",
   "lastOpenFiles": [
-    "Gameplay/Station Modules.md",
     "Gameplay/Droids.md",
+    "Gameplay/Station Modules.md",
     "Gameplay/Station Rings.md",
     "Gameplay/Time Scaling.md",
     "Gameplay/Resources & Resource Mechanics/Resources.md",

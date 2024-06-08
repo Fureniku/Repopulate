@@ -15,6 +15,11 @@ public class InventorySlot : MonoBehaviour {
 		_view = GetComponent<InventorySlotView>();
 	}
 
+	void OnEnable() {
+		_view = GetComponent<InventorySlotView>();
+		TempUpdate();
+	}
+
 	//TODO lots of prototype logic for inventories! it's all client-side for now.
 	public int GetAvailableSpace() {
 		return Resource.SlotCapacity(SlotSize) - StackCount;
@@ -34,10 +39,19 @@ public class InventorySlot : MonoBehaviour {
 		}
 
 		InvData = new InventoryData(Resource, StackCount, SlotSize);
-		//RaiseProperty(nameof(InvData), InvData);
-		//Debug.Log("Raised the data?");
-		Debug.Log($"========= Slot {name} is going to do the temporary data setting call");
-		_view.TempSetData(InvData);
+		TempUpdate();
+	}
+
+	private void TempUpdate() {
+		if (_view != null) {
+			//RaiseProperty(nameof(InvData), InvData);
+			//Debug.Log("Raised the data?");
+			Debug.Log($"========= Slot {name} is going to do the temporary data setting call");
+			_view.TempSetData(InvData);
+		}
+		else {
+			Debug.Log("View for invslot was null, not updating.");
+		}
 	}
 }
 

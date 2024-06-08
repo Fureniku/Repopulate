@@ -29,7 +29,7 @@ public class InventoryManager : MonoBehaviour {
         }
     }
 
-    public bool GiveResource(Resource res, int count, bool simulate = false) {
+    public int InsertResource(Resource res, int count, bool simulate = false) {
         Debug.Log($"Attempting to give {count} x {res.Name}. There are {_slots.Count} slots available in this inventory.");
         int remain = count;
         for (int i = 0; i < _slots.Count; i++) {
@@ -42,7 +42,7 @@ public class InventoryManager : MonoBehaviour {
                         slot.PutResource(res, remain);
                     }
                     Debug.Log("success! increased existing stack");
-                    return true;
+                    return 0;
                 }
                 if (available > 0) {
                     slot.PutResource(res, available);
@@ -58,7 +58,7 @@ public class InventoryManager : MonoBehaviour {
                         slot.PutResource(res, remain);
                     }
                     Debug.Log("success! placed new stack");
-                    return true;
+                    return 0;
                 }
                 if (available > 0) {
                     slot.PutResource(res, available);
@@ -70,7 +70,7 @@ public class InventoryManager : MonoBehaviour {
         if (remain != count) {
             Debug.Log("Incomplete Give used! We need to handle this edge case.");
         }
-        return false;
+        return remain;
     }
 
     

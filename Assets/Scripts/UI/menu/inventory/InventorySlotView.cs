@@ -38,13 +38,15 @@ public class InventorySlotView : ViewModelBase, IPointerEnterHandler, IPointerEx
 			_resource = data.Resource;
 			_stackCount = data.StackCount;
 			_slotSize = data.SlotSize;
-			
-			RaiseProperty(nameof(ItemName), ItemName);
-			RaiseProperty(nameof(ItemCategory), ItemCategory);
-			RaiseProperty(nameof(ItemDescription), ItemDescription);
-			RaiseProperty(nameof(StackCount), StackCount);
-			RaiseProperty(nameof(SlotIcon), _resource.Sprite);
-			Debug.Log($"Raised slot data with name [{ItemName}], description [{ItemDescription}] and count [{StackCount}]. Probably an icon too.");
+
+			if (_resource != null) {
+				RaiseProperty(nameof(ItemName), ItemName);
+				RaiseProperty(nameof(ItemCategory), ItemCategory);
+				RaiseProperty(nameof(ItemDescription), ItemDescription);
+				RaiseProperty(nameof(StackCount), StackCount);
+				RaiseProperty(nameof(SlotIcon), _resource.Sprite);
+				Debug.Log($"Raised slot data with name [{ItemName}], description [{ItemDescription}] and count [{StackCount}]. Probably an icon too.");
+			}
 		}
 		else {
 			Debug.Log($"wasn't inventory data. It was {value.GetType()}");

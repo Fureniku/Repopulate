@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class DebugUIHandlerDroid : DebugUIHandlerBase {
@@ -8,8 +6,8 @@ public class DebugUIHandlerDroid : DebugUIHandlerBase {
     
     private bool Grounded => droid.isGrounded;
     private bool ForceNotGrounded => droid.forcedNotGrounded;
-    private bool IsInGravity => droid.isInGravity;
-    private GravityBase CurrentGravitySource => droid.CurrentGravitySource();
+    private bool IsInGravity => droid.DroidGao.IsInGravity;
+    private GravityBase CurrentGravitySource => droid.CurrentGravitySource;
     private PreviewItem CurrentHeldItem => droid.GetPreviewItem();
 
     protected override void SetupTexts() {

@@ -2,17 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DroidController : MonoBehaviour {
-
-	[SerializeField] private Camera _fpCam;
+public class DroidController : PlayerControllable {
+	
 	[SerializeField] private PreviewItem heldItem;
 	[SerializeField] private Scrollbar scrollbar;
 	[SerializeField] private float heldRotation = 0;
 	[SerializeField] private UIController _uiController;
 	
 	[SerializeField] private Rigidbody rb;
-	[SerializeField] private GravityBase gravitySource;
-	[SerializeField] private CharacterController characterController;
 	[SerializeField] private Transform footPoint;
 
 	[SerializeField] private InventoryManager _inventory;
@@ -30,22 +27,13 @@ public class DroidController : MonoBehaviour {
 	//[SerializeField] private float slopeLimit = 45f;
 	[Tooltip("Upward speed to apply when jumping in meters/second")]
 	[SerializeField] private float jumpSpeed = 4f;
-	[Tooltip("The speed at which the droid rotates to correct orientation when entering gravity")]
-	[Range(1f, 10f)]
-	[SerializeField] private float gravitationalCorrectionSpeed = 5f;
 	[Tooltip("The maximum velocity the droid can move at")]
 	[SerializeField] private float maxSpeed = 5f;
-	//[Tooltip("The maximum velocity the droid can move at when moving upwards")]
-	//[SerializeField] private float maxSpeedUp = 5f;
-	//[Tooltip("The maximum velocity the droid can move at when falling (in gravity)")]
-	//[SerializeField] private float maxSpeedFall = 25f;
-	//[Tooltip("The maximum velocity the droid can move at (on all axis) while in space or zero-G areas")]
-	//[SerializeField] private float maxSpeedZeroG = 5f;
 
-	private Vector3 moveDir; //The in-gravity movement input
-	private Vector3 lastPosition; //The last known position when in gravity, used for transitioning velocity to out-of-gravity
-	private List<GravityBase> currentGravities = new();
+	private GravityAffectedObject _gao;
 	
+	private Vector3 moveDir; //The in-gravity movement input
+
 	//In-space variables
 	private Vector3 currentMomentum;
 	private Vector3 currentDirection;
@@ -54,10 +42,12 @@ public class DroidController : MonoBehaviour {
 
 	public int forcedNotGroundedCount { get; private set; } = 0; //Allows overlap of forced grounded areas without having to make a whole list of them.
 	public bool forcedNotGrounded { get; private set; } = false;
-
 	public bool isGrounded { get; private set; } = false;
-	public bool isInGravity { get; private set; } = false;
-	public bool isInElevator { get; private set; } = false;
+	public Vector3 MoveDir => moveDir;
+	public GravityAffectedObject DroidGao => _gao;
+	public GravityBase CurrentGravitySource => _gao.GravitySource;
+	public InventoryManager DroidInventory => _inventory;
+	
 	private bool isControlActive = true; //Whether the controls (movement/look) are currently active. Disabled while a UI is open etc
 	private bool isDroidActive = false; //Whether this droid currently has a controller TODO improve
 
@@ -65,13 +55,13 @@ public class DroidController : MonoBehaviour {
 
 	public bool grounded;
 	
-	void Awake() {
+	protected override void ControllableAwake() {
 		UpdateSelection();
 		rb = GetComponent<Rigidbody>();
-		isInGravity = gravitySource != null;
+		_gao = GetComponent<GravityAffectedObject>();
 	}
 
-	private void FixedUpdate() {
+	protected override void ControllableFixedUpdate() {
 		if (!isControlActive) {
 			return;
 		}
@@ -80,13 +70,6 @@ public class DroidController : MonoBehaviour {
 		grounded = isGrounded;
 	}
 	
-	#region Inventory
-
-	public bool Give(Resource resource, int count) {
-		return _inventory.GiveResource(resource, count);
-	}
-	#endregion
-
 	#region Movement controls
 	
 	public void HandleMovement(Vector2 input) {
@@ -95,7 +78,7 @@ public class DroidController : MonoBehaviour {
 	}
 
 	public void HandleVerticalMovement(float input) {
-		moveDir.y = isInGravity ? 0 : input;
+		moveDir.y = _gao.IsInGravity ? 0 : input;
 	}
 
 	public void HandleObjectRotation() {
@@ -106,7 +89,7 @@ public class DroidController : MonoBehaviour {
 	}
 
 	public void HandleJump() {
-		if (isGrounded && isInGravity && isControlActive) {
+		if (isGrounded && _gao.IsInGravity && isControlActive) {
 			Debug.Log("Jump!");
 			rb.AddForce(transform.TransformDirection(Vector3.up) * jumpSpeed, ForceMode.Impulse);
 		}
@@ -126,7 +109,7 @@ public class DroidController : MonoBehaviour {
 		moveDirection += t.right * moveDir.x;
 		moveDirection += t.up * moveDir.y;
 
-		if (isInGravity) {
+		if (_gao.IsInGravity) {
 			//Store our Y velocity so it's unaffected by player movement on X/Z
 			float velocityY = rb.velocity.y;
 
@@ -142,7 +125,7 @@ public class DroidController : MonoBehaviour {
 			rb.velocity = new Vector3(rb.velocity.x, velocityY, rb.velocity.z);
 
 			//Next, apply the gravitational force, pulling the object down.
-			Gravity();
+			_gao.UpdateGravity();
 			
 			//Now, if they've stopped pressing input and are on the floor, stop moving. Don't stop vertical velocity. Must be done in local space!
 			if (moveDir == Vector3.zero && isGrounded) {
@@ -159,7 +142,7 @@ public class DroidController : MonoBehaviour {
 			}
 
 			//Finally, limit velocities within maximum ranges
-			ClampVelocity();
+			rb.ClampVelocity(maxSpeed);
 		} else {
 			// Check for input to activate the thrusters
 			moveDirection += t.forward * moveDir.z;
@@ -188,7 +171,7 @@ public class DroidController : MonoBehaviour {
 	//Check if the character is touching the floor in some way, while within gravity
 	private void CheckGrounded() {
 		isGrounded = false;
-		if (forcedNotGrounded || gravitySource == null) {
+		if (forcedNotGrounded || !_gao.IsInGravity) {
 			return;
 		}
 
@@ -201,22 +184,6 @@ public class DroidController : MonoBehaviour {
 			if (Vector3.Distance(footPos, col.ClosestPoint(footPos)) < groundedDistance) {
 				isGrounded = true;
 			}
-		}
-	}
-
-	private void ClampVelocity() {
-		Vector3 velocityIn = rb.velocity;
-		float currentSpeed = velocityIn.magnitude;
-		
-		if (currentSpeed > maxSpeed) {
-			Vector3 desiredVelocity = rb.velocity.normalized * maxSpeed;
-			rb.velocity = desiredVelocity;
-		}
-	}
-	
-	private void LateUpdate() {
-		if (isInGravity) {
-			lastPosition = transform.position;
 		}
 	}
 	#endregion
@@ -247,7 +214,7 @@ public class DroidController : MonoBehaviour {
 	}
 
 	public void UpdatePreview() {
-		heldItem.UpdatePreview(_fpCam);
+		heldItem.UpdatePreview(_camera);
 	}
 
 	public PreviewItem GetPreviewItem() {
@@ -267,7 +234,7 @@ public class DroidController : MonoBehaviour {
             Debug.LogWarning($"Starting placement from {transform.name} (right click triggered)");
             if (heldItem.IsPlaceable()) {
                 Vector2 mousePosition = Mouse.current.position.ReadValue();
-                Ray ray = _fpCam.ScreenPointToRay(mousePosition);
+                Ray ray = _camera.ScreenPointToRay(mousePosition);
                 if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Constants.MASK_BUILDABLE)) {
                     Debug.Log($"Attempting to place a block in the grid after clicking {hit.transform.name}");
                     Direction dir = ColliderUtilities.GetHitFace(hit.normal);
@@ -308,15 +275,7 @@ public class DroidController : MonoBehaviour {
     }
 	#endregion
 	
-	#region Camwra
-	public Camera GetCamera() {
-		return _fpCam;
-	}
-	
-	public void SetCameraStatus(bool camOn) {
-		_fpCam.enabled = camOn;
-	}
-	
+	#region Camera
 	private float xRotation = 0.0f;
 	
 	public void HandleCamera(InputAction.CallbackContext context) {
@@ -327,23 +286,19 @@ public class DroidController : MonoBehaviour {
 
 		xRotation -= mouseY;
         
-		if (isInGravity) {
+		if (_gao.IsInGravity) {
 			xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-			_fpCam.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+			_camera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 			UpdateRotation(Vector3.up * mouseX);
 		} else {
 			transform.localRotation *= Quaternion.Euler(-mouseY, mouseX, 0f);
 
 			// Set the camera to always look in the direction of Object A's forward vector.
-			_fpCam.transform.localRotation = Quaternion.identity;
+			_camera.transform.localRotation = Quaternion.identity;
 		}
         
 		UpdatePreview();
-	}
-	
-	public void ResetCamera() {
-		_fpCam.transform.localRotation = Quaternion.identity;
 	}
 	#endregion
 
@@ -353,7 +308,7 @@ public class DroidController : MonoBehaviour {
 	
 	public void SetDroidActive(bool active) {
 		isDroidActive = active;
-		_fpCam.gameObject.SetActive(active);
+		_camera.gameObject.SetActive(active);
 	}
 
 	public void UpdateRotation(Vector3 newRot) {
@@ -361,89 +316,12 @@ public class DroidController : MonoBehaviour {
 	}
 	
 	#region Inventory
-
+	public int Give(Resource resource, int count) {
+		return _inventory.InsertResource(resource, count);
+	}
+	
 	public void InventoryVisible(bool visible) {
 		_uiController.InventoryVisible(visible);
-	}
-	
-	#endregion
-	
-	#region Gravity
-	private void Gravity() {
-		Vector3 pos = transform.position;
-		if (currentGravities.Count > 0) {
-			if (!isInGravity) {
-				characterController.ResetCamera();
-				transform.localScale = Vector3.one;
-			}
-
-			GravityBase priorityGravity = currentGravities[0];
-			
-			foreach (GravityBase grav in currentGravities) {
-				if (grav.GetPriority() > priorityGravity.GetPriority()) {
-					if (grav.IsWithinGravitationalEffect(pos)) {
-						priorityGravity = grav;
-					}
-				}
-			}
-
-			gravitySource = priorityGravity;
-			isInGravity = true;
-		} else {
-			if (isInGravity) {
-				gravitySource = null;
-				transform.parent = StationController.Instance.transform;
-				ClampVelocity();
-			}
-			isInGravity = false;
-		}
-
-		if (gravitySource != null && gravitySource.IsWithinGravitationalEffect(pos)) {
-			Vector3 direction = gravitySource.GetPullDirection(pos);
-			Vector3 gravDirection = gravitySource.GetPull(pos);
-		
-			rb.AddForce(gravDirection);
-
-			Quaternion targetRotation = Quaternion.FromToRotation(transform.up, -direction) * transform.rotation;
-			Quaternion slerp = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * gravitationalCorrectionSpeed);
-
-			transform.rotation = slerp;
-		}
-	}
-
-	public GravityBase CurrentGravitySource() => gravitySource;
-
-	#endregion
-
-	#region Interactions
-	private void OnTriggerEnter(Collider other) {
-		GravityBase gravity = other.GetComponent<GravityBase>();
-
-		if (gravity != null) {
-			isInGravity = true;
-			currentGravities.Add(gravity);
-		}
-	}
-
-	private void OnTriggerExit(Collider other) {
-		GravityBase gravity = other.GetComponent<GravityBase>();
-
-		if (gravity != null) {
-			currentGravities.Remove(gravity);
-		}
-	}
-
-	private void OnTriggerStay(Collider other) {
-		GravityLift gravLift = other.GetComponent<GravityLift>();
-
-		if (gravLift != null) {
-			isInElevator = true;
-			if (moveDir == Vector3.zero) {
-				gravLift.HandleForces(rb);
-			}
-		} else {
-			isInElevator = false;
-		}
 	}
 	#endregion
 

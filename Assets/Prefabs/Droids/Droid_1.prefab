@@ -48,6 +48,7 @@ MonoBehaviour:
   _slotSize: 2
   _slotParent: {fileID: 3738597555387159125}
   _slotPrefab: {fileID: 8457711200723988334, guid: f663a0a1b862cd24385951de79708869, type: 3}
+  _slots: []
 --- !u!1 &4290571541127608934
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,6 +385,8 @@ GameObject:
   - component: {fileID: 4290571542892684370}
   - component: {fileID: 4290571542892684371}
   - component: {fileID: 4290571542892684373}
+  - component: {fileID: 3460191988439074503}
+  - component: {fileID: 4840231717469009547}
   - component: {fileID: 4290571542892684374}
   - component: {fileID: 4290571542892684368}
   m_Layer: 3
@@ -479,6 +482,37 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &3460191988439074503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4290571542892684375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b490b686f3bb24bad60dd65279e4cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravitySource: {fileID: 0}
+  rb: {fileID: 4290571542892684373}
+  _gravitationalCorrectionSpeed: 5
+  _terminalVelocity: 5
+  _droidController: {fileID: 4290571542892684374}
+  characterController: {fileID: 0}
+--- !u!114 &4840231717469009547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4290571542892684375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27d9694782216a54780dd5d1cf92e49f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactDistance: 10
 --- !u!114 &4290571542892684374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,21 +525,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f00d55ffa81b0324cb047e010692a25d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fpCam: {fileID: 4290571542915913363}
+  _camera: {fileID: 0}
   heldItem: {fileID: 4290571541482753488}
   scrollbar: {fileID: 11400000, guid: da3f093a3703b7c4eaca4f468b2fc388, type: 2}
   heldRotation: 0
   _uiController: {fileID: 6641125869618298932}
   rb: {fileID: 4290571542892684373}
-  gravitySource: {fileID: 0}
-  characterController: {fileID: 0}
   footPoint: {fileID: 4290571541474410096}
   _inventory: {fileID: 8604372103246591587}
   spaceControls: 0
   moveSpeed: 5
   moveSpeedSpace: 25
   jumpSpeed: 2
-  gravitationalCorrectionSpeed: 5
   maxSpeed: 10
   groundedDistance: 0.6
   grounded: 0

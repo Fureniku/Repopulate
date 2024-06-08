@@ -87,6 +87,12 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
+    public void HandleInteract(InputAction.CallbackContext context) {
+        if (context.performed && isPlayerDroidActive && Cursor.lockState == CursorLockMode.Locked) {
+            currentDroid.Interact();
+        }
+    }
+
     public void ResetCamera() {
         currentDroid.ResetCamera();
     }

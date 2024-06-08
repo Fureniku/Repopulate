@@ -26,7 +26,7 @@ public abstract class GravityBase : MonoBehaviour {
     private void OnTriggerStay(Collider other) {
         DroidController droid = other.GetComponent<DroidController>();
         if (droid != null) {
-            if (droid.CurrentGravitySource() == this) {
+            if (droid.CurrentGravitySource == this) {
                 gizmoCol = Color.white;
                 if (IsWithinGravitationalEffect(droid.transform.position)) {
                     gizmoCol = Color.green;

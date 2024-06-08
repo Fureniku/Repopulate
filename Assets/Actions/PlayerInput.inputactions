@@ -2,7 +2,7 @@
     "name": "DroidInput",
     "maps": [
         {
-            "name": "General",
+            "name": "Droid",
             "id": "27fd3d90-d886-462b-9c93-0d9cc2a4e56e",
             "actions": [
                 {
@@ -322,7 +322,7 @@
                 {
                     "name": "",
                     "id": "af2f430a-5b17-437c-bd39-f7c12233f5d1",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
