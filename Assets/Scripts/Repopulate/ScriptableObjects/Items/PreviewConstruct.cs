@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+using Repopulate.Utils;
+using Repopulate.World.Registries;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PreviewConstruct : MonoBehaviour {
 
-	private Construct _construct = ConstructRegistry.Instance.EMPTY;
-	private GameObject _itemObject = ConstructRegistry.Instance.EMPTY.Get();
+	private Construct _construct;
+	private GameObject _itemObject;
 	
 	[SerializeField] private Material invalidPlace;
 	[SerializeField] private Material validPlace;
@@ -16,6 +15,11 @@ public class PreviewConstruct : MonoBehaviour {
 	
 	private bool canPlaceNow = true; //Updated with the preview, changes the material shading and also allows/disallows placement.
 
+	void Start() {
+		_construct = ConstructRegistry.Instance.EMPTY;
+		_itemObject = ConstructRegistry.Instance.EMPTY.Get();
+	}
+	
 	public void SetObject(Construct construct) {
 		if (construct == null) {
 			_construct = GameManager.Instance.EmptyConstruct;

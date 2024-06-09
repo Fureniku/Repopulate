@@ -1,20 +1,22 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(IconCapture))]
-public class ComponentButtonIconCapture : Editor {
-    
-    public override void OnInspectorGUI() {
-        IconCapture iconCapture = (IconCapture)target;
+namespace Repopulate.Utils {
+    [CustomEditor(typeof(IconCapture))]
+    public class ComponentButtonIconCapture : Editor {
 
-        DrawDefaultInspector();
+        public override void OnInspectorGUI() {
+            IconCapture iconCapture = (IconCapture)target;
 
-        if (GUILayout.Button("Generate Current Item")) {
-            iconCapture.GenerateSingleImage();
-        }
-        
-        if (GUILayout.Button("Generate All Items")) {
-            iconCapture.GenerateAllImages();
+            DrawDefaultInspector();
+
+            if (GUILayout.Button("Generate Current Item")) {
+                iconCapture.GenerateSingleImage();
+            }
+
+            if (GUILayout.Button("Generate All Items")) {
+                iconCapture.GenerateAllImages();
+            }
         }
     }
 }

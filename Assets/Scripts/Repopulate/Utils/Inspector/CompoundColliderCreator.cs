@@ -1,46 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CompoundColliderCreator : MonoBehaviour {
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+namespace Repopulate.Utils {
+    public class CompoundColliderCreator : MonoBehaviour {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        public void DeleteColliders() {
+            BoxCollider[] colliders = GetComponents<BoxCollider>();
 
-    public void DeleteColliders() {
-        BoxCollider[] colliders = GetComponents<BoxCollider>();
-
-        Debug.Log($"Deleting {colliders.Length} existing colliders");
-        foreach (BoxCollider box in colliders) {
-            DestroyImmediate(box);
+            Debug.Log($"Deleting {colliders.Length} existing colliders");
+            foreach (BoxCollider box in colliders) {
+                DestroyImmediate(box);
+            }
         }
-    }
 
-    public void CombineColliders() {
-        DeleteColliders();
-        
-        BoxCollider[] childColliders = GetComponentsInChildren<BoxCollider>();
+        public void CombineColliders() {
+            DeleteColliders();
 
-        // Combine child colliders into a compound collider
-        foreach (BoxCollider childCollider in childColliders) {
-            // Copy child collider properties
-            BoxCollider newCollider = gameObject.AddComponent<BoxCollider>();
-            newCollider.center = childCollider.center + childCollider.transform.position;
-            newCollider.size = childCollider.size;
+            BoxCollider[] childColliders = GetComponentsInChildren<BoxCollider>();
 
-            // Disable child colliders
-            //childCollider.enabled = false;
+            // Combine child colliders into a compound collider
+            foreach (BoxCollider childCollider in childColliders) {
+                // Copy child collider properties
+                BoxCollider newCollider = gameObject.AddComponent<BoxCollider>();
+                newCollider.center = childCollider.center + childCollider.transform.position;
+                newCollider.size = childCollider.size;
+
+                // Disable child colliders
+                //childCollider.enabled = false;
+            }
+
+            Debug.Log($"Added {childColliders.Length} new colliders");
         }
-        
-        Debug.Log($"Added {childColliders.Length} new colliders");
     }
 }

@@ -1,4 +1,5 @@
 using Repopulate.Inventory;
+using Repopulate.World.Registries;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
