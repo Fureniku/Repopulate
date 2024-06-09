@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Repopulate.Inventory;
 using UnityEngine;
 
 public class InventoryView : MonoBehaviour
