@@ -525,21 +525,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f00d55ffa81b0324cb047e010692a25d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 0}
+  _camera: {fileID: 4290571542915913363}
   _previewConstruct: {fileID: 4290571541482753488}
-  scrollbar: {fileID: 11400000, guid: da3f093a3703b7c4eaca4f468b2fc388, type: 2}
-  heldRotation: 0
+  _scrollbar: {fileID: 11400000, guid: da3f093a3703b7c4eaca4f468b2fc388, type: 2}
   _uiController: {fileID: 6641125869618298932}
-  rb: {fileID: 4290571542892684373}
-  footPoint: {fileID: 4290571541474410096}
+  _footPoint: {fileID: 4290571541474410096}
   _inventory: {fileID: 8604372103246591587}
-  spaceControls: 0
-  moveSpeed: 5
-  moveSpeedSpace: 25
-  jumpSpeed: 2
-  maxSpeed: 10
-  groundedDistance: 0.6
-  grounded: 0
+  _spaceControls: 0
+  _moveSpeed: 5
+  _moveSpeedSpace: 25
+  _jumpSpeed: 2
+  _maxSpeed: 10
+  _groundedDistance: 0.6
+  _physicsMovement: 1
 --- !u!136 &4290571542892684368
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -974,6 +972,10 @@ PrefabInstance:
       objectReference: {fileID: 1156029666762405633}
     - target: {fileID: 6323867564047152382, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
       propertyPath: droid
+      value: 
+      objectReference: {fileID: 4290571542892684374}
+    - target: {fileID: 6323867564047152382, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}
+      propertyPath: _droid
       value: 
       objectReference: {fileID: 4290571542892684374}
     - target: {fileID: 6323867564047152382, guid: 1da54604aebb5c44bb71ff6654f02c91, type: 3}

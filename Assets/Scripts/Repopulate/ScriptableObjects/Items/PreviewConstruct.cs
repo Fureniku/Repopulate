@@ -1,3 +1,4 @@
+using Repopulate.Player;
 using Repopulate.Utils;
 using Repopulate.World.Registries;
 using UnityEngine;
@@ -6,6 +7,7 @@ public class PreviewConstruct : MonoBehaviour {
 
 	private Construct _construct;
 	private GameObject _itemObject;
+	private PlaceableObject _placeableObject;
 	
 	[SerializeField] private Material invalidPlace;
 	[SerializeField] private Material validPlace;
@@ -16,7 +18,10 @@ public class PreviewConstruct : MonoBehaviour {
 	private bool canPlaceNow = true; //Updated with the preview, changes the material shading and also allows/disallows placement.
 
 	void Start() {
-		_construct = ConstructRegistry.Instance.EMPTY;
+		if (_construct == null) {
+			_construct = ConstructRegistry.Instance.EMPTY;
+		}
+
 		_itemObject = ConstructRegistry.Instance.EMPTY.Get();
 	}
 	
@@ -28,6 +33,7 @@ public class PreviewConstruct : MonoBehaviour {
 		}
 		_construct = construct;
 		_itemObject = _construct.Get();
+		_placeableObject = _itemObject.GetComponent<PlaceableObject>();
 		CombineMeshes();
 	}
 
@@ -55,11 +61,11 @@ public class PreviewConstruct : MonoBehaviour {
 
 	void UpdateObject() {
 		Debug.Log("Calling update object from event");
-		SetObject(droid.GetSelectedConstruct());
+		SetObject(droid.SelectedConstruct);
 	}
 	
 	public void UpdatePreview(Camera cam) {
-		if (_itemObject == null || _construct == GameManager.Instance.EmptyConstruct) {
+		if (_itemObject == null || _placeableObject == null || _construct == GameManager.Instance.EmptyConstruct || _placeableObject.GetConstruct() == GameManager.Instance.EmptyConstruct) {
 			return;
 		}
 		
@@ -75,8 +81,7 @@ public class PreviewConstruct : MonoBehaviour {
 				return;
 			}
 			
-			PlaceableObject placeable = _itemObject.GetComponent<PlaceableObject>();
-			Construct placeableConstruct = placeable.GetConstruct();
+			Construct placeableConstruct = _placeableObject.GetConstruct();
 			
 			Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
 			if (!targetGrid.CheckGridSpaceAvailability(gridPosition)) {
@@ -84,11 +89,11 @@ public class PreviewConstruct : MonoBehaviour {
 			}
 
 			transform.position = targetGrid.GetPlacementPosition(gridPosition, placeableConstruct);
-			transform.rotation = targetGrid.GetPlacementRotation(droid.GetHeldRotation());
+			transform.rotation = targetGrid.GetPlacementRotation(droid.HeldRotation);
 
-			canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeableConstruct.GetSize(), droid.GetHeldRotation());
+			canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeableConstruct.GetSize(), droid.HeldRotation);
 
-			if (placeable.GetConstruct().MustBeGrounded && gridPosition.y > 0) {
+			if (_placeableObject.GetConstruct().MustBeGrounded && gridPosition.y > 0) {
 				canPlaceNow = false;
 			}
 			meshRenderer.material = canPlaceNow ? validPlace : invalidPlace;

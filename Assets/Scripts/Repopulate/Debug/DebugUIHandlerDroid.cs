@@ -1,14 +1,15 @@
+using Repopulate.Player;
 using UnityEngine;
 
 public class DebugUIHandlerDroid : DebugUIHandlerBase {
 
     [SerializeField] private DroidController droid;
     
-    private bool Grounded => droid.isGrounded;
-    private bool ForceNotGrounded => droid.forcedNotGrounded;
+    private bool Grounded => droid.IsGrounded;
+    private bool ForceNotGrounded => droid.ForcedNotGrounded;
     private bool IsInGravity => droid.DroidGao.IsInGravity;
     private GravityBase CurrentGravitySource => droid.CurrentGravitySource;
-    private PreviewConstruct CurrentHeldItem => droid.GetPreviewConstruct();
+    private PreviewConstruct CurrentHeldItem => droid.PreviewConstruct;
 
     protected override void SetupTexts() {
         texts.Add(CreateEntry(nameof(Grounded)));
@@ -20,7 +21,7 @@ public class DebugUIHandlerDroid : DebugUIHandlerBase {
 
     protected override void UpdateTexts() {
         UpdateText(nameof(Grounded), $"Grounded:: {Grounded}");
-        UpdateText(nameof(ForceNotGrounded), $"Forced Grounded: {ForceNotGrounded}, count: {droid.forcedNotGroundedCount}");
+        UpdateText(nameof(ForceNotGrounded), $"Forced Grounded: {ForceNotGrounded}, count: {droid.ForcedNotGroundedCount}");
         UpdateText(nameof(IsInGravity), $"In Gravity: {IsInGravity}");
         UpdateText(nameof(CurrentGravitySource), $"Current gravity source: {CurrentGravitySource}");
         UpdateText(nameof(CurrentHeldItem), $"Held item: {CurrentHeldItem.GetObject().name}");

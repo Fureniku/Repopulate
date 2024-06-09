@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0036981925, g: 0.0056150854, b: 0.01763621, a: 1}
+  m_IndirectSpecularColor: {r: 0.003698647, g: 0.0056153685, b: 0.017636806, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4459,7 +4459,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &700174153
@@ -7597,6 +7597,10 @@ PrefabInstance:
       propertyPath: currentDroid
       value: 
       objectReference: {fileID: 1595712873}
+    - target: {fileID: 8161479858922590425, guid: 487b7131d43a3544a9cdf1abd74483fc, type: 3}
+      propertyPath: _currentDroid
+      value: 
+      objectReference: {fileID: 1595712873}
     - target: {fileID: 8161479858922590426, guid: 487b7131d43a3544a9cdf1abd74483fc, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -10010,9 +10014,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b342452997fe3e74586a9d5d4f9bbb1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  droidList:
+  _droidList:
   - {fileID: 1595712873}
-  - {fileID: 0}
 --- !u!1 &1800783169
 GameObject:
   m_ObjectHideFlags: 0

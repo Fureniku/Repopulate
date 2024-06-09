@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Repopulate.Player;
 using UnityEngine;
 
 public class InteractionHandler : MonoBehaviour {

@@ -1,34 +1,36 @@
 using UnityEngine;
 
-public abstract class PlayerControllable : MonoBehaviour {
+namespace Repopulate.Player {
+	public abstract class PlayerControllable : MonoBehaviour {
 	
-	[SerializeField] protected Camera _camera;
+		[SerializeField] protected Camera _camera;
 	
-	private InteractionHandler _interactionHandler;
+		private InteractionHandler _interactionHandler;
 	
-	protected abstract void ControllableAwake();
-	protected abstract void ControllableFixedUpdate();
+		protected abstract void ControllableAwake();
+		protected abstract void ControllableFixedUpdate();
 
-	void Awake() {
-		ControllableAwake();
-		_interactionHandler = GetComponent<InteractionHandler>();
-	}
+		void Awake() {
+			ControllableAwake();
+			_interactionHandler = GetComponent<InteractionHandler>();
+		}
 
-	void FixedUpdate() {
-		ControllableFixedUpdate();
-	}
+		void FixedUpdate() {
+			ControllableFixedUpdate();
+		}
 
-	#region General Controls
-	public void Interact() {
-		_interactionHandler.Interact(this, _camera);
-	}
-	#endregion
+		#region General Controls
+		public void Interact() {
+			_interactionHandler.Interact(this, _camera);
+		}
+		#endregion
 	
-	public void SetCameraStatus(bool camOn) {
-		_camera.enabled = camOn;
-	}
+		public void SetCameraStatus(bool camOn) {
+			_camera.enabled = camOn;
+		}
 	
-	public void ResetCamera() {
-		_camera.transform.localRotation = Quaternion.identity;
+		public void ResetCamera() {
+			_camera.transform.localRotation = Quaternion.identity;
+		}
 	}
 }

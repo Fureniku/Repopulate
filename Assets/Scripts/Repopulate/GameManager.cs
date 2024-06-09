@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using Repopulate.Player;
 using Repopulate.Utils;
 using Repopulate.World.Registries;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using CharacterController = Repopulate.Player.CharacterController;
 
 public class GameManager : MonoSingleton<GameManager> {
 

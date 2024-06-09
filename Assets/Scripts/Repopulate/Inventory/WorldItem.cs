@@ -1,3 +1,4 @@
+using Repopulate.Player;
 using UnityEngine;
 
 namespace Repopulate.Inventory {

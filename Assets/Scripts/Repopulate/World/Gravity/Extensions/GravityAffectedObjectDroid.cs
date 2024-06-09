@@ -1,4 +1,6 @@
+using Repopulate.Player;
 using UnityEngine;
+using CharacterController = Repopulate.Player.CharacterController;
 
 public class GravityAffectedObjectDroid : GravityAffectedObject {
 	
