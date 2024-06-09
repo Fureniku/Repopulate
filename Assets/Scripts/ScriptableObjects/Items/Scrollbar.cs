@@ -1,25 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
 public class Scrollbar : ScriptableObject {
 
-	[SerializeField] private Item[] slots = new Item[9];
+	[SerializeField] private Construct[] slots = new Construct[9];
 	[SerializeField] private int currentSlot = 0;
 	private readonly int maxSlots = 8; //Zero-based
 
-	public Item GetHeldItem() {
+	public Construct GetSelectedConstruct() {
 		if (slots[currentSlot] == null) {
-			Debug.Log("Getting null slot, defaulting to empty item");
-			return GameManager.Instance.EmptyItem;
+			Debug.Log("Getting null slot, defaulting to empty construct");
+			return GameManager.Instance.EmptyConstruct;
 		}
-		Debug.Log("Getting item in slot " + currentSlot);
-		Debug.Log("Item is " + slots[currentSlot].Get().name);
+		Debug.Log("Getting construct in slot " + currentSlot);
+		Debug.Log("Construct is " + slots[currentSlot].Get().name);
 		return slots[currentSlot];
 	}
 
-	public Item GetItemInSlot(int slot) {
+	public Construct GetConstructInSlot(int slot) {
 		return slots[ValidateSlot(slot)];
 	}
 

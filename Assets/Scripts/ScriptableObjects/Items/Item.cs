@@ -1,52 +1,55 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu]
 public class Item : ScriptableObject {
 
-	[Header("Item Information")]
-	[SerializeField] private string itemName;
-	[SerializeField] private Category category;
-	
-	[Header("Placement Data")]
-	[SerializeField] private Vector3Int size = Vector3Int.one;
-	[SerializeField] private Vector3 rotationOrigin;
-	[SerializeField] private bool mustBeGrounded = false;
-	[SerializeField] private bool wallMount = false;
-	[SerializeField] private bool mustBeOnCeiling = false;
-	[SerializeField] private bool placeable = true;
-	[SerializeField] private bool destroyable = true;
+    [Header("Metadata")]
+    [SerializeField] private int _id;
+    [SerializeField] private EnumItemTags[] _tags;
+    [SerializeField] private string _unlocalizedName;
+    
+    [Header("Item Information")]
+    [SerializeField] private string _itemName;
+    [SerializeField] private string _description;
+    [SerializeField] private Category _category;
+    [SerializeField] private Sprite _icon;
 
-	[Header("Prefab Information")]
-	[SerializeField] private PlaceableObject prefab;
-	[SerializeField] private Sprite icon;
+    [Header("Inventory Sizes")]
+    [SerializeField] private bool _stackable;
+    [SerializeField] private int _sizeMin;
+    [SerializeField] private int _sizeSmall;
+    [SerializeField] private int _sizeMedium;
+    [SerializeField] private int _sizeLarge;
+    [SerializeField] private int _sizeExtraLarge;
+    [SerializeField] private int _sizeMaximum;
 
-	public GameObject Get() {
-		if (prefab == null) {
-			return new GameObject();
-		}
-		return prefab.gameObject;
-	}
+    public string UnlocalizedName => _unlocalizedName;
+    public string Name => _itemName;
+    public Category Category => _category;
+    public string Description => _description;
+    public int ID => _id;
+    public Sprite Sprite => _icon;
 
-	public Sprite GetIcon() {
-		return icon;
-	}
+    public int SlotCapacity(EnumSlotSizes size) {
+        if (!_stackable) {
+            return 1;
+        }
+        switch (size) {
+            case EnumSlotSizes.MINIMUM:
+                return _sizeMin;
+            case EnumSlotSizes.SMALL:
+                return _sizeSmall;
+            case EnumSlotSizes.MEDIUM:
+                return _sizeMedium;
+            case EnumSlotSizes.LARGE:
+                return _sizeLarge;
+            case EnumSlotSizes.EXTRA_LARGE:
+                return _sizeExtraLarge;
+            case EnumSlotSizes.MAXIMUM:
+                return _sizeMaximum;
+        }
 
-	public Vector3Int GetSize() {
-		return size;
-	}
-
-	public int GetX() { return size.x; }
-	public int GetY() { return size.y; }
-	public int GetZ() { return size.z; }
-
-	public bool MustBeGrounded => mustBeGrounded;
-	public bool WallMounted => wallMount;
-	public bool MustBeOnCeiling => mustBeOnCeiling;
-	public string GetItemName => itemName;
-	public string GetItemUnlocalizedName => itemName;
-	public bool IsPlaceable => placeable;
-	public bool IsDestroyable => destroyable;
+        return 0;
+    }
 }

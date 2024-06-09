@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5568037fb30540c44910486979efaedd, type: 3}
+  m_Script: {fileID: 11500000, guid: c67edc3e6e7665b4688e899fcddf8a9c, type: 3}
   m_Name: Item_Registry
   m_EditorClassIdentifier: 
-  EMPTY: {fileID: 11400000, guid: ea4e9315a5cec72438c7955be86150d1, type: 2}
-  ALGAE_FARM_1: {fileID: 11400000, guid: 4171680838cf7584dbf218148a924fd0, type: 2}
-  PILLAR_1: {fileID: 11400000, guid: 14cde73593cd024418beee0933904a23, type: 2}
-  BATTERY_1: {fileID: 11400000, guid: be785791c7fbc014d92ad8ebccf829fe, type: 2}
-  CUBE_PANELS: {fileID: 11400000, guid: 99d1e706300d33f4a82e16a16f040c4d, type: 2}
-  CUBE_METAL: {fileID: 11400000, guid: 64fecd26fad8e7a478150b2c6ae3e25d, type: 2}
-  WALL_LIGHT_1: {fileID: 11400000, guid: 235747dae56bf62428c728df3d4975b8, type: 2}
+  EMPTY: {fileID: 11400000, guid: 7cef0e3d1dff5b443aefc2a9bee19661, type: 2}
+  RAW_IRON_ORE: {fileID: 11400000, guid: 6089118e49c7fdd448f039e89d3c39e0, type: 2}
+  RAW_GOLD_ORE: {fileID: 11400000, guid: 1ca18a3ae5367e740bd078df1d40ad67, type: 2}
+  RAW_CARBON_ORE: {fileID: 11400000, guid: 011cad9ef51a6be438f30a07f120be7a, type: 2}
+  RAW_COPPER_ORE: {fileID: 11400000, guid: 109c67edaec2c6e4db68aaa16d493f26, type: 2}
+  RAW_URANIUM_ORE: {fileID: 11400000, guid: f4d5bb17c30d6d54daca36eb085c640c, type: 2}

@@ -4,7 +4,7 @@ using UnityEngine;
 public class InventorySlot : MonoBehaviour {
 	
 	public EnumSlotSizes SlotSize { get; set; }
-	public Resource Resource { get; set; }
+	public Item Item { get; set; }
 	public int StackCount { get; set; }
 
 	public InventoryData InvData;
@@ -22,23 +22,23 @@ public class InventorySlot : MonoBehaviour {
 
 	//TODO lots of prototype logic for inventories! it's all client-side for now.
 	public int GetAvailableSpace() {
-		return Resource.SlotCapacity(SlotSize) - StackCount;
+		return Item.SlotCapacity(SlotSize) - StackCount;
 	}
 
-	public void PutResource(Resource res, int count) {
-		if (Resource == ResourceRegistry.Instance.EMPTY) {
-			Resource = res;
+	public void PutItem(Item item, int count) {
+		if (Item == ItemRegistry.Instance.EMPTY) {
+			Item = item;
 			StackCount = count;
 		}
-		else if (Resource.ID == res.ID) {
+		else if (Item.ID == item.ID) {
 			StackCount += count;
 		}
 
-		if (StackCount > Resource.SlotCapacity(SlotSize)) {
-			StackCount = Resource.SlotCapacity(SlotSize);
+		if (StackCount > Item.SlotCapacity(SlotSize)) {
+			StackCount = Item.SlotCapacity(SlotSize);
 		}
 
-		InvData = new InventoryData(Resource, StackCount, SlotSize);
+		InvData = new InventoryData(Item, StackCount, SlotSize);
 		TempUpdate();
 	}
 
@@ -57,12 +57,12 @@ public class InventorySlot : MonoBehaviour {
 
 [Serializable]
 public class InventoryData {
-	public Resource Resource;
+	public Item Item;
 	public int StackCount;
 	public EnumSlotSizes SlotSize;
 
-	public InventoryData(Resource res, int count, EnumSlotSizes slotSize) {
-		Resource = res;
+	public InventoryData(Item item, int count, EnumSlotSizes slotSize) {
+		Item = item;
 		StackCount = count;
 		SlotSize = slotSize;
 	}

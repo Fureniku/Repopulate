@@ -1,39 +1,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//TOOL! Make it one properly.
 public class IconCapture : MonoBehaviour {
 
-	[SerializeField] private Item targetItem;
+	[SerializeField] private Construct _targetConstruct;
     [SerializeField] private float distance = 1.25f;
 
-    private Vector3 GetTargetPoint(GameObject go, Item item) {
-        Vector3 v = item.GetSize();
+    private Vector3 GetTargetPoint(GameObject go, Construct construct) {
+        Vector3 v = _targetConstruct.GetSize();
         return go.transform.position + new Vector3(v.x / 2.0f, v.y / 2.0f, v.z / 2.0f);
     }
 
     //Get highest dimension to decide how much to back up by
-    private float GetBonusDistance(Item item) {
-        if (item.GetX() > item.GetY()) {
-            return item.GetX() > item.GetZ() ? item.GetX() : item.GetZ();
+    private float GetBonusDistance(Construct construct) {
+        if (construct.GetX() > construct.GetY()) {
+            return construct.GetX() > construct.GetZ() ? construct.GetX() : construct.GetZ();
         }
-        return item.GetY() > item.GetZ() ? item.GetY() : item.GetZ();
+        return construct.GetY() > construct.GetZ() ? construct.GetY() : construct.GetZ();
     }
 
     public void GenerateAllImages() {
-        List<Item> itemList = ItemRegistry.Instance.GetItemList();
-        for (int i = 0; i < itemList.Count; i++) {
-            GenerateImage(itemList[i]);
+        List<Construct> constructList = ConstructRegistry.Instance.ConstructList;
+        for (int i = 0; i < ConstructRegistry.Instance.ConstructCount; i++) {
+            GenerateImage(constructList[i]);
         }
     }
 
     [ContextMenu("Generate Image")]
     public void GenerateSingleImage() {
-        GenerateImage(targetItem);
+        GenerateImage(_targetConstruct);
     }
 
-    private void GenerateImage(Item item) {
+    private void GenerateImage(Construct construct) {
         int imageSize = 430;
-        GameObject go = Instantiate(item.Get());
+        GameObject go = Instantiate(construct.Get());
 
         Camera camera = new GameObject("IconCam").AddComponent<Camera>();
 
@@ -41,8 +42,8 @@ public class IconCapture : MonoBehaviour {
         camera.backgroundColor = new Color(0, 0, 0, 0); // Transparent background
 
         // Position the camera to capture only the targetGameObject
-        camera.transform.position = new Vector3(-distance - (GetBonusDistance(item)/2), 2, -distance - (GetBonusDistance(item)/2));
-        camera.transform.LookAt(GetTargetPoint(go, item));
+        camera.transform.position = new Vector3(-distance - (GetBonusDistance(construct)/2), 2, -distance - (GetBonusDistance(construct)/2));
+        camera.transform.LookAt(GetTargetPoint(go, construct));
 
         RenderTexture renderTexture = new RenderTexture(imageSize, imageSize, 24);
         camera.targetTexture = renderTexture;
@@ -57,7 +58,7 @@ public class IconCapture : MonoBehaviour {
         Texture2D croppedTexture = CropTexture(texture);
 
         byte[] bytes = croppedTexture.EncodeToPNG();
-        string iconName = item.GetItemUnlocalizedName;
+        string iconName = construct.GetItemUnlocalizedName;
         System.IO.File.WriteAllBytes(Application.dataPath + $"/Textures/Icons/{iconName}.png", bytes); // Save image as PNG in project directory
 
         camera.targetTexture = null;

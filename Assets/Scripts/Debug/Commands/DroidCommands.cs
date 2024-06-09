@@ -13,7 +13,7 @@ public class DroidCommands
 			item = "raw_iron_ore";
 		}
 		
-		Resource given = int.TryParse(item, out int id) ? ResourceRegistry.Instance.GetFromID(id) : ResourceRegistry.Instance.GetFromName(item);
+		Item given = int.TryParse(item, out int id) ? ItemRegistry.Instance.GetFromID(id) : ItemRegistry.Instance.GetFromName(item);
 
 		if (given != null) {
 			droid.Give(given, count);

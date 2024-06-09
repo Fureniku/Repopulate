@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2709231201835651361}
   - component: {fileID: 873879130526559233}
   - component: {fileID: -7555060797975378205}
+  - component: {fileID: 3440502291639869178}
   m_Layer: 14
   m_Name: Battery_1
   m_TagString: Untagged
@@ -47,8 +48,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec59daf2a4c80e248bea1b89ee7a5a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grid: {fileID: 0}
+  space:
+    position: {x: 0, y: 0, z: 0}
+    size: {x: 1, y: 1, z: 1}
   showDebugSizeBox: 1
-  item: {fileID: 11400000, guid: be785791c7fbc014d92ad8ebccf829fe, type: 2}
+  prefabPlaced: 0
+  _construct: {fileID: 11400000, guid: be785791c7fbc014d92ad8ebccf829fe, type: 2}
 --- !u!114 &-7555060797975378205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,6 +70,19 @@ MonoBehaviour:
   resourceType: 3
   capacity: 100000
   currentEnergy: 0
+--- !u!65 &3440502291639869178
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421612536349574}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0.5, y: 1, z: 0.5}
 --- !u!1 &191047734700375307
 GameObject:
   m_ObjectHideFlags: 0

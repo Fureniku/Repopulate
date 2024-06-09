@@ -73,7 +73,7 @@ public class ScrollBarHandler : MonoBehaviour {
 
     public void UpdateSlot(int id) {
         if (slots[id] != null) {
-            slots[id].GetComponent<Image>().sprite = scrollbar.GetItemInSlot(id).GetIcon();
+            slots[id].GetComponent<Image>().sprite = scrollbar.GetConstructInSlot(id).GetIcon();
         }
     }
 

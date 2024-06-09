@@ -11,17 +11,17 @@ public class PlaceableObject : BuildableBase {
     [SerializeField] private bool prefabPlaced = false;
 
     [Header("Prefab Information")]
-    [SerializeField] private Item item;
+    [SerializeField] private Construct _construct;
 
     public void OnValidate() {
         _collider = TryGetComponent(out BoxCollider col) ? col : gameObject.AddComponent<BoxCollider>();
-        if (item != null) {
-            Vector3Int size = item.GetSize();
+        if (_construct != null) {
+            Vector3Int size = _construct.GetSize();
             float x = Mathf.Max(size.x / 2.0f, 0.5f);
             float y = Mathf.Max(size.y / 2.0f, 0.5f);
             float z = Mathf.Max(size.z / 2.0f, 0.5f);
             _collider.center = new Vector3(x, y, z);
-            _collider.size = item.GetSize();
+            _collider.size = _construct.GetSize();
         }
 
         if (prefabPlaced) {
@@ -38,14 +38,14 @@ public class PlaceableObject : BuildableBase {
                 Vector3Int approxPosition = Vector3Int.RoundToInt(transform.localPosition);
                 transform.localPosition = approxPosition;
                 space.position = approxPosition;
-                space.size = item.GetSize();
+                space.size = _construct.GetSize();
                 grid.AttemptAddOccupiedSlot(space);
             }
         }
     }
 
-    public Item GetItem() {
-        return item;
+    public Construct GetConstruct() {
+        return _construct;
     }
     
     public void Place(BuildingGrid newGrid, GridSize occupiedSpace) {
@@ -63,13 +63,13 @@ public class PlaceableObject : BuildableBase {
 
             Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);
 
-            Vector3Int size = item.GetSize();
+            Vector3Int size = _construct.GetSize();
             float x = Mathf.Max(size.x / 2.0f, 0.5f);
             float y = Mathf.Max(size.y / 2.0f, 0.5f);
             float z = Mathf.Max(size.z / 2.0f, 0.5f);
             Gizmos.color = new Color(0.5f, 0.5f, 0.0f, 0.3f);
 
-            Gizmos.DrawCube(new Vector3(x, y, z), item.GetSize());
+            Gizmos.DrawCube(new Vector3(x, y, z), _construct.GetSize());
 
             Gizmos.matrix = originalMatrix;
         }

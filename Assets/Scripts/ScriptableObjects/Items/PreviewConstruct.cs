@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PreviewItem : MonoBehaviour {
+public class PreviewConstruct : MonoBehaviour {
 
-	private Item _item = ItemRegistry.Instance.EMPTY;
-	private GameObject _itemObject = ItemRegistry.Instance.EMPTY.Get();
+	private Construct _construct = ConstructRegistry.Instance.EMPTY;
+	private GameObject _itemObject = ConstructRegistry.Instance.EMPTY.Get();
 	
 	[SerializeField] private Material invalidPlace;
 	[SerializeField] private Material validPlace;
@@ -16,26 +16,26 @@ public class PreviewItem : MonoBehaviour {
 	
 	private bool canPlaceNow = true; //Updated with the preview, changes the material shading and also allows/disallows placement.
 
-	public void SetObject(Item item) {
-		if (item == null) {
-			_item = GameManager.Instance.EmptyItem;
-			_itemObject = _item.Get();
+	public void SetObject(Construct construct) {
+		if (construct == null) {
+			_construct = GameManager.Instance.EmptyConstruct;
+			_itemObject = _construct.Get();
 			return;
 		}
-		_item = item;
-		_itemObject = _item.Get();
+		_construct = construct;
+		_itemObject = _construct.Get();
 		CombineMeshes();
 	}
 
-	public Item GetItem() {
-		return _item;
+	public Construct GetConstruct() {
+		return _construct;
 	}
 
 	public GameObject GetObject() {
 		if (_itemObject == null) {
 			Debug.LogError("PreviewItem._itemObject is currently null! Fixing and returning empty.");
-			_itemObject = ItemRegistry.Instance.EMPTY.Get();
-			return ItemRegistry.Instance.EMPTY.Get();
+			_itemObject = ConstructRegistry.Instance.EMPTY.Get();
+			return ConstructRegistry.Instance.EMPTY.Get();
 		}
 		return _itemObject;
 	}
@@ -51,11 +51,11 @@ public class PreviewItem : MonoBehaviour {
 
 	void UpdateObject() {
 		Debug.Log("Calling update object from event");
-		SetObject(droid.GetHeldItem());
+		SetObject(droid.GetSelectedConstruct());
 	}
 	
 	public void UpdatePreview(Camera cam) {
-		if (_itemObject == null || _item == GameManager.Instance.EmptyItem) {
+		if (_itemObject == null || _construct == GameManager.Instance.EmptyConstruct) {
 			return;
 		}
 		
@@ -72,18 +72,19 @@ public class PreviewItem : MonoBehaviour {
 			}
 			
 			PlaceableObject placeable = _itemObject.GetComponent<PlaceableObject>();
-
+			Construct placeableConstruct = placeable.GetConstruct();
+			
 			Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
 			if (!targetGrid.CheckGridSpaceAvailability(gridPosition)) {
 				gridPosition = targetGrid.GetOffsetGridSpace(gridPosition, ColliderUtilities.GetHitFace(hit.normal));
 			}
 
-			transform.position = targetGrid.GetPlacementPosition(gridPosition, placeable.GetItem());
+			transform.position = targetGrid.GetPlacementPosition(gridPosition, placeableConstruct);
 			transform.rotation = targetGrid.GetPlacementRotation(droid.GetHeldRotation());
 
-			canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeable.GetItem().GetSize(), droid.GetHeldRotation());
+			canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeableConstruct.GetSize(), droid.GetHeldRotation());
 
-			if (placeable.GetItem().MustBeGrounded && gridPosition.y > 0) {
+			if (placeable.GetConstruct().MustBeGrounded && gridPosition.y > 0) {
 				canPlaceNow = false;
 			}
 			meshRenderer.material = canPlaceNow ? validPlace : invalidPlace;
@@ -93,7 +94,7 @@ public class PreviewItem : MonoBehaviour {
 	}
 
 	public bool IsPlaceable() {
-		return _item.IsPlaceable && canPlaceNow;
+		return _construct.IsPlaceable && canPlaceNow;
 	}
 	
     private void CombineMeshes() {

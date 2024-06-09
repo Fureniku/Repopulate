@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e40d9dafe1793644d8c82e02288c3210, type: 3}
-  m_Name: _EmptyItem
+  m_Name: _EmptyConstruct
   m_EditorClassIdentifier: 
   itemName: EMPTY_ITEM
   category: {fileID: 11400000, guid: 415e3d2377c5520439dd7af74c45d261, type: 2}

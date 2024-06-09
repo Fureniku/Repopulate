@@ -293,7 +293,7 @@ GameObject:
   - component: {fileID: 4290571541482753488}
   - component: {fileID: 4290571541482753487}
   m_Layer: 0
-  m_Name: PreviewItem
+  m_Name: PreviewConstruct
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -526,7 +526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 0}
-  heldItem: {fileID: 4290571541482753488}
+  _previewConstruct: {fileID: 4290571541482753488}
   scrollbar: {fileID: 11400000, guid: da3f093a3703b7c4eaca4f468b2fc388, type: 2}
   heldRotation: 0
   _uiController: {fileID: 6641125869618298932}

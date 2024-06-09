@@ -183,7 +183,7 @@ public class BuildingGrid : MonoBehaviour {
         }
     }
 
-    public Vector3 GetPlacementPosition(Vector3Int gridSpace, Item item) {
+    public Vector3 GetPlacementPosition(Vector3Int gridSpace, Construct construct) {
         Quaternion rot = transform.parent.rotation;
         Vector3 transformedPosition = rot * gridSpace;
 
@@ -237,14 +237,14 @@ public class BuildingGrid : MonoBehaviour {
         return gridSpace;
     }
 
-    public void TryPlaceBlock(Vector3Int gridSpace, Item item, float rotation, Direction dir) {
+    public void TryPlaceBlock(Vector3Int gridSpace, Construct construct, float rotation, Direction dir) {
         // Check if the block's grid space is available
         if (CheckGridSpaceAvailability(gridSpace, Vector3Int.one, rotation)) { //TODO size
-            PlaceBlock(gridSpace, item, rotation);
+            PlaceBlock(gridSpace, construct, rotation);
         } else {
             gridSpace = GetOffsetGridSpace(gridSpace, dir);
             if (CheckGridSpaceAvailability(gridSpace, Vector3Int.one, rotation)) {
-                PlaceBlock(gridSpace, item, rotation);
+                PlaceBlock(gridSpace, construct, rotation);
             } else {
                 //TODO UI feedback
                 Debug.Log($"Invalid or occupied space {gridSpace} - replace me with UI feedback!");
@@ -252,10 +252,10 @@ public class BuildingGrid : MonoBehaviour {
         }
     }
 
-    public void PlaceBlock(Vector3Int gridSpace, Item item, float rotation) {
-        GameObject block = item.Get();
-        GameObject newBlock = Instantiate(block, GetPlacementPosition(gridSpace, item), GetPlacementRotation(rotation));
-        GridSize occupancy = GetFinalPlacementOccupancy(newBlock.GetComponent<PlaceableObject>().GetItem().GetSize(), gridSpace, rotation);
+    public void PlaceBlock(Vector3Int gridSpace, Construct construct, float rotation) {
+        GameObject block = construct.Get();
+        GameObject newBlock = Instantiate(block, GetPlacementPosition(gridSpace, construct), GetPlacementRotation(rotation));
+        GridSize occupancy = GetFinalPlacementOccupancy(newBlock.GetComponent<PlaceableObject>().GetConstruct().GetSize(), gridSpace, rotation);
         newBlock.transform.SetParent(transform);
         newBlock.GetComponent<PlaceableObject>().Place(this, occupancy);
             

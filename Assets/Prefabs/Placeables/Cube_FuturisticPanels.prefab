@@ -144,8 +144,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 0}
+  space:
+    position: {x: 0, y: 0, z: 0}
+    size: {x: 1, y: 1, z: 1}
   showDebugSizeBox: 0
-  item: {fileID: 11400000, guid: a30d835ad46b0cb489f5eb996848528d, type: 2}
+  prefabPlaced: 0
+  _construct: {fileID: 11400000, guid: 99d1e706300d33f4a82e16a16f040c4d, type: 2}
 --- !u!65 &1678676329201896927
 BoxCollider:
   m_ObjectHideFlags: 0

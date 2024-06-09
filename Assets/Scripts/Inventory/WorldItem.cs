@@ -8,7 +8,7 @@ public class WorldItem : MonoBehaviour, IInteractable
     [Tooltip("How long in seconds before the object should despawn")]
     [SerializeField] private int _maxAliveTime = 300;
 
-    [SerializeField] private Resource _resourceType;
+    [SerializeField] private Item _itemType;
     [SerializeField] private int _resourceCount;
 
     void Awake()
@@ -29,7 +29,7 @@ public class WorldItem : MonoBehaviour, IInteractable
     }
 
     public void TransferToInventory(InventoryManager inventory) {
-        int overspill = inventory.InsertResource(_resourceType, _resourceCount);
+        int overspill = inventory.InsertItem(_itemType, _resourceCount);
         if (overspill > 0) {
             _resourceCount = 0;
         }

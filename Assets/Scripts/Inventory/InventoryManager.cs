@@ -20,7 +20,7 @@ public class InventoryManager : MonoBehaviour {
                 InventorySlot slot = slotObject.GetComponent<InventorySlot>();
                 slotObject.name = $"Slot_{i}";
                 slot.SlotSize = _slotSize;
-                slot.Resource = ResourceRegistry.Instance.EMPTY;
+                slot.Item = ItemRegistry.Instance.EMPTY;
                 _slots.Add(slot);
 
             }
@@ -29,39 +29,39 @@ public class InventoryManager : MonoBehaviour {
         }
     }
 
-    public int InsertResource(Resource res, int count, bool simulate = false) {
-        Debug.Log($"Attempting to give {count} x {res.Name}. There are {_slots.Count} slots available in this inventory.");
+    public int InsertItem(Item item, int count, bool simulate = false) {
+        Debug.Log($"Attempting to give {count} x {item.Name}. There are {_slots.Count} slots available in this inventory.");
         int remain = count;
         for (int i = 0; i < _slots.Count; i++) {
             InventorySlot slot = _slots[i];
-            if (slot.Resource.ID == res.ID) {
+            if (slot.Item.ID == item.ID) {
                 Debug.Log("Attempting to insert to existing slot");
                 int available = slot.GetAvailableSpace();
                 if (available > remain) {
                     if (!simulate) {
-                        slot.PutResource(res, remain);
+                        slot.PutItem(item, remain);
                     }
                     Debug.Log("success! increased existing stack");
                     return 0;
                 }
                 if (available > 0) {
-                    slot.PutResource(res, available);
+                    slot.PutItem(item, available);
                     remain -= available;
                 }
-            } else if (slot.Resource == ResourceRegistry.Instance.EMPTY) {
+            } else if (slot.Item == ItemRegistry.Instance.EMPTY) {
                 
                 //Clone of above, function?
-                int available = res.SlotCapacity(slot.SlotSize);
+                int available = item.SlotCapacity(slot.SlotSize);
                 Debug.Log($"Attempting to insert to empty slot. Slot capacity is {available}");
                 if (available > remain) {
                     if (!simulate) {
-                        slot.PutResource(res, remain);
+                        slot.PutItem(item, remain);
                     }
                     Debug.Log("success! placed new stack");
                     return 0;
                 }
                 if (available > 0) {
-                    slot.PutResource(res, available);
+                    slot.PutItem(item, available);
                     remain -= available;
                 }
             }
@@ -73,21 +73,17 @@ public class InventoryManager : MonoBehaviour {
         return remain;
     }
 
-    
-    
-    
-    
-    int Insert(InventorySlot slot, int available, int remain, Resource res, bool simulate = false) {
+    int Insert(InventorySlot slot, int available, int remain, Item item, bool simulate = false) {
         Debug.Log($"Attempting to insert to slot. Slot capacity is {available}");
         if (available > remain) {
             if (!simulate) {
-                slot.PutResource(res, remain);
+                slot.PutItem(item, remain);
             }
             Debug.Log("success! placed new stack");
             return 0;
         }
         if (available > 0) {
-            slot.PutResource(res, available);
+            slot.PutItem(item, available);
             remain -= available;
         }
 

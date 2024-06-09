@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public enum EnumResourceTags {
+public enum EnumItemTags {
 	RAW_ORE,
 	UNREFINED_ORE,
 	ORE,

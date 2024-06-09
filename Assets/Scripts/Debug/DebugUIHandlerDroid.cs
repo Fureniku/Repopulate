@@ -8,7 +8,7 @@ public class DebugUIHandlerDroid : DebugUIHandlerBase {
     private bool ForceNotGrounded => droid.forcedNotGrounded;
     private bool IsInGravity => droid.DroidGao.IsInGravity;
     private GravityBase CurrentGravitySource => droid.CurrentGravitySource;
-    private PreviewItem CurrentHeldItem => droid.GetPreviewItem();
+    private PreviewConstruct CurrentHeldItem => droid.GetPreviewConstruct();
 
     protected override void SetupTexts() {
         texts.Add(CreateEntry(nameof(Grounded)));

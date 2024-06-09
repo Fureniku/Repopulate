@@ -13,8 +13,8 @@ public class GameManager : MonoSingleton<GameManager> {
 
     public const float MouseSensitivity = 3.5f;
 
-    //An empty item with no logic, model or assets, used instead of null for missing items or unoccupied scrollbar slots
-    public Item EmptyItem => ItemRegistry.Instance.EMPTY;
+    //An empty construct with no logic, model or assets, used instead of null for missing constructs or unoccupied scrollbar slots
+    public Construct EmptyConstruct => ConstructRegistry.Instance.EMPTY;
     public DroidManager GetDroidManager => _droidManager;
 
     void Start() {

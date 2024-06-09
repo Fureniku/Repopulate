@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class DroidController : PlayerControllable {
 	
-	[SerializeField] private PreviewItem heldItem;
+	[SerializeField] private PreviewConstruct _previewConstruct;
 	[SerializeField] private Scrollbar scrollbar;
 	[SerializeField] private float heldRotation = 0;
 	[SerializeField] private UIController _uiController;
@@ -190,7 +190,7 @@ public class DroidController : PlayerControllable {
 
 	#region Block Placement
 	public void UpdateSelection() {
-		if (heldItem == null) {
+		if (_previewConstruct == null) {
 			Debug.LogWarning($"Trying to update held item for {name} but held item object is null.");
 			return;
 		}
@@ -200,29 +200,29 @@ public class DroidController : PlayerControllable {
 			return;
 		}
 
-		if (scrollbar.GetHeldItem() == null) {
+		if (scrollbar.GetSelectedConstruct() == null) {
 			Debug.LogWarning($"Trying to update selection with {scrollbar.name} but nothing is selected");
 			return;
 		}
 
-		Debug.Log($"UpdateSelection! helditem name; {heldItem.name}");
+		Debug.Log($"UpdateSelection! preview construct name; {_previewConstruct.name}");
 		Debug.Log($"UpdateSelection! scrollbar name: {scrollbar.name}");
-		Debug.Log($"UpdateSelection! scrollbar selection: {scrollbar.GetHeldItem().name}");
-		Debug.Log($"UpdateSelection! scrollbar item SO: {scrollbar.GetHeldItem().Get().name}");
+		Debug.Log($"UpdateSelection! scrollbar selection: {scrollbar.GetSelectedConstruct().name}");
+		Debug.Log($"UpdateSelection! scrollbar item SO: {scrollbar.GetSelectedConstruct().Get().name}");
 		
-		heldItem.SetObject(scrollbar.GetHeldItem());
+		_previewConstruct.SetObject(scrollbar.GetSelectedConstruct());
 	}
 
 	public void UpdatePreview() {
-		heldItem.UpdatePreview(_camera);
+		_previewConstruct.UpdatePreview(_camera);
 	}
 
-	public PreviewItem GetPreviewItem() {
-		return heldItem;
+	public PreviewConstruct GetPreviewConstruct() {
+		return _previewConstruct;
 	}
 
-	public Item GetHeldItem() {
-		return scrollbar.GetHeldItem();
+	public Construct GetSelectedConstruct() {
+		return scrollbar.GetSelectedConstruct();
 	}
 
 	public float GetHeldRotation() {
@@ -232,7 +232,7 @@ public class DroidController : PlayerControllable {
 	public void HandlePlaceObject(InputAction.CallbackContext context) {
         if (context.started) {
             Debug.LogWarning($"Starting placement from {transform.name} (right click triggered)");
-            if (heldItem.IsPlaceable()) {
+            if (_previewConstruct.IsPlaceable()) {
                 Vector2 mousePosition = Mouse.current.position.ReadValue();
                 Ray ray = _camera.ScreenPointToRay(mousePosition);
                 if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Constants.MASK_BUILDABLE)) {
@@ -268,7 +268,7 @@ public class DroidController : PlayerControllable {
             }
 
             // Place the block
-            targetGrid.TryPlaceBlock(gridPosition, scrollbar.GetHeldItem(), heldRotation, dir);
+            targetGrid.TryPlaceBlock(gridPosition, scrollbar.GetSelectedConstruct(), heldRotation, dir);
        //}
        //Update the preview after placing a block
        UpdatePreview();
@@ -316,8 +316,8 @@ public class DroidController : PlayerControllable {
 	}
 	
 	#region Inventory
-	public int Give(Resource resource, int count) {
-		return _inventory.InsertResource(resource, count);
+	public int Give(Item item, int count) {
+		return _inventory.InsertItem(item, count);
 	}
 	
 	public void InventoryVisible(bool visible) {

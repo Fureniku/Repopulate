@@ -69,7 +69,7 @@ MonoBehaviour:
     size: {x: 2, y: 1, z: 1}
   showDebugSizeBox: 0
   prefabPlaced: 0
-  item: {fileID: 11400000, guid: c4c25910a349a0a47b22827e77bfedde, type: 2}
+  _construct: {fileID: 11400000, guid: c4c25910a349a0a47b22827e77bfedde, type: 2}
 --- !u!1 &882907070723066398
 GameObject:
   m_ObjectHideFlags: 0

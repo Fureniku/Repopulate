@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.003698647, g: 0.0056153685, b: 0.017636806, a: 1}
+  m_IndirectSpecularColor: {r: 0.0036981925, g: 0.0056150854, b: 0.01763621, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4459,7 +4459,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 5, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &700174153
@@ -6316,7 +6316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxAliveTime: 300
-  _resourceType: {fileID: 11400000, guid: 6089118e49c7fdd448f039e89d3c39e0, type: 2}
+  _itemType: {fileID: 0}
   _resourceCount: 3
 --- !u!136 &1148345169
 CapsuleCollider:
@@ -7038,6 +7038,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 798482343704833665, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: _construct
+      value: 
+      objectReference: {fileID: 11400000, guid: c4c25910a349a0a47b22827e77bfedde, type: 2}
+    - target: {fileID: 798482343704833665, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
       propertyPath: showDebugSizeBox
       value: 0
       objectReference: {fileID: 0}
@@ -7185,6 +7189,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5788366111774900614, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: _construct
+      value: 
+      objectReference: {fileID: 11400000, guid: c4c25910a349a0a47b22827e77bfedde, type: 2}
     - target: {fileID: 6025447858177237906, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
       propertyPath: m_Name
       value: Module_small_8x4x12
@@ -7193,6 +7201,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6383544973820147983, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
+      propertyPath: _construct
+      value: 
+      objectReference: {fileID: 11400000, guid: c4c25910a349a0a47b22827e77bfedde, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
 --- !u!1 &1348367466
@@ -12780,10 +12792,6 @@ PrefabInstance:
     - target: {fileID: 6568244458869977007, guid: 664450bc3dba3fa47ab62b476f419aac, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8604372103246591587, guid: 664450bc3dba3fa47ab62b476f419aac, type: 3}
-      propertyPath: _slotCount
-      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 9126595354525865931, guid: 664450bc3dba3fa47ab62b476f419aac, type: 3}
       propertyPath: m_AnchorMax.x
