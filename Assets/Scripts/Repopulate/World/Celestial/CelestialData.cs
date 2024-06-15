@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Repopulate.World {
+namespace Repopulate.World.Celestial {
 	[Serializable]
 	public class CelestialData {
 

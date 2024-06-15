@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Repopulate.UI;
+using Repopulate.World.Celestial;
 using TMPro;
 using UnityEngine;
 

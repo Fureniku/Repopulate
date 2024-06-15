@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Repopulate.Player;
 using Repopulate.ScriptableObjects;
 using Repopulate.Utils;
+using Repopulate.World.Celestial;
 using Repopulate.World.Registries;
 using UnityEngine;
 using UnityEngine.InputSystem;

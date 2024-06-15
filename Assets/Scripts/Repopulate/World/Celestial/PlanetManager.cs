@@ -1,26 +1,21 @@
-using System;
 using UnityEngine;
 
-public class PlanetManager : CelestialBody {
+namespace Repopulate.World.Celestial {
+    public class PlanetManager : CelestialBody {
     
-    [SerializeField] private PlanetOrbitalSystem orbitSystem;
+        [SerializeField] private PlanetOrbitalSystem _orbitSystem;
 
-    
+        public void Create(PlanetOrbitalSystem system) {
+            _orbitSystem = system;
+        }
 
-    void Start() {
+        public PlanetOrbitalSystem GetOrbitSystem() {
+            return _orbitSystem;
+        }
 
-    }
-
-    public void Create(PlanetOrbitalSystem system) {
-        orbitSystem = system;
-    }
-
-    public PlanetOrbitalSystem GetOrbitSystem() {
-        return orbitSystem;
-    }
-
-    private void OnTriggerEnter(Collider other) {
-        Debug.Log("Ship entered trigger; switch to planet orbit");
-        GameManager.Instance.GetShipController().SetAvailablePlanet(this);
+        private void OnTriggerEnter(Collider other) {
+            Debug.Log("Ship entered trigger; switch to planet orbit");
+            GameManager.Instance.GetShipController().SetAvailablePlanet(this);
+        }
     }
 }

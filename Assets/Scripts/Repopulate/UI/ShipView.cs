@@ -1,3 +1,4 @@
+using Repopulate.World.Celestial;
 using UnityEngine;
 
 namespace Repopulate.UI {
