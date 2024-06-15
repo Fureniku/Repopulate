@@ -1,5 +1,5 @@
+using Repopulate.UI;
 using TMPro;
-using UI;
 using UnityEngine;
 
 namespace Repopulate.Player {

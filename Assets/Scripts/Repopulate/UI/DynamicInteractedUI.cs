@@ -1,13 +1,13 @@
 ﻿using Repopulate.Player;
 using UnityEngine;
 
-namespace UI {
+namespace Repopulate.UI {
 	public abstract class DynamicInteractedUI : MonoBehaviour {
 		
-		[SerializeField] protected UIController uiController;
+		[SerializeField] protected UIController _uiController;
 
 		public void SetUIController(UIController cont) {
-			uiController = cont;
+			_uiController = cont;
 		}
 
 		public abstract void CreateObject(GameObject obj);

@@ -1,60 +1,61 @@
-using System.Collections;
-using System.Collections.Generic;
-using Repopulate.World;
 using UnityEngine;
 
-public class ShipView : MonoBehaviour {
+namespace Repopulate.UI {
+    public class ShipView : MonoBehaviour {
     
-    [SerializeField] private Camera _overlayCamera;
-    [SerializeField] private SolarSystemManager _solarSystem;
-    [SerializeField] private RectTransform _celestialTargetter;
+        [SerializeField] private Camera _overlayCamera;
+        [SerializeField] private SolarSystemManager _solarSystem;
+        [SerializeField] private RectTransform _celestialTargetter;
 
-    private RectTransform _rect;
-    public Transform ClosestVisibleObject { get; private set; }
+        private RectTransform _rect;
+        public Transform ClosestVisibleObject { get; private set; }
     
-    Plane[] planes;
+        Plane[] planes;
 
-    void Awake() {
-        _rect = GetComponent<RectTransform>();
-    }
+        void Awake() {
+            _rect = GetComponent<RectTransform>();
+        }
 
-    private void Update() {
-        int count = _solarSystem.GetCelestialBodies().Count;
-        Transform currentClosest = null;
-        for (int i = 0; i < count; i++) {
-            Transform bodyTransform = _solarSystem.GetCelestialBodies()[i].CelestialController.CelestialBody.transform;
+        private void Update() {
+            int count = _solarSystem.GetCelestialBodies().Count;
+            Transform currentClosest = null;
+            Vector3 rectPos = _rect.position;
             
-            Vector3 screenPoint = _overlayCamera.WorldToScreenPoint(bodyTransform.position);
+            for (int i = 0; i < count; i++) {
+                Transform bodyTransform = _solarSystem.GetCelestialBodies()[i].CelestialController.CelestialBody.transform;
 
-            if (RectTransformUtility.RectangleContainsScreenPoint(_rect, screenPoint)) {
-                currentClosest = (currentClosest == null ||
-                                  Vector3.Distance(_rect.position, currentClosest.position) > Vector3.Distance(_rect.position, bodyTransform.position)) ? bodyTransform : currentClosest;
+                if (currentClosest == null) {
+                    currentClosest = bodyTransform;
+                    continue;
+                }
+                
+                Vector3 screenPoint = _overlayCamera.WorldToScreenPoint(bodyTransform.position);
+
+                if (RectTransformUtility.RectangleContainsScreenPoint(_rect, screenPoint)) {
+                    currentClosest = Vector3.Distance(rectPos, currentClosest.position) > Vector3.Distance(rectPos, bodyTransform.position) ? bodyTransform : currentClosest;
+                }
             }
-        }
         
-        planes = GeometryUtility.CalculateFrustumPlanes(_overlayCamera);
-        /*if (currentClosest != null && GeometryUtility.TestPlanesAABB(planes, currentClosest.gameObject.GetComponent<Collider>().bounds))
-        {
-            Debug.Log(currentClosest.gameObject.name + " has been detected!");
-        }
-        else
-        {
-            Debug.Log("Nothing has been detected");
-        }*/
+            /*planes = GeometryUtility.CalculateFrustumPlanes(_overlayCamera);
+            if (currentClosest != null && GeometryUtility.TestPlanesAABB(planes, currentClosest.gameObject.GetComponent<Collider>().bounds)) {
+                Debug.Log(currentClosest.gameObject.name + " has been detected!");
+            } else {
+                Debug.Log("Nothing has been detected");
+            }*/
 
-        if (currentClosest != null) {
-            PositionTooltip(currentClosest);
-        } else {
-            _celestialTargetter.gameObject.SetActive(false);
-        }
+            if (currentClosest != null) {
+                PositionTooltip(currentClosest);
+            } else {
+                _celestialTargetter.gameObject.SetActive(false);
+            }
         
-        ClosestVisibleObject = currentClosest;
-    }
+            ClosestVisibleObject = currentClosest;
+        }
 
-    void PositionTooltip(Transform target)
-    {
-        _celestialTargetter.gameObject.SetActive(true);
-        Vector3 targetScreenPosition = _overlayCamera.WorldToScreenPoint(target.position);
-        _celestialTargetter.position = new Vector3(targetScreenPosition.x, targetScreenPosition.y, 0);
+        void PositionTooltip(Transform target) {
+            _celestialTargetter.gameObject.SetActive(true);
+            Vector3 targetScreenPosition = _overlayCamera.WorldToScreenPoint(target.position);
+            _celestialTargetter.position = new Vector3(targetScreenPosition.x, targetScreenPosition.y, 0);
+        }
     }
 }

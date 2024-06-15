@@ -1,5 +1,6 @@
 using Repopulate.Player;
 using Repopulate.ScriptableObjects;
+using Repopulate.UI;
 using Repopulate.Utils;
 using Repopulate.World.Registries;
 using UnityEngine;
