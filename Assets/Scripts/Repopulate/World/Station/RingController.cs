@@ -1,5 +1,6 @@
 using System;
 using Repopulate.Utils;
+using Repopulate.World.Modules;
 using UnityEngine;
 
 public class RingController : MonoBehaviour {

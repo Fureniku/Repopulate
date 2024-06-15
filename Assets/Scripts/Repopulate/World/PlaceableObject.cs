@@ -1,10 +1,11 @@
 using System;
 using Repopulate.ScriptableObjects;
 using Repopulate.Utils;
+using Repopulate.World.Constructs;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
-public class PlaceableObject : BuildableBase {
+public class PlaceableObject : ConstructBase {
     
     private Material lastMat;
     private BoxCollider _collider;
@@ -27,21 +28,21 @@ public class PlaceableObject : BuildableBase {
         }
 
         if (prefabPlaced) {
-            if (grid == null) {
-                if (transform.parent.TryGetComponent(out BuildingGrid parentGrid)) {
-                    grid = parentGrid;
+            if (_grid == null) {
+                if (transform.parent.TryGetComponent(out ConstructGrid parentGrid)) {
+                    _grid = parentGrid;
                 } else {
                     Debug.LogError($"{transform.name} cannot find a grid on parent {transform.parent.name}");
                 }
             }
 
-            if (grid != null) {
-                grid.RemoveOccupiedSlot(space);
+            if (_grid != null) {
+                _grid.RemoveOccupiedSlot(_space);
                 Vector3Int approxPosition = Vector3Int.RoundToInt(transform.localPosition);
                 transform.localPosition = approxPosition;
-                space.position = approxPosition;
-                space.size = _construct.GetSize();
-                grid.AttemptAddOccupiedSlot(space);
+                _space.position = approxPosition;
+                _space.size = _construct.GetSize();
+                _grid.AttemptAddOccupiedSlot(_space);
             }
         }
     }
@@ -50,9 +51,9 @@ public class PlaceableObject : BuildableBase {
         return _construct;
     }
     
-    public void Place(BuildingGrid newGrid, GridSize occupiedSpace) {
-        grid = newGrid;
-        space = occupiedSpace;
+    public void Place(ConstructGrid newGrid, GridSize occupiedSpace) {
+        _grid = newGrid;
+        _space = occupiedSpace;
     }
 
     public void SetRotation(Quaternion rotation) {

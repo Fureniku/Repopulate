@@ -1,6 +1,7 @@
 using Repopulate.Inventory;
 using Repopulate.ScriptableObjects;
 using Repopulate.Utils;
+using Repopulate.World.Constructs;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -219,7 +220,7 @@ namespace Repopulate.Player {
 				if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Constants.MASK_BUILDABLE)) {
 					Debug.Log($"Attempting to place a block in the grid after clicking {hit.transform.name}");
 					Direction dir = ColliderUtilities.GetHitFace(hit.normal);
-					BuildingGrid targetGrid = hit.transform.GetComponent<BuildableBase>().GetGrid();
+					ConstructGrid targetGrid = hit.transform.GetComponent<ConstructBase>().GetGrid();
 
 					if (targetGrid != null) {
 						PlaceBlock(targetGrid, targetGrid.GetHitSpace(hit.point), dir);
@@ -228,7 +229,7 @@ namespace Repopulate.Player {
 			}
 		}
 
-		private void PlaceBlock(BuildingGrid targetGrid, Vector3Int gridPosition, Direction dir) {
+		private void PlaceBlock(ConstructGrid targetGrid, Vector3Int gridPosition, Direction dir) {
 			//Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
 			//if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
 

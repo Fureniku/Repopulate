@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Repopulate.ScriptableObjects;
 using UnityEngine;
+using Repopulate.ScriptableObjects;
 
 namespace Repopulate.World.Registries {
     

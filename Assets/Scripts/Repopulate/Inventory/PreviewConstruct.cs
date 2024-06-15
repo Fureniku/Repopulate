@@ -2,6 +2,7 @@ using Repopulate.Player;
 using Repopulate.ScriptableObjects;
 using Repopulate.UI;
 using Repopulate.Utils;
+using Repopulate.World.Constructs;
 using Repopulate.World.Registries;
 using UnityEngine;
 
@@ -75,9 +76,9 @@ namespace Repopulate.Inventory {
 		
 			if (Physics.Raycast(ray, out RaycastHit hit, placeableRange, Constants.MASK_BUILDABLE)) {
 				meshRenderer.enabled = true;
-				BuildingGrid targetGrid = null;
-				if (hit.transform.GetComponent<BuildableBase>() != null) { //TODO not ideal; won't work if there's nested children in more complex objects.
-					targetGrid = hit.transform.GetComponent<BuildableBase>().GetGrid();
+				ConstructGrid targetGrid = null;
+				if (hit.transform.GetComponent<ConstructBase>() != null) { //TODO not ideal; won't work if there's nested children in more complex objects.
+					targetGrid = hit.transform.GetComponent<ConstructBase>().GetGrid();
 				} else {
 					Debug.LogError($"You forgot to add a BuildableBase child component to {hit.transform.name}, so nothing works!!");
 					return;

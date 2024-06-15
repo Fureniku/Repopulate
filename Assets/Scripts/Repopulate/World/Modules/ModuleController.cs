@@ -1,51 +1,52 @@
-using System.Collections;
 using System.Collections.Generic;
 using Repopulate.UI;
+using Repopulate.World.Constructs;
 using UnityEngine;
 
-public class ModuleController : MonoBehaviour, UIFillable {
+namespace Repopulate.World.Modules {
+    public class ModuleController : MonoBehaviour, UIFillable {
 
-    [SerializeField] private bool isBuilt = false;
-    [SerializeField] private bool isEnterable = false; //Whether there should be doors, oxygen, etc
-    [SerializeField] private int buildTime;
-    //[SerializeField] private DoorController innerDoorController;
-    //[SerializeField] private DoorController stationDoorController;
-    [SerializeField] private BuildingGrid grid;
+        [SerializeField] private bool _isBuilt = false;
+        [SerializeField] private bool _isEnterable = false; //Whether there should be doors, oxygen, etc
+        [SerializeField] private int _buildTime;
+        [SerializeField] private ConstructGrid _grid;
     
-    private float oxygenPressure;
+        private float _oxygenPressure;
 
-    private int currentBuilt;
+        private int _currentBuilt;
     
-    void FixedUpdate() {
-        if (!isBuilt) {
-            if (currentBuilt < buildTime) {
-                currentBuilt++;
+        void FixedUpdate() {
+            if (_isBuilt) {
+                return;
+            }
+        
+            if (_currentBuilt < _buildTime) {
+                _currentBuilt++;
             } else {
-                isBuilt = true;
+                _isBuilt = true;
                 Debug.Log("Module constructed!");
-                if (isEnterable) {
-                    //stationDoorController.ForceDoorState(true);
-                    //innerDoorController.ForceDoorState(true);
+                if (_isEnterable) {
+                    //TODO handle entering/door controls
                 }
             }
         }
-    }
     
-    public float GetProgress() {
-        return currentBuilt / (float) buildTime;
-    }
-
-    public float GetProducedOxygen() {
-        List<GameObject> objects = grid.GetAllAttachedObjects();
-        oxygenPressure = 0;
-
-        for (int i = 0; i < objects.Count; i++) {
-            OxygenProducer oxygen = objects[i].GetComponent<OxygenProducer>();
-            if (oxygen != null) {
-                oxygenPressure += oxygen.GetProducedAmount();
-            }
+        public float GetProgress() {
+            return _currentBuilt / (float) _buildTime;
         }
+
+        public float GetProducedOxygen() {
+            List<GameObject> objects = _grid.GetAllAttachedObjects();
+            _oxygenPressure = 0;
+
+            for (int i = 0; i < objects.Count; i++) {
+                OxygenProducer oxygen = objects[i].GetComponent<OxygenProducer>();
+                if (oxygen != null) {
+                    _oxygenPressure += oxygen.GetProducedAmount();
+                }
+            }
         
-        return oxygenPressure;
+            return _oxygenPressure;
+        }
     }
 }
