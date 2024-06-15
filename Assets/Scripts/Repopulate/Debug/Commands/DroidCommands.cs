@@ -1,6 +1,6 @@
 using Repopulate.Player;
 using Repopulate.ScriptableObjects;
-using Repopulate.World.Registries;
+using Repopulate.Utils.Registries;
 using UnityEngine;
 
 public class DroidCommands

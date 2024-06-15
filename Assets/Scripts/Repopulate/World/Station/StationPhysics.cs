@@ -1,31 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class StationPhysics : MonoBehaviour {
+namespace Repopulate.World.Station {
+    public class StationPhysics : MonoBehaviour {
 
-    private Rigidbody rb;
+        private Rigidbody rb;
 
-    [SerializeField] private Vector3 centreMass;
-    [SerializeField] private Vector3 inertiaTensor;
+        [SerializeField] private Vector3 centreMass;
+        [SerializeField] private Vector3 inertiaTensor;
 
-    [SerializeField] private GameObject ship;
+        [SerializeField] private GameObject ship;
 
-    [SerializeField] private Vector3 startingVelocity;
+        [SerializeField] private Vector3 startingVelocity;
     
-    void Start() {
-        rb = GetComponent<Rigidbody>();
+        void Start() {
+            rb = GetComponent<Rigidbody>();
 
-        rb.centerOfMass = centreMass;
-        rb.inertiaTensor = inertiaTensor;
+            rb.centerOfMass = centreMass;
+            rb.inertiaTensor = inertiaTensor;
 
         
-    }
+        }
 
-    void Update() {
-        ship.transform.position = transform.position;
-        ship.transform.rotation = transform.rotation;
+        void Update() {
+            ship.transform.position = transform.position;
+            ship.transform.rotation = transform.rotation;
         
-        rb.velocity = startingVelocity;
+            rb.velocity = startingVelocity;
+        }
     }
 }

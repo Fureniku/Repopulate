@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Repopulate.Utils {
 	
-	[Obsolete("None of the current utilities should be in use. revisit.")]
 	public static class Utilities {
 	
 		//Float comparison sometimes isn't accurate, this rounds them to 3 decimal places and compares.

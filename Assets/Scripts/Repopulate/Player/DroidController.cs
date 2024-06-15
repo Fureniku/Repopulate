@@ -1,4 +1,5 @@
 using Repopulate.Inventory;
+using Repopulate.Physics.Gravity;
 using Repopulate.ScriptableObjects;
 using Repopulate.Utils;
 using Repopulate.World.Constructs;
@@ -175,7 +176,7 @@ namespace Repopulate.Player {
 			}
 
 			LayerMask layerMask = Constants.MASK_STANDABLE;
-			Collider[] hitColliders = Physics.OverlapSphere(_footPoint.position, 2f, layerMask);
+			Collider[] hitColliders = UnityEngine.Physics.OverlapSphere(_footPoint.position, 2f, layerMask);
 			int colliderCount = hitColliders.Length;
 			for (int i = 0; i < colliderCount; i++) {
 				Collider col = hitColliders[i];
@@ -217,7 +218,7 @@ namespace Repopulate.Player {
 			if (_previewConstruct.IsPlaceable()) {
 				Vector2 mousePosition = Mouse.current.position.ReadValue();
 				Ray ray = _camera.ScreenPointToRay(mousePosition);
-				if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Constants.MASK_BUILDABLE)) {
+				if (UnityEngine.Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Constants.MASK_BUILDABLE)) {
 					Debug.Log($"Attempting to place a block in the grid after clicking {hit.transform.name}");
 					Direction dir = ColliderUtilities.GetHitFace(hit.normal);
 					ConstructGrid targetGrid = hit.transform.GetComponent<ConstructBase>().GetGrid();

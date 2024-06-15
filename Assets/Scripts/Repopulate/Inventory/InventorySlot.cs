@@ -1,6 +1,6 @@
 using System;
 using Repopulate.ScriptableObjects;
-using Repopulate.World.Registries;
+using Repopulate.Utils.Registries;
 using UnityEngine;
 
 namespace Repopulate.Inventory {

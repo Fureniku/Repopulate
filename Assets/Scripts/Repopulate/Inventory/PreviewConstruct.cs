@@ -3,7 +3,7 @@ using Repopulate.ScriptableObjects;
 using Repopulate.UI;
 using Repopulate.Utils;
 using Repopulate.World.Constructs;
-using Repopulate.World.Registries;
+using Repopulate.Utils.Registries;
 using UnityEngine;
 
 namespace Repopulate.Inventory {
@@ -74,7 +74,7 @@ namespace Repopulate.Inventory {
 		
 			Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 		
-			if (Physics.Raycast(ray, out RaycastHit hit, placeableRange, Constants.MASK_BUILDABLE)) {
+			if (UnityEngine.Physics.Raycast(ray, out RaycastHit hit, placeableRange, Constants.MASK_BUILDABLE)) {
 				meshRenderer.enabled = true;
 				ConstructGrid targetGrid = null;
 				if (hit.transform.GetComponent<ConstructBase>() != null) { //TODO not ideal; won't work if there's nested children in more complex objects.
