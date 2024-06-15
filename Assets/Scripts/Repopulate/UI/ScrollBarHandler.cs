@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Scrollbar = Repopulate.ScriptableObjects.Scrollbar;
 
 public class ScrollBarHandler : MonoBehaviour {
 

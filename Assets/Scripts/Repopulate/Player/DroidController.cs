@@ -1,4 +1,5 @@
 using Repopulate.Inventory;
+using Repopulate.ScriptableObjects;
 using Repopulate.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;

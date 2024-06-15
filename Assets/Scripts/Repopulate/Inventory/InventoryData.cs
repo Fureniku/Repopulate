@@ -1,4 +1,5 @@
 using System;
+using Repopulate.ScriptableObjects;
 
 namespace Repopulate.Inventory {
 	

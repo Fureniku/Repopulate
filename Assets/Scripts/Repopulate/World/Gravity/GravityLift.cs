@@ -1,4 +1,5 @@
 using System;
+using Repopulate.Rendering;
 using UnityEngine;
 
 [RequireComponent(typeof(CapsuleCollider))]

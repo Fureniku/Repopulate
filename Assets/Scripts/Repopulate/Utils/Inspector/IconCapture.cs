@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Repopulate.ScriptableObjects;
 using Repopulate.World.Registries;
 using UnityEngine;
 
