@@ -15,7 +15,7 @@ MonoBehaviour:
   _id: 3
   _tags: 000000000500000008000000
   _unlocalizedName: raw_carbon_ore
-  _resourceName: Raw Carbon Ore
+  _itemName: Raw Carbon Ore
   _description: This might've been something, a really long time ago.
   _category: {fileID: 11400000, guid: c488ba307db775040a05fbea5c500aa0, type: 2}
   _icon: {fileID: 21300000, guid: e0314dad805445e4ab95e8367b9fdf52, type: 3}

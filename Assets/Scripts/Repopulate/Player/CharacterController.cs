@@ -75,10 +75,23 @@ namespace Repopulate.Player {
         
         //Open the droid's inventory
         public void HandleOpenInventory(InputAction.CallbackContext context) {
-            if (ShouldProcess(context, true)) {
+            if (context.performed) {
                 _isPlayerDroidActive = !_isPlayerDroidActive;
                 Cursor.lockState = _isPlayerDroidActive ? CursorLockMode.Locked : CursorLockMode.None;
                 _currentDroid.InventoryVisible(!_isPlayerDroidActive);
+            }
+        }
+
+        //Open pause if we're playing, else close any open menus and return to gameplay.
+        public void HandlePause(InputAction.CallbackContext context) {
+            if (context.performed) {
+                if (_isPlayerDroidActive) {
+                    //pause
+                }
+                else {
+                    
+                }
+                _isPlayerDroidActive = !_isPlayerDroidActive;
             }
         }
         

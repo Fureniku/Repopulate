@@ -15,7 +15,7 @@ MonoBehaviour:
   _id: 4
   _tags: 00000000050000000a000000
   _unlocalizedName: raw_copper_ore
-  _resourceName: Raw Copper Ore
+  _itemName: Raw Copper Ore
   _description: Incredibly useful... once you process it.
   _category: {fileID: 11400000, guid: c488ba307db775040a05fbea5c500aa0, type: 2}
   _icon: {fileID: 21300000, guid: f2a6ed3e9a8a9b34595d04cb204882cf, type: 3}

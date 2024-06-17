@@ -1646,8 +1646,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ee0e670ef33f004e92da648321038b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: {x: 0, y: -9.8, z: 0}
-  inverseGravity: 0
+  _gravity: {x: 0, y: -9.8, z: 0}
+  _inverseGravity: 0
   priority: 0
   aboveDistance: 391
   belowDistance: 0

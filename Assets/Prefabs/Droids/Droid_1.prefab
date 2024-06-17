@@ -494,8 +494,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b490b686f3bb24bad60dd65279e4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravitySource: {fileID: 0}
-  rb: {fileID: 4290571542892684373}
+  _gravitySource: {fileID: 0}
+  _rb: {fileID: 4290571542892684373}
   _gravitationalCorrectionSpeed: 5
   _terminalVelocity: 5
   _droidController: {fileID: 4290571542892684374}

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0036981925, g: 0.0056150854, b: 0.01763621, a: 1}
+  m_IndirectSpecularColor: {r: 0.003698647, g: 0.0056153685, b: 0.017636806, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -537,16 +537,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0204e5eeba4e554449ff5c0e3d8d6eaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeScale: 1
-  planetPrefab: {fileID: 0}
-  planetCount: 0
-  originPoint: {fileID: 0}
+  _timeScale: 1
+  _planetPrefab: {fileID: 0}
+  _planetCount: 0
+  _originPoint: {fileID: 0}
   _yearScale: 1460
-  currentPlanetDistance: 25
-  minDistanceIncrease: 10
-  maxDistanceIncrease: 15
-  lastOrbitalSpeed: 25
-  orbitalReduction: 1
+  _currentPlanetDistance: 25
+  _minDistanceIncrease: 10
+  _maxDistanceIncrease: 15
+  _lastOrbitalSpeed: 25
+  _orbitalReduction: 1
   _star: {fileID: 3718533312418981339, guid: ad5eea621fef98a419ffd6133859ee99, type: 3}
   _planet: {fileID: 1402291448687105967, guid: e6092c154f51f4b4f99fff2d8099685a, type: 3}
   _moon: {fileID: 0}
@@ -1158,9 +1158,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03ba69cc2d001fe49a116e7e6af60221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stationResources: {fileID: 0}
-  segments: []
-  maxRings: 0
 --- !u!1001 &666882264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1828,7 +1825,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxAliveTime: 300
-  _itemType: {fileID: 0}
+  _itemType: {fileID: 11400000, guid: 6089118e49c7fdd448f039e89d3c39e0, type: 2}
   _resourceCount: 3
 --- !u!136 &1148345169
 CapsuleCollider:
@@ -1937,8 +1934,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15f1217db61128840ba07b2501a05a0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravitySource: {fileID: 0}
-  rb: {fileID: 1148345173}
+  _gravitySource: {fileID: 0}
+  _rb: {fileID: 1148345173}
   _gravitationalCorrectionSpeed: 5
   _terminalVelocity: 5
 --- !u!198 &1231460120 stripped
@@ -2378,16 +2375,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0204e5eeba4e554449ff5c0e3d8d6eaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeScale: 1
-  planetPrefab: {fileID: 6298240395501881301, guid: a8a9db3fe74cacb4987d840e5f0f8b36, type: 3}
-  planetCount: 5
-  originPoint: {fileID: 455682865}
+  _timeScale: 1
+  _planetPrefab: {fileID: 0}
+  _planetCount: 0
+  _originPoint: {fileID: 0}
   _yearScale: 1460
-  currentPlanetDistance: 10
-  minDistanceIncrease: 10
-  maxDistanceIncrease: 15
-  lastOrbitalSpeed: 25
-  orbitalReduction: 1
+  _currentPlanetDistance: 25
+  _minDistanceIncrease: 10
+  _maxDistanceIncrease: 15
+  _lastOrbitalSpeed: 25
+  _orbitalReduction: 1
   _star: {fileID: 0}
   _planet: {fileID: 0}
   _moon: {fileID: 0}
@@ -3921,11 +3918,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a808eb916bbf1469511ad7dfd5b020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!20 &1871493599 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 4290571542915913363, guid: 664450bc3dba3fa47ab62b476f419aac, type: 3}
-  m_PrefabInstance: {fileID: 4290571541501444415}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1877990278
 GameObject:
   m_ObjectHideFlags: 0
@@ -4858,10 +4850,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4290571542892684374, guid: 664450bc3dba3fa47ab62b476f419aac, type: 3}
-      propertyPath: _camera
-      value: 
-      objectReference: {fileID: 1871493599}
     - target: {fileID: 4290571542892684374, guid: 664450bc3dba3fa47ab62b476f419aac, type: 3}
       propertyPath: gravitySource
       value: 

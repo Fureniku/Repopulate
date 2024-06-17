@@ -25,6 +25,10 @@ namespace Repopulate.Physics.Gravity {
         void Awake()
         {
             IsInGravity = _gravitySource != null;
+            if (_rb == null) {
+                Debug.LogError($"Forgot to set the rigidbody for gravity object on {name}. Do that for performance.");
+                _rb = GetComponent<Rigidbody>();
+            }
         }
 
         public void UpdateGravity() {
@@ -49,7 +53,7 @@ namespace Repopulate.Physics.Gravity {
             } else {
                 if (IsInGravity) {
                     _gravitySource = null;
-                    transform.parent = StationController.Instance.transform;
+                    transform.parent = null;
                     _rb.ClampVelocity(_terminalVelocity);
                 }
                 IsInGravity = false;

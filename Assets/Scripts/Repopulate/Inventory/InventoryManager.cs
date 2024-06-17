@@ -38,8 +38,9 @@ namespace Repopulate.Inventory {
             for (int i = 0; i < _slots.Count; i++) {
                 InventorySlot slot = _slots[i];
                 if (slot.Item.ID == item.ID || slot.Item == ItemRegistry.Instance.EMPTY) {
-                    Debug.Log($"Attempting to insert to slot {i}");
-                    int available = slot.GetAvailableSpace();
+                    
+                    int available = slot.GetAvailableSpace(item);
+                    Debug.Log($"Attempting to insert to slot {i}. Available space: {available}, remaining to insert: {remain}");
                     if (available >= remain) {
                         if (!simulate) {
                             slot.PutItem(item, remain);

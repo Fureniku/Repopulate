@@ -15,7 +15,7 @@ MonoBehaviour:
   _id: 2
   _tags: 00000000050000000a000000
   _unlocalizedName: raw_gold_ore
-  _resourceName: Raw Gold Ore
+  _itemName: Raw Gold Ore
   _description: Like a gold ingot, but dirty and impure
   _category: {fileID: 11400000, guid: c488ba307db775040a05fbea5c500aa0, type: 2}
   _icon: {fileID: 21300000, guid: 0a50613cc362df04baabc9d390d86ab9, type: 3}

@@ -24,7 +24,10 @@ namespace Repopulate.Inventory {
 		}
 
 		//TODO lots of prototype logic for inventories! it's all client-side for now.
-		public int GetAvailableSpace() {
+		public int GetAvailableSpace(Item itemInsert = null) {
+			if (itemInsert != null && (itemInsert.ID == Item.ID || Item == ItemRegistry.Instance.EMPTY)) {
+				return itemInsert.SlotCapacity(SlotSize) - StackCount;
+			}
 			return Item.SlotCapacity(SlotSize) - StackCount;
 		}
 

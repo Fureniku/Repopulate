@@ -74,7 +74,9 @@ namespace Repopulate.UI {
 
         private void UpdateSlot(int id) {
             if (slots[id] != null) {
-                slots[id].GetComponent<Image>().sprite = scrollbar.GetConstructInSlot(id).GetIcon();
+                if (scrollbar.GetConstructInSlot(id) != null) {
+                    slots[id].GetComponent<Image>().sprite = scrollbar.GetConstructInSlot(id).GetIcon();
+                }
             }
         }
 
@@ -87,7 +89,7 @@ namespace Repopulate.UI {
                 selectedId = id;
             }
             UpdateSelectionBox();
-            OnScrolled();
+            if (OnScrolled != null) OnScrolled();
         }
 
         private void UpdateSelectionBox() {
