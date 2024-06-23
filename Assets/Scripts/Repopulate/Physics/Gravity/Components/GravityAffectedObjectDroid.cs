@@ -5,7 +5,7 @@ using CharacterController = Repopulate.Player.CharacterController;
 namespace Repopulate.Physics.Gravity {
 	public class GravityAffectedObjectDroid : GravityAffectedObject {
 	
-		[SerializeField] private DroidController _droidController;
+		[SerializeField] private DroidControllerBase _droidController;
 		[SerializeField] private CharacterController characterController;
 	
 		protected override bool CurrentlyHasExternalForce() {

@@ -45,8 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db799d9fe5bce44781eb1830e3f1760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 3.5
-  currentDroid: {fileID: 0}
+  _currentDroid: {fileID: 0}
 --- !u!114 &8161479858922590426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,10 +73,10 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: CloseUI
-        m_Mode: 1
+      - m_Target: {fileID: 8161479858922590425}
+        m_TargetAssemblyTypeName: Repopulate.Player.CharacterController, Assembly-CSharp
+        m_MethodName: HandlePause
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -139,8 +138,8 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8161479858922590425}
-        m_TargetAssemblyTypeName: CharacterController, Assembly-CSharp
-        m_MethodName: HandleObjectRotation
+        m_TargetAssemblyTypeName: Repopulate.Player.CharacterController, Assembly-CSharp
+        m_MethodName: HandleModifierInput
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -201,7 +200,19 @@ MonoBehaviour:
     m_ActionId: dcc82070-9767-4be3-8c0e-c8d102aca91a
     m_ActionName: General/New action
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8161479858922590425}
+        m_TargetAssemblyTypeName: Repopulate.Player.CharacterController, Assembly-CSharp
+        m_MethodName: HandleInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 8124e887-6022-4d4b-887d-2f2c9da3d783
     m_ActionName: General/Interact[/Mouse/rightButton]
   - m_PersistentCalls:
@@ -512,8 +523,24 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 29e74109-0563-43a7-a34f-c34d8e3dfc65
     m_ActionName: General/HotBar9[/Keyboard/9]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8161479858922590425}
+        m_TargetAssemblyTypeName: Repopulate.Player.CharacterController, Assembly-CSharp
+        m_MethodName: HandleOpenInventory
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 55ca0a24-f933-42a3-9e5a-de3dc5331b76
+    m_ActionName: Droid/Inventory[/Keyboard/tab]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: General
+  m_DefaultActionMap: Droid
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}

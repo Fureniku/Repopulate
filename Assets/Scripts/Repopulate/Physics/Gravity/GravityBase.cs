@@ -26,7 +26,7 @@ namespace Repopulate.Physics.Gravity {
         }
     
         private void OnTriggerStay(Collider other) {
-            DroidController droid = other.GetComponent<DroidController>();
+            DroidControllerBase droid = other.GetComponent<DroidControllerBase>();
             if (droid != null) {
                 if (droid.CurrentGravitySource == this) {
                     gizmoCol = Color.white;

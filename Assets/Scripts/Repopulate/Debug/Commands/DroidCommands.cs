@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DroidCommands
 {
-	public static void Give(DroidController droid, string[] args) {
+	public static void Give(DroidControllerBase droid, string[] args) {
 		string item = args[0];
 		int count = 1;
 		if (args.Length >= 2) {

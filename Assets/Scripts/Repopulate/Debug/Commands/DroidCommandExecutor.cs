@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class DroidCommandExecutor : CommandExecutor {
     
-    private DroidController _controller;
+    private DroidControllerBase _controller;
     
     [SerializeField] private TMP_InputField _input;
     
     void Start() {
-        _controller = GetComponentInParent<DroidController>();
+        _controller = GetComponentInParent<DroidControllerBase>();
     }
 
     void Awake() {

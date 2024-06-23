@@ -20,7 +20,7 @@ namespace Repopulate.Player {
 		}
 
 		#region General Controls
-		public void Interact() {
+		public virtual void Interact() {
 			_interactionHandler.Interact(this, _camera);
 		}
 		#endregion

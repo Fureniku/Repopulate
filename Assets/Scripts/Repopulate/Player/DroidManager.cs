@@ -5,22 +5,22 @@ using UnityEngine;
 namespace Repopulate.Player {
     public class DroidManager : MonoBehaviour {
         
-        [SerializeField] private List<DroidController> _droidList;
+        [SerializeField] private List<DroidControllerBase> _droidList;
 
         public void AssignNextAvailableDroid(CharacterController character) {
-            DroidController currentDroid = character.GetCurrentDroid();
+            DroidControllerBase currentDroid = character.GetCurrentDroid();
             int currentDroidId = _droidList.IndexOf(currentDroid);
             if (currentDroidId == -1) {
                 Debug.LogError($"Unable to find droid {currentDroid.name} in the droid list!");
                 return;
             }
             currentDroid.SetDroidActive(false);
-            DroidController newDroid = FindNextAvailableDroid(currentDroidId);
+            DroidControllerBase newDroid = FindNextAvailableDroid(currentDroidId);
             character.SetDroid(newDroid);
             newDroid.SetDroidActive(true);
         }
     
-        private DroidController FindNextAvailableDroid(int startIndex)
+        private DroidControllerBase FindNextAvailableDroid(int startIndex)
         {
             int currentIndex = startIndex;
 
@@ -37,7 +37,7 @@ namespace Repopulate.Player {
             return _droidList[startIndex];
         }
 
-        public void AddNewDroid(DroidController droid) {
+        public void AddNewDroid(DroidControllerBase droid) {
             _droidList.Add(droid);
         }
     }

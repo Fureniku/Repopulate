@@ -9,14 +9,14 @@ namespace Repopulate.Physics {
         private void OnTriggerEnter(Collider other) {
             if (other.gameObject.tag.Equals("Player")) {
                 UnityEngine.Physics.IgnoreCollision(other, mainCollider);
-                other.GetComponent<DroidController>().ForceNotGroundedState(true);
+                other.GetComponent<DroidControllerBase>().ForceNotGroundedState(true);
             }
         }
     
         private void OnTriggerExit(Collider other) {
             if (other.gameObject.tag.Equals("Player")) {
                 UnityEngine.Physics.IgnoreCollision(other, mainCollider, false);
-                other.GetComponent<DroidController>().ForceNotGroundedState(false);
+                other.GetComponent<DroidControllerBase>().ForceNotGroundedState(false);
             }
         }
     }

@@ -5,7 +5,7 @@ namespace Repopulate.Utils {
 		
 		public static Direction GetHitFace(Vector3 hitNormal) {
 			if ((hitNormal.x != 0 && hitNormal.y != 0) || (hitNormal.x != 0 && hitNormal.z != 0) || (hitNormal.y != 0 && hitNormal.z != 0)) {
-				Debug.Log("Normal was not on a flat face!");
+				Debug.Log($"Normal was not on a flat face! X: {hitNormal.x}, Y: {hitNormal.y}, Z: {hitNormal.z}");
 			}
 
 			if (hitNormal.x < 0) return Direction.X_NEG;

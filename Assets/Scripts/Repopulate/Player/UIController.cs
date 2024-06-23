@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Repopulate.Player {
     public class UIController : MonoBehaviour {
 
-        [SerializeField] private DroidController _droid;
+        [SerializeField] private DroidControllerBase _droid;
         [SerializeField] private ScrollBarHandler _scrollBarHandler;
         [SerializeField] private GameObject _inventory;
         [SerializeField] private TMP_InputField _input;

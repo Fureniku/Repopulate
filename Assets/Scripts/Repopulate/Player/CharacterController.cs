@@ -6,13 +6,13 @@ namespace Repopulate.Player {
     public class CharacterController : MonoBehaviour {
 
         [Header("Gameplay stuff")]
-        [SerializeField] private DroidController _currentDroid;
+        [SerializeField] private DroidControllerBase _currentDroid;
 
         private bool _isPlayerDroidActive = true; //True when a droid is currently controllable, false when in a UI or another mode
 
-        public DroidController GetCurrentDroid() => _currentDroid;
+        public DroidControllerBase GetCurrentDroid() => _currentDroid;
 
-        public void SetDroid(DroidController newDroid) {
+        public void SetDroid(DroidControllerBase newDroid) {
             _currentDroid.SetCameraStatus(false);
             _currentDroid = newDroid;
             _currentDroid.SetCameraStatus(true);
@@ -85,6 +85,7 @@ namespace Repopulate.Player {
         //Open pause if we're playing, else close any open menus and return to gameplay.
         public void HandlePause(InputAction.CallbackContext context) {
             if (context.performed) {
+                _currentDroid.InventoryVisible(false);
                 if (_isPlayerDroidActive) {
                     //pause
                 }
@@ -95,7 +96,7 @@ namespace Repopulate.Player {
             }
         }
         
-        //Switch the currently active droid
+        //Switch the currently active droid - TODO this cycles, but when we have a lot there might be a better option. 
         public void HandleSwitchDroid(InputAction.CallbackContext context) {
             if (ShouldProcess(context)) {
                 GameManager.Instance.GetDroidManager.AssignNextAvailableDroid(this);
@@ -103,9 +104,9 @@ namespace Repopulate.Player {
         }
         
         //Rotate the held construct
-        public void HandleObjectRotation(InputAction.CallbackContext context) {
+        public void HandleModifierInput(InputAction.CallbackContext context) {
             if (ShouldProcess(context, true)) {
-                _currentDroid.HandleObjectRotation();
+                _currentDroid.DroidModifierInput();
             }
         }
         
@@ -119,7 +120,7 @@ namespace Repopulate.Player {
         //Places the currently selected construct in the world
         public void HandlePlaceObject(InputAction.CallbackContext context) {
             if (ShouldProcess(context, true)) {
-                _currentDroid.HandlePlaceObject(context);
+                _currentDroid.DroidCreativeInput(context);
             }
         }
         

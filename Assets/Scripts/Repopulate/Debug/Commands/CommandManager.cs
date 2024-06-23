@@ -11,7 +11,7 @@ public class CommandManager : MonoBehaviour {
         }
     }
     
-    private static Dictionary<string, Action<DroidController, string[]>> _droidCommands;
+    private static Dictionary<string, Action<DroidControllerBase, string[]>> _droidCommands;
 
     private static void Setup() {
         Debug.Log("Setting up");
@@ -29,7 +29,7 @@ public class CommandManager : MonoBehaviour {
         }
         
         switch (source) {
-            case DroidController droid:
+            case DroidControllerBase droid:
                 Debug.Log("Handling droid command");
                 _droidCommands[command](droid, args);
                 break;

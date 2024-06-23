@@ -15,7 +15,7 @@ namespace Repopulate.Inventory {
 	
 		[SerializeField] private Material invalidPlace;
 		[SerializeField] private Material validPlace;
-		[SerializeField] private DroidController droid;
+		[SerializeField] private DroidControllerConstruction droid;
 		[SerializeField] private MeshRenderer meshRenderer;
 		[SerializeField] private float placeableRange = 10f;
 	
