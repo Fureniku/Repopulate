@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e40d9dafe1793644d8c82e02288c3210, type: 3}
   m_Name: Algae_Farm_1
   m_EditorClassIdentifier: 
-  itemName: algae_farm_1
-  category: {fileID: 11400000, guid: d621c135b06abac498fc60381dc97934, type: 2}
-  size: {x: 4, y: 3, z: 1}
-  rotationOrigin: {x: 0, y: 0, z: 0}
-  mustBeGrounded: 1
-  wallMount: 0
-  prefab: {fileID: 107592285966079195, guid: 717c90983cd72fe49b1d910a311f184a, type: 3}
-  icon: {fileID: 21300000, guid: 7cf562e7460da69499a1089eaadb148a, type: 3}
+  _size: {x: 1, y: 1, z: 1}
+  _mountPoint: {x: 0, y: 0, z: 0}
+  _placeable: 1
+  _destroyable: 1
+  _name: 
+  _prefab: {fileID: 107592285966079195, guid: 717c90983cd72fe49b1d910a311f184a, type: 3}
+  _icon: {fileID: 21300000, guid: 7cf562e7460da69499a1089eaadb148a, type: 3}
+  _category: {fileID: 0}
+  _mustBeGrounded: 0
+  _wallMount: 0
+  _mustBeOnCeiling: 0

@@ -17,6 +17,18 @@ namespace Repopulate.Utils {
             if (GUILayout.Button("Generate All Items")) {
                 iconCapture.GenerateAllImages();
             }
+            
+            if (GUILayout.Button("Debug Camera")) {
+                iconCapture.DebugCamera();
+            }
+            
+            if (GUILayout.Button("Destroy Debug Objects")) {
+                iconCapture.ClearObjects();
+            }
+
+            if (GUILayout.Button("Debug Take Image")) {
+                iconCapture.DebugImage();
+            }
         }
     }
 }

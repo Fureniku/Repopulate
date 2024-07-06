@@ -48,13 +48,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec59daf2a4c80e248bea1b89ee7a5a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 0}
-  space:
+  showDebugSizeBox: 1
+  _placeable: {fileID: 0}
+  prefabPlaced: 0
+  _grid: {fileID: 0}
+  _space:
     position: {x: 0, y: 0, z: 0}
     size: {x: 1, y: 1, z: 1}
-  showDebugSizeBox: 1
-  prefabPlaced: 0
-  _construct: {fileID: 11400000, guid: be785791c7fbc014d92ad8ebccf829fe, type: 2}
 --- !u!114 &-7555060797975378205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 675fbf75a9b039a448711bc50725ed80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceType: 3
+  _utilityType: 0
   capacity: 100000
   currentEnergy: 0
 --- !u!65 &3440502291639869178
@@ -145,7 +145,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 8572734292158699522, guid: b41a27de50f87b44d9336a175d8ada9b, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -243,7 +243,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 8572734292158699522, guid: b41a27de50f87b44d9336a175d8ada9b, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
