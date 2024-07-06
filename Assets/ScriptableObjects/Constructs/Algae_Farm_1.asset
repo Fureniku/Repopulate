@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e40d9dafe1793644d8c82e02288c3210, type: 3}
   m_Name: Algae_Farm_1
   m_EditorClassIdentifier: 
-  _size: {x: 1, y: 1, z: 1}
+  _size: {x: 4, y: 3, z: 1}
   _mountPoint: {x: 0, y: 0, z: 0}
   _placeable: 1
   _destroyable: 1

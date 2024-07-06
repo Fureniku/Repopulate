@@ -63,13 +63,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec59daf2a4c80e248bea1b89ee7a5a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 0}
-  space:
-    position: {x: 0, y: 0, z: 0}
-    size: {x: 2, y: 1, z: 1}
   showDebugSizeBox: 0
+  _placeable: {fileID: 11400000, guid: c4c25910a349a0a47b22827e77bfedde, type: 2}
   prefabPlaced: 0
-  _construct: {fileID: 11400000, guid: c4c25910a349a0a47b22827e77bfedde, type: 2}
+  _grid: {fileID: 0}
+  _space:
+    position: {x: 0, y: 0, z: 0}
+    size: {x: 1, y: 1, z: 1}
 --- !u!1 &882907070723066398
 GameObject:
   m_ObjectHideFlags: 0

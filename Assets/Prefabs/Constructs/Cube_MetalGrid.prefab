@@ -129,13 +129,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec59daf2a4c80e248bea1b89ee7a5a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showDebugSizeBox: 0
+  _placeable: {fileID: 11400000, guid: 64fecd26fad8e7a478150b2c6ae3e25d, type: 2}
+  prefabPlaced: 0
   _grid: {fileID: 0}
   _space:
     position: {x: 0, y: 0, z: 0}
     size: {x: 1, y: 1, z: 1}
-  showDebugSizeBox: 0
-  prefabPlaced: 0
-  _construct: {fileID: 11400000, guid: 64fecd26fad8e7a478150b2c6ae3e25d, type: 2}
 --- !u!65 &1678676329201896927
 BoxCollider:
   m_ObjectHideFlags: 0
