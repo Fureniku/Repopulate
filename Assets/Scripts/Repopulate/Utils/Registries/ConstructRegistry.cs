@@ -46,7 +46,7 @@ namespace Repopulate.Utils.Registries {
             return _constructList;
         }
 
-        public override Construct GetFromName(string resourceName) {
+        public override Construct GetFromName(string constructName) {
             throw new System.NotImplementedException();
         }
     }

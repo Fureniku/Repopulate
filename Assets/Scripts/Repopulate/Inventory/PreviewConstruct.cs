@@ -11,7 +11,7 @@ namespace Repopulate.Inventory {
 
 		private Construct _construct;
 		private GameObject _itemObject;
-		private PlaceableObject _placeableObject;
+		private PlaceableConstruct _placeableConstruct;
 	
 		[SerializeField] private Material invalidPlace;
 		[SerializeField] private Material validPlace;
@@ -37,7 +37,7 @@ namespace Repopulate.Inventory {
 			}
 			_construct = construct;
 			_itemObject = _construct.Get();
-			_placeableObject = _itemObject.GetComponent<PlaceableObject>();
+			_placeableConstruct = _itemObject.GetComponent<PlaceableConstruct>();
 			CombineMeshes();
 		}
 
@@ -68,7 +68,7 @@ namespace Repopulate.Inventory {
 		}
 	
 		public void UpdatePreview(Camera cam) {
-			if (_itemObject == null || _placeableObject == null || _construct == GameManager.Instance.EmptyConstruct || _placeableObject.GetConstruct() == GameManager.Instance.EmptyConstruct) {
+			if (_itemObject == null || _placeableConstruct == null || _construct == GameManager.Instance.EmptyConstruct || _placeableConstruct.GetPlaceable() == GameManager.Instance.EmptyConstruct) {
 				return;
 			}
 		
@@ -84,7 +84,7 @@ namespace Repopulate.Inventory {
 					return;
 				}
 			
-				Construct placeableConstruct = _placeableObject.GetConstruct();
+				Construct placeableConstruct = _placeableConstruct.GetPlaceable();
 			
 				Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
 				if (!targetGrid.CheckGridSpaceAvailability(gridPosition)) {
@@ -96,7 +96,7 @@ namespace Repopulate.Inventory {
 
 				canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeableConstruct.GetSize(), droid.HeldRotation);
 
-				if (_placeableObject.GetConstruct().MustBeGrounded && gridPosition.y > 0) {
+				if (_placeableConstruct.GetPlaceable().MustBeGrounded && gridPosition.y > 0) {
 					canPlaceNow = false;
 				}
 				meshRenderer.material = canPlaceNow ? validPlace : invalidPlace;

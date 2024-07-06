@@ -62,7 +62,7 @@ namespace Repopulate.Utils {
             Texture2D croppedTexture = CropTexture(texture);
 
             byte[] bytes = croppedTexture.EncodeToPNG();
-            string iconName = construct.GetItemUnlocalizedName;
+            string iconName = construct.GetUnlocalizedName;
             System.IO.File.WriteAllBytes(Application.dataPath + $"/Textures/Icons/{iconName}.png", bytes); // Save image as PNG in project directory
 
             camera.targetTexture = null;

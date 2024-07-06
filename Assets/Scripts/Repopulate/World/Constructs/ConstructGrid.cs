@@ -255,9 +255,10 @@ namespace Repopulate.World.Constructs {
         public void PlaceBlock(Vector3Int gridSpace, ScriptableObjects.Construct construct, float rotation) {
             GameObject block = construct.Get();
             GameObject newBlock = Instantiate(block, GetPlacementPosition(gridSpace, construct), GetPlacementRotation(rotation));
-            GridSize occupancy = GetFinalPlacementOccupancy(newBlock.GetComponent<PlaceableObject>().GetConstruct().GetSize(), gridSpace, rotation);
+            PlaceableConstruct newConstruct = newBlock.GetComponent<PlaceableConstruct>();
+            GridSize occupancy = GetFinalPlacementOccupancy(newConstruct.GetPlaceable().GetSize(), gridSpace, rotation);
             newBlock.transform.SetParent(transform);
-            newBlock.GetComponent<PlaceableObject>().Place(this, occupancy);
+            newConstruct.Place(this, occupancy);
             
             // Occupy the grid space
             ModifyGridSpaceOccupancy(occupancy, true);
