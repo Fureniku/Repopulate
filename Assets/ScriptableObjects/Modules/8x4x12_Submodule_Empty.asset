@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1041d7c29c3b4874489541608cd4a162, type: 3}
   m_Name: 8x4x12_Submodule_Empty
   m_EditorClassIdentifier: 
-  _size: {x: 1, y: 1, z: 1}
-  _mountPoint: {x: 0, y: 0, z: 0}
+  _size: {x: 8, y: 4, z: 12}
+  _mountPoint: {x: 4, y: 2, z: 12}
   _placeable: 1
   _destroyable: 1
   _name: 
-  _prefab: {fileID: 0}
+  _prefab: {fileID: 4182322238148095775, guid: 1700cdb75bb06ff4d857547b05f949b2, type: 3}
   _icon: {fileID: 0}
-  _type: 0
+  _type: 1
   _requiresDoor: 1
