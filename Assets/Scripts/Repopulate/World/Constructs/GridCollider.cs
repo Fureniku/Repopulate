@@ -1,8 +1,10 @@
 using UnityEngine;
 
 namespace Repopulate.World.Constructs {
-    public class GridCollider : ConstructBase {
-    
+    public class GridCollider : MonoBehaviour, IGridHolder {
+
+        [SerializeField] private ConstructGrid _grid;
+        
         // Start is called before the first frame update
         void Awake() {
             if (_grid == null) {
@@ -20,6 +22,10 @@ namespace Repopulate.World.Constructs {
             }
 
             return foundGrid;
+        }
+
+        public ConstructGrid Grid() {
+            return _grid;
         }
     }
 }

@@ -74,7 +74,7 @@ public class DroidControllerConstruction : DroidControllerBase
 				if (UnityEngine.Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Constants.MASK_BUILDABLE)) {
 					Debug.Log($"Attempting to place a block in the grid after clicking {hit.transform.name}");
 					Direction dir = ColliderUtilities.GetHitFace(hit.normal);
-					ConstructGrid targetGrid = hit.transform.GetComponent<ConstructBase>().GetGrid();
+					ConstructGrid targetGrid = hit.transform.GetComponent<IGridHolder>().Grid();
 
 					if (targetGrid != null) {
 						PlaceBlock(targetGrid, targetGrid.GetHitSpace(hit.point), dir);

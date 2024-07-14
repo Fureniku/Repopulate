@@ -14,12 +14,11 @@ namespace Repopulate.World.Constructs {
         }
     
         [SerializeField] private Vector3Int gridSize;
-
         private bool[,,] gridSpaces; // Represents the availability of each grid space
-
         [SerializeField] public List<GridSize> occupiedSlots;
-
         [SerializeField] private bool showDebugGrid = true;
+
+        public Vector3Int Size => gridSize;
 
         private void OnValidate() {
             Awake();
@@ -256,7 +255,7 @@ namespace Repopulate.World.Constructs {
             GameObject block = construct.Get();
             GameObject newBlock = Instantiate(block, GetPlacementPosition(gridSpace, construct), GetPlacementRotation(rotation));
             PlaceableConstruct newConstruct = newBlock.GetComponent<PlaceableConstruct>();
-            GridSize occupancy = GetFinalPlacementOccupancy(newConstruct.GetPlaceable().GetSize(), gridSpace, rotation);
+            GridSize occupancy = GetFinalPlacementOccupancy(newConstruct.GetPlaceable().Size, gridSpace, rotation);
             newBlock.transform.SetParent(transform);
             newConstruct.Place(this, occupancy);
             

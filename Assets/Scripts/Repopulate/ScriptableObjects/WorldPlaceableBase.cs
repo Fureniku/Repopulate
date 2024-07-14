@@ -32,10 +32,9 @@ namespace Repopulate.ScriptableObjects {
         [SerializeField] private Vector3 _mountPoint;
         [SerializeField] private bool _placeable = true;
         [SerializeField] private bool _destroyable = true;
-        
-        public Vector3Int GetSize() {
-            return _size;
-        }
+
+        public Vector3Int Size => _size;
+        public Vector3 MountPoint => _mountPoint;
 
         public int GetX() { return _size.x; }
         public int GetY() { return _size.y; }
@@ -43,5 +42,12 @@ namespace Repopulate.ScriptableObjects {
         
         public bool IsPlaceable => _placeable;
         public bool IsDestroyable => _destroyable;
+
+        public Vector3 GetSizeMinimums() {
+            float x = Mathf.Max(_size.x / 2.0f, 0.5f);
+            float y = Mathf.Max(_size.y / 2.0f, 0.5f);
+            float z = Mathf.Max(_size.z / 2.0f, 0.5f);
+            return new Vector3(x, y, z);
+        }
     }
 }

@@ -24,7 +24,7 @@ namespace Repopulate.Utils {
         private GameObject go = null;
 
         private Vector3 GetTargetPoint(GameObject go, Construct construct) {
-            Vector3 v = _targetConstruct.GetSize();
+            Vector3 v = _targetConstruct.Size;
             return go.transform.position + new Vector3(v.x / 2.0f, v.y / 2.0f, v.z / 2.0f);
         }
 

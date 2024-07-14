@@ -77,8 +77,8 @@ namespace Repopulate.Inventory {
 			if (UnityEngine.Physics.Raycast(ray, out RaycastHit hit, placeableRange, Constants.MASK_BUILDABLE)) {
 				meshRenderer.enabled = true;
 				ConstructGrid targetGrid = null;
-				if (hit.transform.GetComponent<ConstructBase>() != null) { //TODO not ideal; won't work if there's nested children in more complex objects.
-					targetGrid = hit.transform.GetComponent<ConstructBase>().GetGrid();
+				if (hit.transform.GetComponent<IGridHolder>() != null) { //TODO not ideal; won't work if there's nested children in more complex objects.
+					targetGrid = hit.transform.GetComponent<IGridHolder>().Grid();
 				} else {
 					Debug.LogError($"You forgot to add a BuildableBase child component to {hit.transform.name}, so nothing works!!");
 					return;
@@ -94,7 +94,7 @@ namespace Repopulate.Inventory {
 				transform.position = targetGrid.GetPlacementPosition(gridPosition, placeableConstruct);
 				transform.rotation = targetGrid.GetPlacementRotation(droid.HeldRotation);
 
-				canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeableConstruct.GetSize(), droid.HeldRotation);
+				canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeableConstruct.Size, droid.HeldRotation);
 
 				if (_placeableConstruct.GetPlaceable().MustBeGrounded && gridPosition.y > 0) {
 					canPlaceNow = false;
