@@ -8,17 +8,14 @@ using Vector3 = UnityEngine.Vector3;
 namespace Repopulate.World.Constructs {
     public class ConstructGrid : MonoBehaviour {
 
-        [SerializeField]
-        struct PrefillObjects {
-        
-        }
-    
         [SerializeField] private Vector3Int gridSize;
         private bool[,,] gridSpaces; // Represents the availability of each grid space
         [SerializeField] public List<GridSize> occupiedSlots;
         [SerializeField] private bool showDebugGrid = true;
+        [SerializeField] private MonoBehaviour _connectedDataHandler;
 
         public Vector3Int Size => gridSize;
+        public MonoBehaviour GetConnectedDataHandler => _connectedDataHandler;
 
         private void OnValidate() {
             Awake();

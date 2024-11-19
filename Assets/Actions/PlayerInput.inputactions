@@ -1,5 +1,5 @@
 {
-    "name": "DroidInput",
+    "name": "PlayerInput",
     "maps": [
         {
             "name": "Droid",
@@ -180,6 +180,15 @@
                     "name": "Inventory",
                     "type": "Button",
                     "id": "55ca0a24-f933-42a3-9e5a-de3dc5331b76",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleBuildingMode",
+                    "type": "Button",
+                    "id": "a0537040-2593-4c38-a894-fe05d1586beb",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -448,6 +457,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3936680d-3f0a-453e-aded-baf8c03c7ec2",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleBuildingMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

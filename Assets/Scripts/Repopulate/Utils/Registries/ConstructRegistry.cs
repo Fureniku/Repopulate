@@ -4,7 +4,6 @@ using Repopulate.ScriptableObjects;
 
 namespace Repopulate.Utils.Registries {
     
-    [CreateAssetMenu]
     public class ConstructRegistry : RegistryBase<Construct> {
     
         private static ConstructRegistry _instance;
@@ -30,6 +29,7 @@ namespace Repopulate.Utils.Registries {
         public Construct CUBE_PANELS;
         public Construct CUBE_METAL;
         public Construct WALL_LIGHT_1;
+        public Construct PLANET_MINER_1;
 
         protected override List<Construct> GetList() {
             List<Construct> _constructList = new();
@@ -42,6 +42,7 @@ namespace Repopulate.Utils.Registries {
             _constructList.Add(CUBE_PANELS);
             _constructList.Add(CUBE_METAL);
             _constructList.Add(WALL_LIGHT_1);
+            _constructList.Add(PLANET_MINER_1);
         
             return _constructList;
         }

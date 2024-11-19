@@ -1,13 +1,14 @@
-using System;
 using Repopulate.ScriptableObjects;
+using Repopulate.UI.Menu.Inventory;
 using Repopulate.Utils.Registries;
+using Repopulate.World.Resources;
 using UnityEngine;
 
 namespace Repopulate.Inventory {
 	public class InventorySlot : MonoBehaviour {
 	
 		public EnumSlotSizes SlotSize { get; set; }
-		public Item Item { get; set; }
+		public ItemStack ItemStack { get; set; }
 		public int StackCount { get; set; }
 
 		public InventoryData InvData;
@@ -25,26 +26,25 @@ namespace Repopulate.Inventory {
 
 		//TODO lots of prototype logic for inventories! it's all client-side for now.
 		public int GetAvailableSpace(Item itemInsert = null) {
-			if (itemInsert != null && (itemInsert.ID == Item.ID || Item == ItemRegistry.Instance.EMPTY)) {
+			if (itemInsert != null && (itemInsert.ID == ItemStack.Item.ID || ItemStack.Item == ItemRegistry.Instance.EMPTY)) {
 				return itemInsert.SlotCapacity(SlotSize) - StackCount;
 			}
-			return Item.SlotCapacity(SlotSize) - StackCount;
+			return ItemStack.Item.SlotCapacity(SlotSize) - StackCount;
 		}
 
 		public void PutItem(Item item, int count) {
-			if (Item == ItemRegistry.Instance.EMPTY) {
-				Item = item;
-				StackCount = count;
+			if (ItemStack.IsEmpty()) {
+				ItemStack = new(item, count);
 			}
-			else if (Item.ID == item.ID) {
+			else if (ItemStack.IsItemType(item)) {
 				StackCount += count;
 			}
 
-			if (StackCount > Item.SlotCapacity(SlotSize)) {
-				StackCount = Item.SlotCapacity(SlotSize);
+			if (StackCount > ItemStack.Item.SlotCapacity(SlotSize)) {
+				StackCount = ItemStack.Item.SlotCapacity(SlotSize);
 			}
 
-			InvData = new InventoryData(Item, StackCount, SlotSize);
+			InvData = new InventoryData(ItemStack, SlotSize);
 			TempUpdate();
 		}
 

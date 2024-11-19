@@ -130,6 +130,13 @@ namespace Repopulate.Player {
                 _currentDroid.Interact();
             }
         }
+        
+        //Handle mode toggling (e.g. construction droid enter/exit building mode)
+        public void HandleModeToggle(InputAction.CallbackContext context) {
+            if (ShouldProcess(context, true)) {
+                _currentDroid.ToggleMode();
+            }
+        }
         #endregion
 
         //TODO what does this do?

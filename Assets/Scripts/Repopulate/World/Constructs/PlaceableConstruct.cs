@@ -44,6 +44,10 @@ namespace Repopulate.World.Constructs {
             }
         }
 
+        public bool RequiresGrid() {
+            return _placeable.RequireGrid;
+        }
+
         public void Place(ConstructGrid newGrid, GridSize occupiedSpace) {
             _grid = newGrid;
             _space = occupiedSpace;

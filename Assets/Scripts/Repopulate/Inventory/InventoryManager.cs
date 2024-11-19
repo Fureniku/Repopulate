@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Repopulate.ScriptableObjects;
 using Repopulate.Utils.Registries;
+using Repopulate.World.Resources;
 using UnityEngine;
 
 namespace Repopulate.Inventory {
@@ -23,7 +24,7 @@ namespace Repopulate.Inventory {
                     InventorySlot slot = slotObject.GetComponent<InventorySlot>();
                     slotObject.name = $"Slot_{i}";
                     slot.SlotSize = _slotSize;
-                    slot.Item = ItemRegistry.Instance.EMPTY;
+                    slot.ItemStack = ItemStack.EMPTY;
                     _slots.Add(slot);
 
                 }
@@ -37,7 +38,7 @@ namespace Repopulate.Inventory {
             int remain = count;
             for (int i = 0; i < _slots.Count; i++) {
                 InventorySlot slot = _slots[i];
-                if (slot.Item.ID == item.ID || slot.Item == ItemRegistry.Instance.EMPTY) {
+                if (slot.ItemStack.IsItemType(item) || slot.ItemStack.IsEmpty()) {
                     
                     int available = slot.GetAvailableSpace(item);
                     Debug.Log($"Attempting to insert to slot {i}. Available space: {available}, remaining to insert: {remain}");

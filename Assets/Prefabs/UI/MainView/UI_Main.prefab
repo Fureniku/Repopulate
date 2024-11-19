@@ -37,6 +37,7 @@ RectTransform:
   - {fileID: 1555338442737007227}
   - {fileID: 2607852786177620675}
   - {fileID: 1359952004249985465}
+  - {fileID: 8799456734382788083}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -118,9 +119,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9512e3fac2ca586449c4da644295db37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  droid: {fileID: 0}
+  _droid: {fileID: 0}
   _scrollBarHandler: {fileID: 4381241853249676845}
   _inventory: {fileID: 2377204208117762600}
+  _input: {fileID: 0}
 --- !u!1 &878339921431396176
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,6 +258,58 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &1125473894513440097
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8799456734382788083}
+  - component: {fileID: 4127650170206713920}
+  m_Layer: 5
+  m_Name: MenuUIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8799456734382788083
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125473894513440097}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6436300344052614158}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4127650170206713920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125473894513440097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39fcc64728ce21449b44efb8da64c1cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultMenu: {fileID: 0}
+  _activeMenu: {fileID: 0}
+  _allMenus: []
 --- !u!1 &3062943630857329576
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,6 +714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8059b44d24b5fc49a76f41b803d6b8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _input: {fileID: 0}
 --- !u!114 &5476392389815993997
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "79d9fe759ac25861",
+        "id": "3f95eb44208e52c2",
         "type": "tabs",
         "children": [
           {
-            "id": "e6b6f0f31e3e0c2e",
+            "id": "17254a9fc5466d2d",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -151,7 +151,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e6b6f0f31e3e0c2e",
+  "active": "17254a9fc5466d2d",
   "lastOpenFiles": [
     "Gameplay/Droids.md",
     "Gameplay/Station Modules.md",

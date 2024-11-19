@@ -23,6 +23,10 @@ namespace Repopulate.Player {
 		public virtual void Interact() {
 			_interactionHandler.Interact(this, _camera);
 		}
+
+		public virtual void ToggleMode() {
+			
+		}
 		#endregion
 	
 		public void SetCameraStatus(bool camOn) {
