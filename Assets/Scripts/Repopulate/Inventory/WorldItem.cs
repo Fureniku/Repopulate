@@ -51,5 +51,9 @@ namespace Repopulate.Inventory {
             }
             throw new System.NotImplementedException();
         }
+
+        public void OnLookAt(PlayerControllable controllable) {
+            throw new System.NotImplementedException();
+        }
     }
 }

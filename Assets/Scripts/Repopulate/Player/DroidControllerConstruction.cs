@@ -109,4 +109,6 @@ public class DroidControllerConstruction : DroidControllerBase
 			_previewConstruct.UpdatePreview(_camera);
 		}
 		#endregion
+
+		protected override void ControllableUpdate() {}
 }

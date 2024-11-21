@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Repopulate.ScriptableObjects {
@@ -5,7 +7,8 @@ namespace Repopulate.ScriptableObjects {
     {
         [Header("Item Information")]
         [SerializeField] private string _name;
-
+        [SerializeField] private List<InteractionSet> _interactions;
+        
         [Header("Prefab Information")]
         [SerializeField] private T _prefab;
         [SerializeField] private Sprite _icon;
@@ -22,6 +25,7 @@ namespace Repopulate.ScriptableObjects {
         }
 
         public string GetUnlocalizedName => _name;
+        public List<InteractionSet> Interactions => _interactions;
     }
     
     //Split class so we can use circular generics
@@ -49,5 +53,18 @@ namespace Repopulate.ScriptableObjects {
             float z = Mathf.Max(_size.z / 2.0f, 0.5f);
             return new Vector3(x, y, z);
         }
+    }
+
+    [Serializable]
+    public struct InteractionSet {
+        [SerializeField] public PlaceableInteractions InteractionType;
+        [SerializeField] public string KeyCode;
+        [SerializeField] public string PromptText;
+    }
+    public enum PlaceableInteractions {
+        None,
+        OpenInventory,
+        Configure,
+        ToggleState
     }
 }

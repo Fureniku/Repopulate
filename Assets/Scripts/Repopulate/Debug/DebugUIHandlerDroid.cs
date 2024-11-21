@@ -11,6 +11,8 @@ public class DebugUIHandlerDroid : DebugUIHandlerBase {
     private bool ForceNotGrounded => droid.ForcedNotGrounded;
     private bool IsInGravity => droid.DroidGao.IsInGravity;
     private GravityBase CurrentGravitySource => droid.CurrentGravitySource;
+    
+    private GameObject CurretTarget => droid.CurrentAimTarget;
 
     private PreviewConstruct CurrentHeldItem {
         get {
@@ -24,6 +26,7 @@ public class DebugUIHandlerDroid : DebugUIHandlerBase {
         texts.Add(CreateEntry(nameof(ForceNotGrounded)));
         texts.Add(CreateEntry(nameof(IsInGravity)));
         texts.Add(CreateEntry(nameof(CurrentGravitySource)));
+        texts.Add(CreateEntry(nameof(CurretTarget)));
 
         if (droid.DroidType == DroidType.CONSTRUCTION) {
             texts.Add(CreateEntry(nameof(CurrentHeldItem)));
@@ -35,6 +38,7 @@ public class DebugUIHandlerDroid : DebugUIHandlerBase {
         UpdateText(nameof(ForceNotGrounded), $"Forced Grounded: {ForceNotGrounded}, count: {droid.ForcedNotGroundedCount}");
         UpdateText(nameof(IsInGravity), $"In Gravity: {IsInGravity}");
         UpdateText(nameof(CurrentGravitySource), $"Current gravity source: {CurrentGravitySource}");
+        UpdateText(nameof(CurrentGravitySource), $"Current aimed object: {CurretTarget}");
         if (droid.DroidType == DroidType.CONSTRUCTION) {
             UpdateText(nameof(CurrentHeldItem), $"Held item: {CurrentHeldItem.GetObject().name}");
         }

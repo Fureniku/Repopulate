@@ -51,5 +51,9 @@ namespace Repopulate.World.Constructs.Machines {
 		public void OnInteract(PlayerControllable controllable) {
 			Debug.Log($"Interacted! Machine has {_minedCount} resources!");
 		}
+
+		public void OnLookAt(PlayerControllable controllable) {
+			throw new System.NotImplementedException();
+		}
 	}
 }

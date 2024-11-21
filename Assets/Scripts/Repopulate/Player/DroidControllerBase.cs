@@ -52,6 +52,9 @@ namespace Repopulate.Player {
 		public bool IsControlActive { get; set; } = true; //Whether the controls (movement/look) are currently active. Disabled while a UI is open etc
 		public bool IsDroidActive { get; private set; } = false; //Whether this droid currently has a controller TODO improve
 		public DroidType DroidType => _droidType;
+		
+		//Debug only properties
+		public GameObject CurrentAimTarget => _lastObject;
 
 		protected override void ControllableAwake() {
 			_rigidbody = GetComponent<Rigidbody>();

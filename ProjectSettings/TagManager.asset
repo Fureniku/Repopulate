@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BuildingGrid
   - PlaceableObject
+  - Construct
   layers:
   - Default
   - TransparentFX

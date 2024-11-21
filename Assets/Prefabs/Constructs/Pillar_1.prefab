@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec59daf2a4c80e248bea1b89ee7a5a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showDebugSizeBox: 0
+  _showDebugGizmos: 0
   _placeable: {fileID: 11400000, guid: 14cde73593cd024418beee0933904a23, type: 2}
   prefabPlaced: 0
   _grid: {fileID: 0}

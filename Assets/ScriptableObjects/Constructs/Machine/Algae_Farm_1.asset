@@ -16,10 +16,21 @@ MonoBehaviour:
   _mountPoint: {x: 0, y: 0, z: 0}
   _placeable: 1
   _destroyable: 1
-  _name: 
+  _name: algae_farm_1
+  _interactions:
+  - InteractionType: 1
+    KeyCode: E
+    PromptText: Open Inventory
+  - InteractionType: 2
+    KeyCode: F
+    PromptText: Turn Off
   _prefab: {fileID: 107592285966079195, guid: 717c90983cd72fe49b1d910a311f184a, type: 3}
   _icon: {fileID: 21300000, guid: 7cf562e7460da69499a1089eaadb148a, type: 3}
   _category: {fileID: 0}
   _mustBeGrounded: 0
   _wallMount: 0
   _mustBeOnCeiling: 0
+  _requireGrid: 1
+  _placeOnShip: 0
+  _placeOnPlanet: 0
+  _placeInSpace: 0

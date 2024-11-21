@@ -23,5 +23,6 @@ namespace Repopulate.ScriptableObjects {
 		public bool CanPlaceOnShip => _placeOnShip;
 		public bool CanPlaceOnPlanet => _placeOnPlanet;
 		public bool CanPlaceInSpace => _placeInSpace;
+		
 	}
 }

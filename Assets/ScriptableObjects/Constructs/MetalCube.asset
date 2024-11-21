@@ -16,10 +16,18 @@ MonoBehaviour:
   _mountPoint: {x: 0, y: 0, z: 0}
   _placeable: 1
   _destroyable: 1
-  _name: 
+  _name: metal_cube
+  _interactions:
+  - InteractionType: 2
+    KeyCode: E
+    PromptText: Configure
   _prefab: {fileID: -3671932247624330629, guid: 7009db0451d749342a0102a8461e42dd, type: 3}
   _icon: {fileID: 21300000, guid: 671f739b55cab724dbd38e7bb1b63b01, type: 3}
   _category: {fileID: 0}
   _mustBeGrounded: 0
   _wallMount: 0
   _mustBeOnCeiling: 0
+  _requireGrid: 1
+  _placeOnShip: 0
+  _placeOnPlanet: 0
+  _placeInSpace: 0

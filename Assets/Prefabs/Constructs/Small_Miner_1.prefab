@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3440502291639869178}
   m_Layer: 14
   m_Name: Small_Miner_1
-  m_TagString: Untagged
+  m_TagString: PlaceableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
