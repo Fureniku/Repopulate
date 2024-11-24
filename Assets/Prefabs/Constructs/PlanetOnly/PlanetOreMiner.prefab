@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 5403985775707657345}
   - component: {fileID: 934267063336493119}
   - component: {fileID: 3082603567814656385}
-  m_Layer: 14
+  m_Layer: 15
   m_Name: PlanetOreMiner
   m_TagString: PlaceableObject
   m_Icon: {fileID: 0}

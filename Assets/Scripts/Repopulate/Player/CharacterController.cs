@@ -1,3 +1,4 @@
+using Repopulate.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -125,16 +126,21 @@ namespace Repopulate.Player {
         }
         
         //Handles interacting with the world from the droid (e.g. opening construct UIs or interacting with switches)
-        public void HandleInteract(InputAction.CallbackContext context) {
+        public void HandleInteractPrimary(InputAction.CallbackContext context) {
             if (ShouldProcess(context, true)) {
-                _currentDroid.Interact();
+                _currentDroid.InteractPrimary();
             }
         }
         
-        //Handle mode toggling (e.g. construction droid enter/exit building mode)
-        public void HandleModeToggle(InputAction.CallbackContext context) {
+        public void HandleInteractSecondary(InputAction.CallbackContext context) {
             if (ShouldProcess(context, true)) {
-                _currentDroid.ToggleMode();
+                _currentDroid.InteractSecondary();
+            }
+        }
+        
+        public void HandleInteractTertiary(InputAction.CallbackContext context) {
+            if (ShouldProcess(context, true)) {
+                _currentDroid.InteractTertiary();
             }
         }
         #endregion

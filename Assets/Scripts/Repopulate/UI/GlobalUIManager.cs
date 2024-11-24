@@ -43,11 +43,11 @@ public class GlobalUIManager : MonoBehaviour
 		}
 		
 		if (aimedObject.TryGetComponent(out PlaceableConstruct construct)) {
-			if (construct.GetPlaceable().Interactions.Count == 0 || construct.GetPlaceable().Interactions[0].InteractionType == PlaceableInteractions.None) {
-				DisableKeyPrompt();
+			if (construct.GetPlaceable().HasInteractions) {
+				SetKeyPrompt(construct.GetPlaceable());
 			}
 			else {
-				SetKeyPrompt(construct.GetPlaceable().GetUnlocalizedName,construct.GetPlaceable().Interactions);
+				DisableKeyPrompt();
 			}
 		}
 	}
@@ -60,9 +60,9 @@ public class GlobalUIManager : MonoBehaviour
 		_crosshair.SetActive(true);
 	}
 
-	public void SetKeyPrompt(string targetName, List<InteractionSet> interactions) {
+	public void SetKeyPrompt(Construct construct) {
 		_crosshair.SetActive(false);
 		_interactMenuController.gameObject.SetActive(true);
-		_interactMenuController.SetData(interactions, targetName);
+		_interactMenuController.SetData(construct);
 	}
 }

@@ -43,7 +43,7 @@ namespace Repopulate.Inventory {
             }
         }
 
-        public void OnInteract(PlayerControllable controllable) {
+        public void OnInteract(PlayerControllable controllable, InteractLevel interactLevel) {
             switch (controllable) {
                 case DroidControllerBase droid:
                     TransferToInventory(droid.DroidInventory);

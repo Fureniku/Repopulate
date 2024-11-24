@@ -23,7 +23,7 @@ TagManager:
   - GravLift
   - PhysicsShip
   - Placeable
-  - 
+  - PlaceableBase
   - 
   - 
   - 

@@ -32,12 +32,16 @@ namespace Repopulate.Player {
 		}
 
 		#region General Controls
-		public virtual void Interact() {
-			_interactionHandler.Interact(this, _camera);
+		public virtual void InteractPrimary() {
+			_interactionHandler.InteractPrimary(this, _camera);
 		}
-
-		public virtual void ToggleMode() {
-			
+		
+		public virtual void InteractSecondary() {
+			_interactionHandler.InteractSecondary(this, _camera);
+		}
+		
+		public virtual void InteractTertiary() {
+			_interactionHandler.InteractTertiary(this, _camera);
 		}
 		#endregion
 	
@@ -52,7 +56,7 @@ namespace Repopulate.Player {
 		private void LookAtEvent() { //aim targets: construct, celestial
 			if (_camera.enabled) {
 				Ray ray = new Ray(_camera.transform.position, _camera.transform.forward);
-				if (UnityEngine.Physics.Raycast(ray, out RaycastHit hit, _maxInteractRange, Constants.MASK_PLACEABLE))
+				if (UnityEngine.Physics.Raycast(ray, out RaycastHit hit, _maxInteractRange, Constants.MASK_PLACEABLE_BASE))
 				{
 					GameObject hitObject = hit.collider.gameObject;
 					if (hitObject != _lastObject)

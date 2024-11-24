@@ -16,7 +16,19 @@ MonoBehaviour:
   _mountPoint: {x: 0, y: 0, z: 0}
   _placeable: 1
   _destroyable: 1
-  _name: 
+  _name: Miner
+  _primaryInteraction:
+    InteractionType: 1
+    KeyCode: E
+    PromptText: Open Inventory
+  _secondaryInteraction:
+    InteractionType: 2
+    KeyCode: F
+    PromptText: Quick Withdraw
+  _tertiaryInteraction:
+    InteractionType: 0
+    KeyCode: 
+    PromptText: 
   _prefab: {fileID: 934267063336493119, guid: 76e525904e2e9cd42954a9e3311da5ef, type: 3}
   _icon: {fileID: 21300000, guid: 1bcc5c78a410d874faacf11982468db9, type: 3}
   _category: {fileID: 0}

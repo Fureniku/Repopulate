@@ -78,9 +78,27 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Interact",
+                    "name": "InteractPrimary",
                     "type": "Button",
                     "id": "8124e887-6022-4d4b-887d-2f2c9da3d783",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "InteractSecondary",
+                    "type": "Button",
+                    "id": "6c2185bf-65b6-4ff6-b531-a62b3814b65d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "InteractTertiary",
+                    "type": "Button",
+                    "id": "9bfbb80b-9475-4e5c-8fc1-c9c0c87f2ccc",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -335,7 +353,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Interact",
+                    "action": "InteractPrimary",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -468,6 +486,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "ToggleBuildingMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c42f30f9-d795-46c6-9a84-3aecd24b8bc5",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InteractSecondary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bdbe8686-4718-4f1e-877d-c258db0b96ce",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InteractTertiary",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

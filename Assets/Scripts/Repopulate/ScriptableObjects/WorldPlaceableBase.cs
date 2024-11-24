@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Repopulate.Player;
 using UnityEngine;
 
 namespace Repopulate.ScriptableObjects {
@@ -7,7 +8,9 @@ namespace Repopulate.ScriptableObjects {
     {
         [Header("Item Information")]
         [SerializeField] private string _name;
-        [SerializeField] private List<InteractionSet> _interactions;
+        [SerializeField] private InteractionSet _primaryInteraction;
+        [SerializeField] private InteractionSet _secondaryInteraction;
+        [SerializeField] private InteractionSet _tertiaryInteraction;
         
         [Header("Prefab Information")]
         [SerializeField] private T _prefab;
@@ -25,7 +28,13 @@ namespace Repopulate.ScriptableObjects {
         }
 
         public string GetUnlocalizedName => _name;
-        public List<InteractionSet> Interactions => _interactions;
+        public InteractionSet PrimaryInteractions => _primaryInteraction;
+        public InteractionSet SecondaryInteractions => _secondaryInteraction;
+        public InteractionSet TertiaryInteractions => _tertiaryInteraction;
+        
+        public bool HasInteractions => !(_primaryInteraction.InteractionType == PlaceableInteractions.None &&
+                                         _secondaryInteraction.InteractionType == PlaceableInteractions.None &&
+                                         _tertiaryInteraction.InteractionType == PlaceableInteractions.None);
     }
     
     //Split class so we can use circular generics

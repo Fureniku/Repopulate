@@ -12,22 +12,31 @@ public class InteractMenuController : MonoBehaviour {
     private List<KeyPromptController> _entryPool = new();
     private List<KeyPromptController> _activeEntryPool = new();
     
-    public void SetData(List<InteractionSet> interactions, string title) {
+    public void SetData(Construct construct) {
 	    ClearCurrentKeys();
-	    _title.SetText(title);
-	    for (int i = 0; i < interactions.Count; i++) {
-		    KeyPromptController key = null;
-		    if (_entryPool.Count == 0) {
-			    key = Instantiate(_keyPromptEntry, transform).GetComponent<KeyPromptController>();
-		    }
-		    else {
-			    key = _entryPool[0];
-			    key.gameObject.SetActive(true);
-			    _entryPool.RemoveAt(0);
-		    }
-		    key.SetData(interactions[i]);
-		    _activeEntryPool.Add(key);
+	    _title.SetText(construct.GetUnlocalizedName);
+	    
+	    SetupKey(construct.PrimaryInteractions);
+	    SetupKey(construct.SecondaryInteractions);
+	    SetupKey(construct.TertiaryInteractions);
+    }
+
+    private void SetupKey(InteractionSet interactions) {
+	    if (interactions.InteractionType == PlaceableInteractions.None) {
+		    return;
 	    }
+	    
+	    KeyPromptController key = null;
+	    if (_entryPool.Count == 0) {
+		    key = Instantiate(_keyPromptEntry, transform).GetComponent<KeyPromptController>();
+	    }
+	    else {
+		    key = _entryPool[0];
+		    key.gameObject.SetActive(true);
+		    _entryPool.RemoveAt(0);
+	    }
+	    key.SetData(interactions);
+	    _activeEntryPool.Add(key);
     }
 
     public void ClearCurrentKeys() {

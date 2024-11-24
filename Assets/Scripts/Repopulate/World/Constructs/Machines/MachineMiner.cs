@@ -1,3 +1,4 @@
+using System;
 using Repopulate.Player;
 using Repopulate.World.Resources;
 using UnityEngine;
@@ -48,8 +49,18 @@ namespace Repopulate.World.Constructs.Machines {
 			}
 		}
 		
-		public void OnInteract(PlayerControllable controllable) {
-			Debug.Log($"Interacted! Machine has {_minedCount} resources!");
+		public void OnInteract(PlayerControllable controllable, InteractLevel interactLevel) {
+			switch (interactLevel) {
+				case InteractLevel.PRIMARY:
+					Debug.Log("Primary interact: open inventory");
+					break;
+				case InteractLevel.SECONDARY:
+					Debug.Log("Secondary interact: ");
+					break;
+				case InteractLevel.TERTIARY:
+					Debug.Log("Primary interact: open inventory");
+					break;
+			}
 		}
 
 		public void OnLookAt(PlayerControllable controllable) {
