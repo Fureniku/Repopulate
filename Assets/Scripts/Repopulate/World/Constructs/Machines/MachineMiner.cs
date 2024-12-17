@@ -1,5 +1,6 @@
 using System;
 using Repopulate.Player;
+using Repopulate.ScriptableObjects;
 using Repopulate.World.Resources;
 using UnityEngine;
 
@@ -65,6 +66,10 @@ namespace Repopulate.World.Constructs.Machines {
 
 		public void OnLookAt(PlayerControllable controllable) {
 			throw new System.NotImplementedException();
+		}
+
+		public Construct GetConstruct() {
+			return _construct.GetPlaceable();
 		}
 	}
 }

@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 3200524801596784577}
   - component: {fileID: 7239857804248369078}
   - component: {fileID: 9142337451938745747}
-  m_Layer: 14
+  - component: {fileID: 3115733323709577369}
+  m_Layer: 15
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,6 +99,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &3115733323709577369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2943040893678337715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b6ef5b33f07f5469b829af54df953c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactableObject: {fileID: 7832595159454041186}
 --- !u!1 &5060764444827462516
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +124,8 @@ GameObject:
   - component: {fileID: 5759160592619905289}
   - component: {fileID: 2547308322213316344}
   - component: {fileID: 1449565141711358387}
-  m_Layer: 14
+  - component: {fileID: 4894224635534354373}
+  m_Layer: 15
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,6 +210,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4894224635534354373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5060764444827462516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b6ef5b33f07f5469b829af54df953c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactableObject: {fileID: 7832595159454041186}
 --- !u!1 &5766231009879934671
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +235,8 @@ GameObject:
   - component: {fileID: 4385377653097451223}
   - component: {fileID: 5307992209537762731}
   - component: {fileID: 5467144558812755288}
-  m_Layer: 14
+  - component: {fileID: 5978028910845741544}
+  m_Layer: 15
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,6 +321,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5978028910845741544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5766231009879934671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b6ef5b33f07f5469b829af54df953c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactableObject: {fileID: 7832595159454041186}
 --- !u!1 &7373786058744074118
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,7 +381,7 @@ GameObject:
   - component: {fileID: 5403985775707657345}
   - component: {fileID: 934267063336493119}
   - component: {fileID: 3082603567814656385}
-  m_Layer: 15
+  m_Layer: 14
   m_Name: PlanetOreMiner
   m_TagString: PlaceableObject
   m_Icon: {fileID: 0}
@@ -420,7 +462,8 @@ GameObject:
   - component: {fileID: 6013877483469157525}
   - component: {fileID: 5479975374358976921}
   - component: {fileID: 7001390705852427756}
-  m_Layer: 14
+  - component: {fileID: 771484086614720940}
+  m_Layer: 15
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -505,3 +548,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &771484086614720940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8771771764237379553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b6ef5b33f07f5469b829af54df953c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactableObject: {fileID: 7832595159454041186}

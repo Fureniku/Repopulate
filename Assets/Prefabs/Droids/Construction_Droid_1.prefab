@@ -526,6 +526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 4290571542915913363}
+  _maxInteractRange: 5
   _droidType: 0
   _uiController: {fileID: 6641125869618298932}
   _footPoint: {fileID: 4290571541474410096}
@@ -619,7 +620,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 32255
+    m_Bits: 65023
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

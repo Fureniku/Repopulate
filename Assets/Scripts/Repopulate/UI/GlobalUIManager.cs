@@ -25,7 +25,7 @@ public class GlobalUIManager : MonoBehaviour
 
 		Instance = this;
 		DontDestroyOnLoad(gameObject);
-		PlayerControllable.OnAimedObjectChanged += UpdateInteractPrompt;
+		PlayerControllable.OnAimedObjectChanged += UpdateLookedAtObject;
 	}
 
 	private void OnDestroy()
@@ -36,26 +36,21 @@ public class GlobalUIManager : MonoBehaviour
 		}
 	}
 
-	public void UpdateInteractPrompt(GameObject aimedObject) {
-		if (aimedObject == null) {
+	public void UpdateLookedAtObject(GameObject aimedObject, PlayerControllable controllable) {
+		Debug.Log("updating looked at object");
+		if (aimedObject == null && _interactMenuController != null) {
 			DisableKeyPrompt();
 			return;
 		}
 		
-		if (aimedObject.TryGetComponent(out PlaceableConstruct construct)) {
-			if (construct.GetPlaceable().HasInteractions) {
-				SetKeyPrompt(construct.GetPlaceable());
-			}
-			else {
-				DisableKeyPrompt();
-			}
+		if (aimedObject.TryGetComponent(out InteractableCollider collider)) {
+			Debug.Log($"Looking at {collider.name}");
+			collider.GetInteractable().OnLookAt(controllable);
+			SetKeyPrompt(collider.GetInteractable().GetConstruct());
 		}
 	}
 
 	private void DisableKeyPrompt() {
-		if (_interactMenuController == null) {
-			Debug.Log("aaaaaaa");
-		}
 		_interactMenuController.gameObject.SetActive(false);
 		_crosshair.SetActive(true);
 	}

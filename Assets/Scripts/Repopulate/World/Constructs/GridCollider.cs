@@ -5,16 +5,16 @@ namespace Repopulate.World.Constructs {
 
         [SerializeField] private ConstructGrid _grid;
         
-        // Start is called before the first frame update
         void Awake() {
             if (_grid == null) {
-                _grid = AttemptToFindGrid();
+                _grid = AttemptToFind();
             }
         }
 
-        private ConstructGrid AttemptToFindGrid() {
+        private ConstructGrid AttemptToFind() {
             ConstructGrid foundGrid = GetComponent<ConstructGrid>() 
                                       ?? transform.parent?.GetComponent<ConstructGrid>() 
+                                      ?? transform.GetComponentInParent<ConstructGrid>()
                                       ?? GetComponentInChildren<ConstructGrid>();
 
             if (foundGrid == null) {
