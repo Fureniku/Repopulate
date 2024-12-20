@@ -7,8 +7,8 @@ using UnityEngine;
 public abstract class DebugUIHandlerBase : MonoBehaviour
 {
     [SerializeField] protected GameObject debugUIElement;
-    protected readonly List<TMP_Text> texts = new();
-    protected readonly Dictionary<string, TMP_Text> debugLines = new Dictionary<string, TMP_Text>();
+    protected List<TMP_Text> texts;
+    protected Dictionary<string, TMP_Text> debugLines;
 
     protected TMP_Text CreateEntry(string entryName) {
         TMP_Text text = Instantiate(debugUIElement, transform).GetComponent<TMP_Text>();
@@ -17,10 +17,16 @@ public abstract class DebugUIHandlerBase : MonoBehaviour
     }
 
     protected void UpdateText(string entry, string text) {
+        if (debugLines == null) {
+            Debug.LogError("Debug lines null");
+            return;
+        }
         debugLines[entry].SetText(text);
     }
 
     void Awake() {
+        texts = new();
+        debugLines = new Dictionary<string, TMP_Text>();
         SetupTexts();
         foreach (TMP_Text textComponent in texts) {
             debugLines[textComponent.name] = textComponent;

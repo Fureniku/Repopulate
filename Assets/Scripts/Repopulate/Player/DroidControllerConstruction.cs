@@ -10,15 +10,12 @@ public class DroidControllerConstruction : DroidControllerBase
 {
 	[Space(20)]
 	[Header("Construction Droid")]
-	[Tooltip("The gameobject holding the preview functionality")]
-	[SerializeField] private PreviewConstruct _previewConstruct;
 	[Tooltip("The serialized object for the scrollbar this droid uses")]
 	[SerializeField] private Scrollbar _scrollbar;
 	
 	private float _heldRotation = 0;
 	public float HeldRotation => _heldRotation;
 
-	public PreviewConstruct PreviewConstruct => _previewConstruct;
 	public Construct SelectedConstruct => _scrollbar.GetSelectedConstruct();
 	
 	protected override void DroidAwake() {
@@ -26,14 +23,14 @@ public class DroidControllerConstruction : DroidControllerBase
 	}
 
 	protected override void UpdateDroidCamera() {
-		_previewConstruct.UpdatePreview(_camera);
+		_interactionHandler.UpdatePreview(_camera);
 	}
 	
 	public override void DroidModifierInput() {
 		if (IsDroidActive) {
 			_heldRotation += 90f;
 			if (_heldRotation > 360) _heldRotation -= 360f;
-			_previewConstruct.UpdatePreview(_camera);
+			_interactionHandler.UpdatePreview(_camera);
 		}
 	}
 
@@ -43,11 +40,6 @@ public class DroidControllerConstruction : DroidControllerBase
 	
     #region Block Placement
 		private void UpdateSelection() {
-			if (_previewConstruct == null) {
-				Debug.LogWarning($"Trying to update held item for {name} but held item object is null.");
-				return;
-			}
-
 			if (_scrollbar == null) {
 				Debug.LogWarning($"Trying to update selection for {name} but scrollbar is null");
 				return;
@@ -58,17 +50,16 @@ public class DroidControllerConstruction : DroidControllerBase
 				return;
 			}
 
-			Debug.Log($"UpdateSelection! preview construct name; {_previewConstruct.name}");
 			Debug.Log($"UpdateSelection! scrollbar name: {_scrollbar.name}");
 			Debug.Log($"UpdateSelection! scrollbar selection: {_scrollbar.GetSelectedConstruct().name}");
 			Debug.Log($"UpdateSelection! scrollbar item SO: {_scrollbar.GetSelectedConstruct().Get().name}");
 		
-			_previewConstruct.SetObject(_scrollbar.GetSelectedConstruct());
+			GameManager.Instance.PreviewConstruct.SetObject(_scrollbar.GetSelectedConstruct());
 		}
 
 		public override void DroidCreativeInput(InputAction.CallbackContext context) {
 			Debug.LogWarning($"Starting placement from {transform.name} (right click triggered)");
-			if (_previewConstruct.IsPlaceable()) {
+			if (GameManager.Instance.PreviewConstruct.IsPlaceable()) {
 				Vector2 mousePosition = Mouse.current.position.ReadValue();
 				Ray ray = _camera.ScreenPointToRay(mousePosition);
 				if (UnityEngine.Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Constants.MASK_BUILDABLE)) {
@@ -106,7 +97,7 @@ public class DroidControllerConstruction : DroidControllerBase
 			targetGrid.TryPlaceBlock(gridPosition, _scrollbar.GetSelectedConstruct(), _heldRotation, dir);
 			//}
 			//Update the preview after placing a block
-			_previewConstruct.UpdatePreview(_camera);
+			_interactionHandler.UpdatePreview(_camera);
 		}
 		#endregion
 

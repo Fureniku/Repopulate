@@ -1,3 +1,4 @@
+using Repopulate.Inventory;
 using Repopulate.Player;
 using Repopulate.ScriptableObjects;
 using Repopulate.Utils;
@@ -10,23 +11,25 @@ using CharacterController = Repopulate.Player.CharacterController;
 
 public class GameManager : MonoSingleton<GameManager> {
 
+    [Header("Ship")]
     [SerializeField] private Camera _shipCam;
-    [SerializeField] private CharacterController _character;
     [SerializeField] private ShipMoveController _shipMoveController;
-    [SerializeField] private SolarSystemManager _solarSystem;
 
-    private DroidManager _droidManager;
+    [Header("Droids")]
+    [SerializeField] private CharacterController _character;
+    [SerializeField] private DroidManager _droidManager;
+    [SerializeField] private PreviewConstruct _previewConstruct;
+    
+    [Header("World")]
+    [SerializeField] private SolarSystemManager _solarSystem;
 
     public const float MouseSensitivity = 3.5f;
 
     //An empty construct with no logic, model or assets, used instead of null for missing constructs or unoccupied scrollbar slots
     public Construct EmptyConstruct => ConstructRegistry.Instance.EMPTY;
     public DroidManager GetDroidManager => _droidManager;
+    public PreviewConstruct PreviewConstruct => _previewConstruct;
 
-    void Start() {
-        _droidManager = GetComponent<DroidManager>();
-    }
-    
     public void SwitchCamera() { 
         //TODO SetCameraState(!fpCam.gameObject.activeSelf);
         SetShipControlsActive(_shipCam.gameObject.activeSelf);

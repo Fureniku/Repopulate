@@ -91,6 +91,8 @@ namespace Repopulate.Inventory {
 					gridPosition = targetGrid.GetOffsetGridSpace(gridPosition, ColliderUtilities.GetHitFace(hit.normal));
 				}
 
+				Debug.Log($"Preview: placing at {targetGrid.GetPlacementPosition(gridPosition,placeableConstruct)}");
+				Debug.Log($"Previous position was {transform.position}");
 				transform.position = targetGrid.GetPlacementPosition(gridPosition, placeableConstruct);
 				transform.rotation = targetGrid.GetPlacementRotation(droid.HeldRotation);
 

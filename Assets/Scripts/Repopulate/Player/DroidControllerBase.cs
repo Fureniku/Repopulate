@@ -14,8 +14,8 @@ namespace Repopulate.Player {
 		[SerializeField] private UIController _uiController;
 		[Tooltip("The point which is considered the base of the droid, used for grounded checks")]
 		[SerializeField] private Transform _footPoint;
-		[Tooltip("The droid's inventory system")]
 		[SerializeField] private InventoryManager _inventory;
+		[SerializeField] protected InteractionHandler _interactionHandler;
 		
 		[Header("Control settings")]
 		[Tooltip("Realistic space controls with momentum. Set to false for precise transform controls.")]
@@ -54,7 +54,7 @@ namespace Repopulate.Player {
 		public DroidType DroidType => _droidType;
 		
 		//Debug only properties
-		public GameObject CurrentAimTarget => _lastObject;
+		public GameObject CurrentAimTarget => _interactionHandler.LastAimedObject;
 
 		protected override void ControllableAwake() {
 			_rigidbody = GetComponent<Rigidbody>();

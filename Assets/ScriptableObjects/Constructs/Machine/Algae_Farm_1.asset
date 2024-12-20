@@ -17,13 +17,18 @@ MonoBehaviour:
   _placeable: 1
   _destroyable: 1
   _name: algae_farm_1
-  _interactions:
-  - InteractionType: 1
+  _primaryInteraction:
+    InteractionType: 1
     KeyCode: E
     PromptText: Open Inventory
-  - InteractionType: 2
-    KeyCode: F
-    PromptText: Turn Off
+  _secondaryInteraction:
+    InteractionType: 0
+    KeyCode: 
+    PromptText: 
+  _tertiaryInteraction:
+    InteractionType: 0
+    KeyCode: 
+    PromptText: 
   _prefab: {fileID: 107592285966079195, guid: 717c90983cd72fe49b1d910a311f184a, type: 3}
   _icon: {fileID: 21300000, guid: 7cf562e7460da69499a1089eaadb148a, type: 3}
   _category: {fileID: 0}
