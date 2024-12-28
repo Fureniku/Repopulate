@@ -28,7 +28,6 @@ public class GameManager : MonoSingleton<GameManager> {
     //An empty construct with no logic, model or assets, used instead of null for missing constructs or unoccupied scrollbar slots
     public Construct EmptyConstruct => ConstructRegistry.Instance.EMPTY;
     public DroidManager GetDroidManager => _droidManager;
-    public PreviewConstruct PreviewConstruct => _previewConstruct;
 
     public void SwitchCamera() { 
         //TODO SetCameraState(!fpCam.gameObject.activeSelf);

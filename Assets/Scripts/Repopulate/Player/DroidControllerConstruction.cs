@@ -18,12 +18,12 @@ public class DroidControllerConstruction : DroidControllerBase
 
 	public Construct SelectedConstruct => _scrollbar.GetSelectedConstruct();
 	
-	protected override void DroidAwake() {
+	protected override void DroidInitialized() {
 		UpdateSelection();
 	}
 
 	protected override void UpdateDroidCamera() {
-		_interactionHandler.UpdatePreview(_camera);
+		
 	}
 	
 	public override void DroidModifierInput() {
@@ -54,12 +54,12 @@ public class DroidControllerConstruction : DroidControllerBase
 			Debug.Log($"UpdateSelection! scrollbar selection: {_scrollbar.GetSelectedConstruct().name}");
 			Debug.Log($"UpdateSelection! scrollbar item SO: {_scrollbar.GetSelectedConstruct().Get().name}");
 		
-			GameManager.Instance.PreviewConstruct.SetObject(_scrollbar.GetSelectedConstruct());
+			_previewConstruct.SetObject(_scrollbar.GetSelectedConstruct());
 		}
 
 		public override void DroidCreativeInput(InputAction.CallbackContext context) {
 			Debug.LogWarning($"Starting placement from {transform.name} (right click triggered)");
-			if (GameManager.Instance.PreviewConstruct.IsPlaceable()) {
+			if (_previewConstruct.IsPlaceable()) {
 				Vector2 mousePosition = Mouse.current.position.ReadValue();
 				Ray ray = _camera.ScreenPointToRay(mousePosition);
 				if (UnityEngine.Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Constants.MASK_BUILDABLE)) {
@@ -75,24 +75,6 @@ public class DroidControllerConstruction : DroidControllerBase
 		}
 
 		private void PlaceBlock(ConstructGrid targetGrid, Vector3Int gridPosition, Direction dir) {
-			//Ray ray = fpCam.ScreenPointToRay(Input.mousePosition);
-			//if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BuildingGrid"))) {
-
-			//Debug.Log($"GridPos: {gridPosition.x}, {gridPosition.y}, {gridPosition.z}, name of hit object: {hit.transform.name}, exact hit: {hit.point}");
-
-			// Check if there's already a block at the target grid position
-			//bool isOccupied = targetGrid.CheckGridSpaceAvailability(gridPosition, Vector3Int.one);
-
-			// Check if there's an adjacent block in any direction
-			//bool hasAdjacentBlock = targetGrid.HasAdjacentBlock(gridPosition);
-
-			//if (isOccupied && hasAdjacentBlock)
-			{
-				// Place against the side or top of an existing block
-				//Vector3Int adjacentPosition = targetGrid.GetAdjacentPosition(gridPosition);
-				//finalPosition = targetGrid.GridToWorldPosition(adjacentPosition) + Vector3.up;
-			}
-
 			// Place the block
 			targetGrid.TryPlaceBlock(gridPosition, _scrollbar.GetSelectedConstruct(), _heldRotation, dir);
 			//}
@@ -101,5 +83,7 @@ public class DroidControllerConstruction : DroidControllerBase
 		}
 		#endregion
 
-		protected override void ControllableUpdate() {}
+		protected override void ControllableUpdate() {
+			_interactionHandler.UpdatePreview(_camera);
+		}
 }

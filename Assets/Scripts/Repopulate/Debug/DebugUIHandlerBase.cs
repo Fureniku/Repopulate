@@ -24,7 +24,7 @@ public abstract class DebugUIHandlerBase : MonoBehaviour
         debugLines[entry].SetText(text);
     }
 
-    void Awake() {
+    void Start() {
         texts = new();
         debugLines = new Dictionary<string, TMP_Text>();
         SetupTexts();

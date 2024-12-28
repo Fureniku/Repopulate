@@ -1251,6 +1251,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4840231717469009547, guid: 664450bc3dba3fa47ab62b476f419aac, type: 3}
+      propertyPath: _droid
+      value: 
+      objectReference: {fileID: 1093185817}
+    - target: {fileID: 4840231717469009547, guid: 664450bc3dba3fa47ab62b476f419aac, type: 3}
       propertyPath: _droidCam
       value: 
       objectReference: {fileID: 499741509}
@@ -3045,7 +3049,7 @@ Transform:
   m_GameObject: {fileID: 1348544926}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -11.34, y: 2.1, z: -20.74}
-  m_LocalScale: {x: 1, y: 0.9, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1285104291}
@@ -4453,8 +4457,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b342452997fe3e74586a9d5d4f9bbb1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _previewConstruct: {fileID: 1348544929}
   _droidList:
-  - {fileID: 0}
+  - {fileID: 1093185817}
 --- !u!1 &1805998696
 GameObject:
   m_ObjectHideFlags: 0

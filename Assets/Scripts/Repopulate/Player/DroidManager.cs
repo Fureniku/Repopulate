@@ -1,11 +1,21 @@
+using System;
 using System.Collections.Generic;
+using Repopulate.Inventory;
 using UnityEngine;
 
 //Overall class for all droids, regardless of controller
 namespace Repopulate.Player {
     public class DroidManager : MonoBehaviour {
-        
+
+        [SerializeField] private PreviewConstruct _previewConstruct;
         [SerializeField] private List<DroidControllerBase> _droidList;
+
+        public void Start() {
+            int droidCount = _droidList.Count;
+            for (int i = 0; i < droidCount; i++) {
+                _droidList[i].InitializeDroid(this, _previewConstruct);
+            }
+        }
 
         public void AssignNextAvailableDroid(CharacterController character) {
             DroidControllerBase currentDroid = character.GetCurrentDroid();

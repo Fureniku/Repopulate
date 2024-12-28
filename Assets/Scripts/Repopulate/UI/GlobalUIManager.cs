@@ -25,6 +25,9 @@ public class GlobalUIManager : MonoBehaviour
 
 		Instance = this;
 		DontDestroyOnLoad(gameObject);
+	}
+
+	private void Start() {
 		InteractionHandler.OnAimedObjectChanged += UpdateLookedAtObject;
 	}
 
@@ -33,21 +36,18 @@ public class GlobalUIManager : MonoBehaviour
 		if (Instance == this)
 		{
 			Instance = null;
+			InteractionHandler.OnAimedObjectChanged -= UpdateLookedAtObject;
 		}
 	}
 
-	public void UpdateLookedAtObject(GameObject aimedObject, PlayerControllable controllable) {
-		Debug.Log("updating looked at object");
-		if (aimedObject == null) {
+	private void UpdateLookedAtObject(IInteractable interactable, PlayerControllable controllable) {
+		if (interactable == null) {
 			DisableKeyPrompt();
 			return;
 		}
-		
-		if (aimedObject.TryGetComponent(out InteractableCollider interactableCollider)) {
-			Debug.Log($"Looking at {interactableCollider.name}");
-			interactableCollider.GetInteractable().OnLookAt(controllable);
-			SetKeyPrompt(interactableCollider.GetInteractable().GetConstruct());
-		}
+
+		interactable.OnLookAt(controllable);
+		SetKeyPrompt(interactable.GetConstruct());
 	}
 
 	private void DisableKeyPrompt() {

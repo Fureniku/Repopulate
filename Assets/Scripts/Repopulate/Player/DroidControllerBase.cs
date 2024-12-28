@@ -8,6 +8,9 @@ using UnityEngine.InputSystem;
 namespace Repopulate.Player {
 	public abstract class DroidControllerBase : PlayerControllable {
 
+		protected DroidManager _droidManager;
+		protected PreviewConstruct _previewConstruct;
+		
 		[SerializeField] private DroidType _droidType;
 		[Header("References")]
 		[Tooltip("The UI controller")] //TODO still used?
@@ -49,21 +52,27 @@ namespace Repopulate.Player {
 		public GravityAffectedObject DroidGao => _gao;
 		public GravityBase CurrentGravitySource => _gao.GravitySource;
 		public InventoryManager DroidInventory => _inventory;
+		public PreviewConstruct PreviewConstruct => _previewConstruct;
 		public bool IsControlActive { get; set; } = true; //Whether the controls (movement/look) are currently active. Disabled while a UI is open etc
 		public bool IsDroidActive { get; private set; } = false; //Whether this droid currently has a controller TODO improve
 		public DroidType DroidType => _droidType;
 		
 		//Debug only properties
 		public GameObject CurrentAimTarget => _interactionHandler.LastAimedObject;
-
+		
 		protected override void ControllableAwake() {
 			_rigidbody = GetComponent<Rigidbody>();
 			_gao = GetComponent<GravityAffectedObject>();
-			DroidAwake();
+		}
+
+		public void InitializeDroid(DroidManager droidManager, PreviewConstruct previewConstruct) {
+			_droidManager = droidManager;
+			_previewConstruct = previewConstruct;
+			DroidInitialized();
 		}
 
 		#region Subclass stuff
-		protected abstract void DroidAwake();
+		protected abstract void DroidInitialized();
 		protected abstract void UpdateDroidCamera();
 		
 		public abstract void DroidCreativeInput(InputAction.CallbackContext context); // Rightclick: Creative style input for droids which have it (e.g. construction placing a construct)
