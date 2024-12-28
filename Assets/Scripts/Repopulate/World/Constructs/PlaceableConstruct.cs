@@ -1,10 +1,11 @@
+using Repopulate.Player;
 using Repopulate.ScriptableObjects;
 using Repopulate.Utils;
 using UnityEngine;
 
 namespace Repopulate.World.Constructs {
     [RequireComponent(typeof(BoxCollider))]
-    public class PlaceableConstruct : PlaceableBase<Construct>, IGridHolder {
+    public class PlaceableConstruct : PlaceableBase<Construct>, IGridHolder, IInteractable {
         
         [Tooltip("True if this object is placed alongside the parent prefab. Will update its stats in-editor!")]
         [SerializeField] private bool prefabPlaced = false;
@@ -59,6 +60,18 @@ namespace Repopulate.World.Constructs {
 
         public ConstructGrid Grid() {
             return _grid;
+        }
+
+        public void OnInteract(PlayerControllable controllable, InteractLevel interactLevel) {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnLookAt(PlayerControllable controllable) {
+            Debug.Log($"Looked at {gameObject.name} (make this func abstract later)");
+        }
+
+        public Construct GetConstruct() {
+            return _placeable;
         }
     }
 }

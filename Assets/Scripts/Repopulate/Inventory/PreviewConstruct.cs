@@ -67,44 +67,40 @@ namespace Repopulate.Inventory {
 			SetObject(droid.SelectedConstruct);
 		}
 	
-		public void UpdatePreview(Camera cam) {
+		public void UpdatePreview(RaycastHit hit, GameObject hitObject) {
 			if (_itemObject == null || _placeableConstruct == null || _construct == GameManager.Instance.EmptyConstruct || _placeableConstruct.GetPlaceable() == GameManager.Instance.EmptyConstruct) {
 				return;
 			}
 		
-			Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-		
-			if (UnityEngine.Physics.Raycast(ray, out RaycastHit hit, placeableRange, Constants.MASK_BUILDABLE)) {
-				meshRenderer.enabled = true;
-				ConstructGrid targetGrid = null;
-				if (hit.transform.GetComponent<IGridHolder>() != null) { //TODO not ideal; won't work if there's nested children in more complex objects.
-					targetGrid = hit.transform.GetComponent<IGridHolder>().Grid();
-				} else {
-					Debug.LogError($"You forgot to add a BuildableBase child component to {hit.transform.name}, so nothing works!!");
-					return;
-				}
-			
-				Construct placeableConstruct = _placeableConstruct.GetPlaceable();
-			
-				Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
-				if (!targetGrid.CheckGridSpaceAvailability(gridPosition)) {
-					gridPosition = targetGrid.GetOffsetGridSpace(gridPosition, ColliderUtilities.GetHitFace(hit.normal));
-				}
-
-				Debug.Log($"Preview: placing at {targetGrid.GetPlacementPosition(gridPosition,placeableConstruct)}");
-				Debug.Log($"Previous position was {transform.position}");
-				transform.position = targetGrid.GetPlacementPosition(gridPosition, placeableConstruct);
-				transform.rotation = targetGrid.GetPlacementRotation(droid.HeldRotation);
-
-				canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeableConstruct.Size, droid.HeldRotation);
-
-				if (_placeableConstruct.GetPlaceable().MustBeGrounded && gridPosition.y > 0) {
-					canPlaceNow = false;
-				}
-				meshRenderer.material = canPlaceNow ? validPlace : invalidPlace;
+			ConstructGrid targetGrid = null;
+			if (hitObject.GetComponent<IGridHolder>() != null) { //TODO not ideal; won't work if there's nested children in more complex objects.
+				targetGrid = hitObject.GetComponent<IGridHolder>().Grid();
 			} else {
-				meshRenderer.enabled = false;
+				Debug.LogError($"You forgot to add a BuildableBase child component to {hit.transform.name}, so nothing works!!");
+				return;
 			}
+			
+			meshRenderer.enabled = true;
+			Construct placeableConstruct = _placeableConstruct.GetPlaceable();
+		
+			Vector3Int gridPosition = targetGrid.GetHitSpace(hit.point);
+			if (!targetGrid.CheckGridSpaceAvailability(gridPosition)) {
+				gridPosition = targetGrid.GetOffsetGridSpace(gridPosition, ColliderUtilities.GetHitFace(hit.normal));
+			}
+
+			transform.position = targetGrid.GetPlacementPosition(gridPosition, placeableConstruct);
+			transform.rotation = targetGrid.GetPlacementRotation(droid.HeldRotation);
+
+			canPlaceNow = targetGrid.CheckGridSpaceAvailability(gridPosition, placeableConstruct.Size, droid.HeldRotation);
+
+			if (_placeableConstruct.GetPlaceable().MustBeGrounded && gridPosition.y > 0) {
+				canPlaceNow = false;
+			}
+			meshRenderer.material = canPlaceNow ? validPlace : invalidPlace;
+		}
+
+		public void HidePreview() {
+			meshRenderer.enabled = false;
 		}
 
 		public bool IsPlaceable() {

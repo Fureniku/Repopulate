@@ -11,10 +11,8 @@ public class DebugUIHandlerDroid : DebugUIHandlerBase {
     private bool ForceNotGrounded => droid.ForcedNotGrounded;
     private bool IsInGravity => droid.DroidGao.IsInGravity;
     private GravityBase CurrentGravitySource => droid.CurrentGravitySource;
-    
     private GameObject CurretTarget => droid.CurrentAimTarget;
-
-    private PreviewConstruct CurrentHeldItem = GameManager.Instance.PreviewConstruct;
+    private PreviewConstruct CurrentHeldItem => droid.PreviewConstruct;
 
     protected override void SetupTexts() {
         if (droid == null) {
@@ -47,7 +45,7 @@ public class DebugUIHandlerDroid : DebugUIHandlerBase {
         UpdateText(nameof(IsInGravity), $"In Gravity: {IsInGravity}");
         UpdateText(nameof(CurrentGravitySource), $"Current gravity source: {CurrentGravitySource}");
         UpdateText(nameof(CurretTarget), $"Current aimed object: {CurretTarget}");
-        if (droid.DroidType == DroidType.CONSTRUCTION) {
+        if (droid.DroidType == DroidType.CONSTRUCTION && CurrentHeldItem != null) {
             UpdateText(nameof(CurrentHeldItem), $"Held item: {CurrentHeldItem.GetObject().name}");
         }
     }

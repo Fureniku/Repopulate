@@ -36,18 +36,14 @@ public class GlobalUIManager : MonoBehaviour
 		}
 	}
 
-	public void UpdateLookedAtObject(GameObject aimedObject, PlayerControllable controllable) {
-		Debug.Log("updating looked at object");
-		if (aimedObject == null) {
+	public void UpdateLookedAtObject(IInteractable interactable, PlayerControllable controllable) {
+		if (interactable == null) {
 			DisableKeyPrompt();
 			return;
 		}
-		
-		if (aimedObject.TryGetComponent(out InteractableCollider interactableCollider)) {
-			Debug.Log($"Looking at {interactableCollider.name}");
-			interactableCollider.GetInteractable().OnLookAt(controllable);
-			SetKeyPrompt(interactableCollider.GetInteractable().GetConstruct());
-		}
+
+		interactable.OnLookAt(controllable);
+		SetKeyPrompt(interactable.GetConstruct());
 	}
 
 	private void DisableKeyPrompt() {
