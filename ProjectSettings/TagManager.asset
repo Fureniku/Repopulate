@@ -24,8 +24,8 @@ TagManager:
   - PhysicsShip
   - Placeable
   - Interactable
-  - 
-  - 
+  - SoftClearance
+  - HardClearance
   - 
   - 
   - 

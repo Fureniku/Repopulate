@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using Repopulate.Physics.Gravity;
+using Repopulate.Player;
 using Repopulate.ScriptableObjects;
 using Repopulate.World.Constructs;
 using UnityEngine;
@@ -25,5 +26,11 @@ public class PlaceableModule : PlaceableBase<Module> {
             if (_collidersParent != null) _collidersParent.transform.localPosition = offsetPos;
             if (_gridParent != null) _gridParent.transform.localPosition = Vector3.zero;
         }
+    }
+
+    public override void OnLookAt(PlayerControllable controllable) {
+    }
+
+    public override void OnPlaced() {
     }
 }

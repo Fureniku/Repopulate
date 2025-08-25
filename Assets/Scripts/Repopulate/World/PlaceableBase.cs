@@ -1,7 +1,8 @@
+using Repopulate.Player;
 using Repopulate.ScriptableObjects;
 using UnityEngine;
 
-public class PlaceableBase<T> : MonoBehaviour where T : SizedObject {
+public abstract class PlaceableBase<T> : MonoBehaviour where T : SizedObject {
     
     protected Material lastMat;
     protected BoxCollider _collider;
@@ -11,6 +12,9 @@ public class PlaceableBase<T> : MonoBehaviour where T : SizedObject {
     public T GetPlaceable() {
         return _placeable;
     }
+
+    public abstract void OnLookAt(PlayerControllable controllable);
+    public abstract void OnPlaced();
     
     private void OnDrawGizmos() {
         if (_showDebugGizmos) {

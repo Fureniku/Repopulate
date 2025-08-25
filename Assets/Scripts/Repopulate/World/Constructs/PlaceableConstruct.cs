@@ -1,22 +1,23 @@
+using System;
 using Repopulate.Player;
 using Repopulate.ScriptableObjects;
 using Repopulate.Utils;
 using UnityEngine;
 
 namespace Repopulate.World.Constructs {
-    [RequireComponent(typeof(BoxCollider))]
     public class PlaceableConstruct : PlaceableBase<Construct>, IGridHolder, IInteractable {
         
         [Tooltip("True if this object is placed alongside the parent prefab. Will update its stats in-editor!")]
         [SerializeField] private bool prefabPlaced = false;
 
         [Header("Prefab Information")]
-        [SerializeField] protected ConstructGrid _grid;
-        [SerializeField] protected GridSize _space;
+        [SerializeField][Obsolete] protected ConstructGrid _grid;
+        [SerializeField] protected ClearanceTracker _clearanceTracker;
+        [SerializeField] protected ConstructArea _constructArea;
 
         public void OnValidate() {
             _collider = TryGetComponent(out BoxCollider col) ? col : gameObject.AddComponent<BoxCollider>();
-            if (_placeable != null) {
+            if (_collider != null && _placeable != null) {
                 Vector3Int size = _placeable.Size;
                 float x = Mathf.Max(size.x / 2.0f, 0.5f);
                 float y = Mathf.Max(size.y / 2.0f, 0.5f);
@@ -26,32 +27,26 @@ namespace Repopulate.World.Constructs {
             }
 
             if (prefabPlaced) {
-                if (_grid == null) {
-                    if (transform.parent.TryGetComponent(out ConstructGrid parentGrid)) {
-                        _grid = parentGrid;
+                if (_constructArea == null) {
+                    if (transform.parent.TryGetComponent(out ConstructArea parentArea)) {
+                        _constructArea = parentArea;
                     } else {
-                        Debug.LogError($"{transform.name} cannot find a grid on parent {transform.parent.name}");
+                        Debug.LogError($"{transform.name} cannot find a construct area on parent {transform.parent.name}");
                     }
                 }
+                if (_grid == null) {
+                    Debug.LogError("Grid was null and we're not bothering to fix that now its redundant");
+                }
 
-                if (_grid != null) {
-                    _grid.RemoveOccupiedSlot(_space);
+                if (_constructArea != null) {
                     Vector3Int approxPosition = Vector3Int.RoundToInt(transform.localPosition);
                     transform.localPosition = approxPosition;
-                    _space.position = approxPosition;
-                    _space.size = _placeable.Size;
-                    _grid.AttemptAddOccupiedSlot(_space);
                 }
             }
         }
 
-        public bool RequiresGrid() {
-            return _placeable.RequireGrid;
-        }
-
         public void Place(ConstructGrid newGrid, GridSize occupiedSpace) {
             _grid = newGrid;
-            _space = occupiedSpace;
         }
 
         public void SetRotation(Quaternion rotation) {
@@ -62,16 +57,24 @@ namespace Repopulate.World.Constructs {
             return _grid;
         }
 
+        public ConstructArea Area() {
+            return null;
+        }
+
         public void OnInteract(PlayerControllable controllable, InteractLevel interactLevel) {
             throw new System.NotImplementedException();
         }
 
-        public void OnLookAt(PlayerControllable controllable) {
-            Debug.Log($"Looked at {gameObject.name} (make this func abstract later)");
+        public override void OnLookAt(PlayerControllable controllable) {
+            Debug.Log($"Looked at {gameObject.name}");
         }
 
         public Construct GetConstruct() {
             return _placeable;
+        }
+        
+        public override void OnPlaced() {
+            
         }
     }
 }

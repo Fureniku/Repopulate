@@ -65,18 +65,18 @@ public class DroidControllerConstruction : DroidControllerBase
 				if (UnityEngine.Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Constants.MASK_BUILDABLE)) {
 					Debug.Log($"Attempting to place a block in the grid after clicking {hit.transform.name}");
 					Direction dir = ColliderUtilities.GetHitFace(hit.normal);
-					ConstructGrid targetGrid = hit.transform.GetComponent<IGridHolder>().Grid();
+					ConstructArea constructArea = hit.transform.GetComponent<ConstructArea>();
 
-					if (targetGrid != null) {
-						PlaceBlock(targetGrid, targetGrid.GetHitSpace(hit.point), dir);
+					if (constructArea != null) {
+						PlaceBlock(constructArea, constructArea.transform.InverseTransformPoint(hit.point), dir);
 					}
 				}
 			}
 		}
 
-		private void PlaceBlock(ConstructGrid targetGrid, Vector3Int gridPosition, Direction dir) {
+		private void PlaceBlock(ConstructArea constructArea, Vector3 gridPosition, Direction dir) {
 			// Place the block
-			targetGrid.TryPlaceBlock(gridPosition, _scrollbar.GetSelectedConstruct(), _heldRotation, dir);
+			constructArea.PlaceConstruct(gridPosition, _scrollbar.GetSelectedConstruct(), _heldRotation);
 			//}
 			//Update the preview after placing a block
 			_interactionHandler.UpdatePreview(_camera);

@@ -98,14 +98,6 @@ namespace Repopulate.World.Constructs {
             return clamped;
         }
 
-        public Vector3 GetPreviewPosition(Vector3Int gridSpace) {
-            return transform.position + transform.parent.rotation * gridSpace;
-        }
-    
-        public Quaternion GetPreviewRotation() {
-            return transform.parent.rotation;
-        }
-
         public Vector3Int IntFromVec3(Vector3 vec3) {
             return new Vector3Int((int)Math.Floor(vec3.x), (int)Math.Floor(vec3.y), (int)Math.Floor(vec3.z));
         }
@@ -233,39 +225,7 @@ namespace Repopulate.World.Constructs {
             return gridSpace;
         }
 
-        public void TryPlaceBlock(Vector3Int gridSpace, ScriptableObjects.Construct construct, float rotation, Direction dir) {
-            // Check if the block's grid space is available
-            if (CheckGridSpaceAvailability(gridSpace, Vector3Int.one, rotation)) { //TODO size
-                PlaceBlock(gridSpace, construct, rotation);
-            } else {
-                gridSpace = GetOffsetGridSpace(gridSpace, dir);
-                if (CheckGridSpaceAvailability(gridSpace, Vector3Int.one, rotation)) {
-                    PlaceBlock(gridSpace, construct, rotation);
-                } else {
-                    //TODO UI feedback
-                    Debug.Log($"Invalid or occupied space {gridSpace} - replace me with UI feedback!");
-                }
-            }
-        }
-
-        public void PlaceBlock(Vector3Int gridSpace, ScriptableObjects.Construct construct, float rotation) {
-            GameObject block = construct.Get();
-            GameObject newBlock = Instantiate(block, GetPlacementPosition(gridSpace, construct), GetPlacementRotation(rotation));
-            PlaceableConstruct newConstruct = newBlock.GetComponent<PlaceableConstruct>();
-            GridSize occupancy = GetFinalPlacementOccupancy(newConstruct.GetPlaceable().Size, gridSpace, rotation);
-            newBlock.transform.SetParent(transform);
-            newConstruct.Place(this, occupancy);
-            
-            // Occupy the grid space
-            ModifyGridSpaceOccupancy(occupancy, true);
-            OnGridChanged();
-        }
-
-        public void RemoveBlock(GameObject block) {
-            //TODO unimplemented
-            Destroy(block);
-            OnGridChanged();
-        }
+        
 
         private void OnDrawGizmos() {
             if (showDebugGrid) {
