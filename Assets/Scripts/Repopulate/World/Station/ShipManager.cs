@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Repopulate.World.Station {
-    public class ShipMoveController : MonoBehaviour {
+    public class ShipManager : MonoBehaviour {
 
         [SerializeField] private bool controlActive;
         [SerializeField] private Camera cam;

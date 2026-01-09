@@ -9,6 +9,7 @@ public abstract class DebugUIHandlerBase : MonoBehaviour
     [SerializeField] protected GameObject debugUIElement;
     protected List<TMP_Text> texts;
     protected Dictionary<string, TMP_Text> debugLines;
+    protected bool IsGameFocused => Application.isFocused;
 
     protected TMP_Text CreateEntry(string entryName) {
         TMP_Text text = Instantiate(debugUIElement, transform).GetComponent<TMP_Text>();
@@ -28,12 +29,14 @@ public abstract class DebugUIHandlerBase : MonoBehaviour
         texts = new();
         debugLines = new Dictionary<string, TMP_Text>();
         SetupTexts();
+        texts.Add(CreateEntry(nameof(IsGameFocused)));
         foreach (TMP_Text textComponent in texts) {
             debugLines[textComponent.name] = textComponent;
         }
     }
 
     void Update() {
+        UpdateText(nameof(IsGameFocused), $"Is Game Focused: {IsGameFocused}");
         UpdateTexts();
     }
 

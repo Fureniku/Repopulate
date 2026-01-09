@@ -63,7 +63,7 @@ namespace Repopulate.World.Constructs {
         }
 
         public void OnInteract(PlayerControllable controllable, InteractLevel interactLevel) {
-            throw new System.NotImplementedException();
+            controllable.OpenGenericPopup(_placeable.GetUnlocalizedName, _placeable.GetUnlocalizedDescription);
         }
 
         public void OnLookAt(PlayerControllable controllable) {

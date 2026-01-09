@@ -39,51 +39,51 @@ public class DroidControllerConstruction : DroidControllerBase
 	}
 	
     #region Block Placement
-		private void UpdateSelection() {
-			if (_scrollbar == null) {
-				Debug.LogWarning($"Trying to update selection for {name} but scrollbar is null");
-				return;
-			}
-
-			if (_scrollbar.GetSelectedConstruct() == null) {
-				Debug.LogWarning($"Trying to update selection with {_scrollbar.name} but nothing is selected");
-				return;
-			}
-
-			Debug.Log($"UpdateSelection! scrollbar name: {_scrollbar.name}");
-			Debug.Log($"UpdateSelection! scrollbar selection: {_scrollbar.GetSelectedConstruct().name}");
-			Debug.Log($"UpdateSelection! scrollbar item SO: {_scrollbar.GetSelectedConstruct().Get().name}");
-		
-			_previewConstruct.SetObject(_scrollbar.GetSelectedConstruct());
+	private void UpdateSelection() {
+		if (_scrollbar == null) {
+			Debug.LogWarning($"Trying to update selection for {name} but scrollbar is null");
+			return;
 		}
 
-		public override void DroidCreativeInput(InputAction.CallbackContext context) {
-			Debug.LogWarning($"Starting placement from {transform.name} (right click triggered)");
-			if (_previewConstruct.IsPlaceable()) {
-				Vector2 mousePosition = Mouse.current.position.ReadValue();
-				Ray ray = _camera.ScreenPointToRay(mousePosition);
-				if (UnityEngine.Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Constants.MASK_BUILDABLE)) {
-					Debug.Log($"Attempting to place a block in the grid after clicking {hit.transform.name}");
-					Direction dir = ColliderUtilities.GetHitFace(hit.normal);
-					ConstructGrid targetGrid = hit.transform.GetComponent<IGridHolder>().Grid();
+		if (_scrollbar.GetSelectedConstruct() == null) {
+			Debug.LogWarning($"Trying to update selection with {_scrollbar.name} but nothing is selected");
+			return;
+		}
 
-					if (targetGrid != null) {
-						PlaceBlock(targetGrid, targetGrid.GetHitSpace(hit.point), dir);
-					}
+		Debug.Log($"UpdateSelection! scrollbar name: {_scrollbar.name}");
+		Debug.Log($"UpdateSelection! scrollbar selection: {_scrollbar.GetSelectedConstruct().name}");
+		Debug.Log($"UpdateSelection! scrollbar item SO: {_scrollbar.GetSelectedConstruct().Get().name}");
+	
+		_previewConstruct.SetObject(_scrollbar.GetSelectedConstruct());
+	}
+
+	public override void DroidCreativeInput(InputAction.CallbackContext context) {
+		Debug.LogWarning($"Starting placement from {transform.name} (right click triggered)");
+		if (_previewConstruct.IsPlaceable()) {
+			Vector2 mousePosition = Mouse.current.position.ReadValue();
+			Ray ray = _camera.ScreenPointToRay(mousePosition);
+			if (UnityEngine.Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Constants.MASK_BUILDABLE)) {
+				Debug.Log($"Attempting to place a block in the grid after clicking {hit.transform.name}");
+				Direction dir = ColliderUtilities.GetHitFace(hit.normal);
+				ConstructGrid targetGrid = hit.transform.GetComponent<IGridHolder>().Grid();
+
+				if (targetGrid != null) {
+					PlaceBlock(targetGrid, targetGrid.GetHitSpace(hit.point), dir);
 				}
 			}
 		}
+	}
 
-		private void PlaceBlock(ConstructGrid targetGrid, Vector3Int gridPosition, Direction dir) {
-			// Place the block
-			targetGrid.TryPlaceBlock(gridPosition, _scrollbar.GetSelectedConstruct(), _heldRotation, dir);
-			//}
-			//Update the preview after placing a block
-			_interactionHandler.UpdatePreview(_camera);
-		}
-		#endregion
+	private void PlaceBlock(ConstructGrid targetGrid, Vector3Int gridPosition, Direction dir) {
+		// Place the block
+		targetGrid.TryPlaceBlock(gridPosition, _scrollbar.GetSelectedConstruct(), _heldRotation, dir);
+		//}
+		//Update the preview after placing a block
+		_interactionHandler.UpdatePreview(_camera);
+	}
+	#endregion
 
-		protected override void ControllableUpdate() {
-			_interactionHandler.UpdatePreview(_camera);
-		}
+	protected override void ControllableUpdate() {
+		_interactionHandler.UpdatePreview(_camera);
+	}
 }

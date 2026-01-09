@@ -7,16 +7,14 @@ using Repopulate.Utils.Registries;
 using Repopulate.World.Station;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using CharacterController = Repopulate.Player.CharacterController;
 
 public class GameManager : MonoSingleton<GameManager> {
 
     [Header("Ship")]
     [SerializeField] private Camera _shipCam;
-    [SerializeField] private ShipMoveController _shipMoveController;
+    [SerializeField] private ShipManager _shipManager;
 
     [Header("Droids")]
-    [SerializeField] private CharacterController _character;
     [SerializeField] private DroidManager _droidManager;
     [SerializeField] private PreviewConstruct _previewConstruct;
     
@@ -36,11 +34,11 @@ public class GameManager : MonoSingleton<GameManager> {
 
     private void SetCameraState(bool fpActive) {
         _shipCam.gameObject.SetActive(!fpActive);
-        _character.SetPlayerActive(fpActive);
+        _droidManager.SetPlayerActive(fpActive);
     }
 
     private void SetShipControlsActive(bool active) {
-        _shipMoveController.SetActive(active);
+        _shipManager.SetActive(active);
     }
 
     public void SwitchControlType(EnumControlType controlType) {
@@ -48,20 +46,20 @@ public class GameManager : MonoSingleton<GameManager> {
             case EnumControlType.DROID:
                 Debug.Log("Switching to droid");
                 GetPlayerInput().SwitchCurrentActionMap("General");
-                _character.SetActive(true);
+                _droidManager.SetActive(true);
                 break;
             case EnumControlType.SHIP:
                 GetPlayerInput().SwitchCurrentActionMap("Ship");
-                _shipMoveController.SetActive(true);
+                _shipManager.SetActive(true);
                 break;
         }
     }
 
     public PlayerInput GetPlayerInput() {
-        return _character.GetComponent<PlayerInput>();
+        return _droidManager.GetComponent<PlayerInput>();
     }
     
-    public ShipMoveController GetShipController() => _shipMoveController;
+    public ShipManager GetShipController() => _shipManager;
 
     public SolarSystemManager GetSolarSystem() {
         return _solarSystem;

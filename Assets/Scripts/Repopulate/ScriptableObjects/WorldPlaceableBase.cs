@@ -28,6 +28,7 @@ namespace Repopulate.ScriptableObjects {
         }
 
         public string GetUnlocalizedName => _name;
+        public string GetUnlocalizedDescription => _name;
         public InteractionSet PrimaryInteractions => _primaryInteraction;
         public InteractionSet SecondaryInteractions => _secondaryInteraction;
         public InteractionSet TertiaryInteractions => _tertiaryInteraction;

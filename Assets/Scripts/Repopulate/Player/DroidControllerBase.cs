@@ -13,8 +13,6 @@ namespace Repopulate.Player {
 		
 		[SerializeField] private DroidType _droidType;
 		[Header("References")]
-		[Tooltip("The UI controller")] //TODO still used?
-		[SerializeField] private UIController _uiController;
 		[Tooltip("The point which is considered the base of the droid, used for grounded checks")]
 		[SerializeField] private Transform _footPoint;
 		[SerializeField] private InventoryManager _inventory;
@@ -108,7 +106,7 @@ namespace Repopulate.Player {
 		}
 
 		public void HandleStabilisation() {
-			_rigidbody.velocity = Vector3.MoveTowards(_rigidbody.velocity, Vector3.zero, 5f * Time.fixedDeltaTime);
+			_rigidbody.linearVelocity = Vector3.MoveTowards(_rigidbody.linearVelocity, Vector3.zero, 5f * Time.fixedDeltaTime);
 		}
 
 		//Handle movement and abilities
@@ -121,7 +119,7 @@ namespace Repopulate.Player {
 
 			if (_gao.IsInGravity) {
 				//Store our Y velocity so it's unaffected by player movement on X/Z
-				float velocityY = _rigidbody.velocity.y;
+				float velocityY = _rigidbody.linearVelocity.y;
 
 				//Player input movement:
 				//Apply a velocity change force to instantly move them
@@ -132,23 +130,23 @@ namespace Repopulate.Player {
 					transform.Translate(_moveDir * (_moveSpeed * Time.deltaTime * groundedModifier));
 				}
 				//Restore the Y velocity
-				_rigidbody.velocity = new Vector3(_rigidbody.velocity.x, velocityY, _rigidbody.velocity.z);
+				_rigidbody.linearVelocity = new Vector3(_rigidbody.linearVelocity.x, velocityY, _rigidbody.linearVelocity.z);
 
 				//Next, apply the gravitational force, pulling the object down.
 				_gao.UpdateGravity();
 			
 				//Now, if they've stopped pressing input and are on the floor, stop moving. Don't stop vertical velocity. Must be done in local space!
 				if (_moveDir == Vector3.zero && IsGrounded) {
-					_rigidbody.velocity = new Vector3(0, velocityY, 0);
+					_rigidbody.linearVelocity = new Vector3(0, velocityY, 0);
 				
-					Vector3 localDirection = _rigidbody.transform.InverseTransformDirection(_rigidbody.velocity);
+					Vector3 localDirection = _rigidbody.transform.InverseTransformDirection(_rigidbody.linearVelocity);
 
 					localDirection.x = 0f;
 					localDirection.z = 0f;
 
 					Vector3 globalDirection = _rigidbody.transform.TransformDirection(localDirection);
 
-					_rigidbody.velocity = globalDirection;
+					_rigidbody.linearVelocity = globalDirection;
 				}
 
 				//Finally, limit velocities within maximum ranges
@@ -200,6 +198,9 @@ namespace Repopulate.Player {
 	
 		#region Camera
 		public void HandleCamera(InputAction.CallbackContext context) {
+			if (!IsControlActive) {
+				return;
+			}
 			Vector2 input = context.ReadValue<Vector2>();
         
 			float mouseX = input.x * GameManager.MouseSensitivity * Time.deltaTime;
@@ -236,8 +237,16 @@ namespace Repopulate.Player {
 		public int Give(Item item, int count) {
 			return _inventory.InsertItem(item, count);
 		}
+		#endregion
 	
+		#region Menu
+
+		public void CloseAllMenus() {
+			_uiController.CloseUI();
+		}
+		
 		public void InventoryVisible(bool visible) {
+			GlobalUIManager.Instance.IsInMenu = visible;
 			_uiController.InventoryVisible(visible);
 		}
 		#endregion

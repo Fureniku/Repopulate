@@ -8,20 +8,20 @@ using UnityEngine;
 
 public class DebugUIHandlerShip : DebugUIHandlerBase {
 
-    [SerializeField] private ShipMoveController ship;
+    [SerializeField] private ShipManager _ship;
     [SerializeField] private ShipView _shipView;
     
     private Rigidbody shipRigidbody;
     private SolarSystemManager solarSystem;
 
-    private float ShipSpeed => shipRigidbody.velocity.magnitude;
+    private float ShipSpeed => shipRigidbody.linearVelocity.magnitude;
     private Vector3 AngularVelocity => shipRigidbody.angularVelocity;
-    private Vector3 ShipPosition => ship.transform.position;
-    private float DistanceToOrigin => Vector3.Distance(ship.transform.position, solarSystem.transform.position);
+    private Vector3 ShipPosition => _ship.transform.position;
+    private float DistanceToOrigin => Vector3.Distance(_ship.transform.position, solarSystem.transform.position);
     private string ClosestVisibleObject => _shipView.ClosestVisibleObject == null ? "None Found" : _shipView.ClosestVisibleObject.name; 
 
     protected override void SetupTexts() {
-        shipRigidbody = ship.ShipPhysicsObject().GetComponent<Rigidbody>();
+        shipRigidbody = _ship.ShipPhysicsObject().GetComponent<Rigidbody>();
         solarSystem = GameManager.Instance.GetSolarSystem();
         
         texts.Add(CreateEntry(nameof(ShipSpeed)));

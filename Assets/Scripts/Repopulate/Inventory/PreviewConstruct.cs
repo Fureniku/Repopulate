@@ -68,6 +68,10 @@ namespace Repopulate.Inventory {
 		}
 	
 		public void UpdatePreview(RaycastHit hit, GameObject hitObject) {
+			if (GameManager.Instance == null) {
+				Debug.LogError($"Game not loaded yet, skipping update preview.");
+				return;
+			}
 			if (_itemObject == null || _placeableConstruct == null || _construct == GameManager.Instance.EmptyConstruct || _placeableConstruct.GetPlaceable() == GameManager.Instance.EmptyConstruct) {
 				return;
 			}

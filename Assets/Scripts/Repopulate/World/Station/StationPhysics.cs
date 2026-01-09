@@ -25,7 +25,7 @@ namespace Repopulate.World.Station {
             ship.transform.position = transform.position;
             ship.transform.rotation = transform.rotation;
         
-            rb.velocity = startingVelocity;
+            rb.linearVelocity = startingVelocity;
         }
     }
 }

@@ -5,6 +5,9 @@ namespace Repopulate.Player {
 	public abstract class PlayerControllable : MonoBehaviour {
 	
 		[SerializeField] protected Camera _camera;
+		
+		[Tooltip("The UI controller")]
+		[SerializeField] protected UIController _uiController;
 	
 		private InteractionHandler _interactionHandler;
 
@@ -45,6 +48,11 @@ namespace Repopulate.Player {
 	
 		public void ResetCamera() {
 			_camera.transform.localRotation = Quaternion.identity;
+		}
+
+		public void OpenGenericPopup(string title, string body) {
+			GlobalUIManager.Instance.IsInMenu = true;
+			_uiController.OpenGenericPopup(title, body);
 		}
 	}
 }

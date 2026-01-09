@@ -40,7 +40,7 @@ public class DebugUIHandlerDroid : DebugUIHandlerBase {
             Debug.LogError("Droid is null, skipping debug update");
             return;
         }
-        UpdateText(nameof(Grounded), $"Grounded:: {Grounded}");
+        UpdateText(nameof(Grounded), $"Grounded: {Grounded}");
         UpdateText(nameof(ForceNotGrounded), $"Forced Grounded: {ForceNotGrounded}, count: {droid.ForcedNotGroundedCount}");
         UpdateText(nameof(IsInGravity), $"In Gravity: {IsInGravity}");
         UpdateText(nameof(CurrentGravitySource), $"Current gravity source: {CurrentGravitySource}");
