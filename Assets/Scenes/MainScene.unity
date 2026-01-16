@@ -1177,17 +1177,17 @@ MonoBehaviour:
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: e19493f449ad23c45b7b8fb11d971898, type: 3}
+  m_PointAction: {fileID: 0}
+  m_MoveAction: {fileID: 0}
+  m_SubmitAction: {fileID: 0}
+  m_CancelAction: {fileID: 0}
+  m_LeftClickAction: {fileID: 0}
+  m_MiddleClickAction: {fileID: 0}
+  m_RightClickAction: {fileID: 0}
+  m_ScrollWheelAction: {fileID: 0}
+  m_TrackedDevicePositionAction: {fileID: 0}
+  m_TrackedDeviceOrientationAction: {fileID: 0}
   m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
@@ -1227,7 +1227,7 @@ PrefabInstance:
     - target: {fileID: 3460191988439074503, guid: 664450bc3dba3fa47ab62b476f419aac, type: 3}
       propertyPath: _droidManager
       value: 
-      objectReference: {fileID: 1783198912}
+      objectReference: {fileID: 0}
     - target: {fileID: 3648121532173307018, guid: 664450bc3dba3fa47ab62b476f419aac, type: 3}
       propertyPath: _defaultMenu
       value: 
@@ -4549,8 +4549,8 @@ GameObject:
   - component: {fileID: 1783198910}
   - component: {fileID: 1783198909}
   - component: {fileID: 1783198911}
-  - component: {fileID: 1783198912}
   - component: {fileID: 1783198913}
+  - component: {fileID: 1783198914}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4572,7 +4572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shipCam: {fileID: 1450314879}
   _shipManager: {fileID: 634727218}
-  _droidManager: {fileID: 1783198912}
+  _droidManager: {fileID: 1783198914}
   _previewConstruct: {fileID: 1348544929}
   _solarSystem: {fileID: 246409560}
 --- !u!4 &1783198910
@@ -4605,22 +4605,6 @@ MonoBehaviour:
   ship: {fileID: 229768864}
   solarOrigin: {fileID: 246409559}
   threshold: 10000
---- !u!114 &1783198912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1783198908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1db799d9fe5bce44781eb1830e3f1760, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Repopulate.Player.DroidManager
-  _previewConstruct: {fileID: 1348544929}
-  _currentDroid: {fileID: 1093185817}
-  _droidList:
-  - {fileID: 1093185817}
 --- !u!114 &1783198913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4635,7 +4619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: e19493f449ad23c45b7b8fb11d971898, type: 3}
   m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
+  m_UIInputModule: {fileID: 391563632}
   m_DeviceLostEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -4648,7 +4632,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandlePause
         m_Mode: 0
@@ -4664,7 +4648,7 @@ MonoBehaviour:
     m_ActionName: 'General/Menu[/Keyboard/escape]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleMovement
         m_Mode: 0
@@ -4680,7 +4664,7 @@ MonoBehaviour:
     m_ActionName: 'General/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleJump
         m_Mode: 0
@@ -4696,7 +4680,7 @@ MonoBehaviour:
     m_ActionName: 'General/Jump[/Keyboard/space]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleSwitchDroid
         m_Mode: 0
@@ -4712,7 +4696,7 @@ MonoBehaviour:
     m_ActionName: 'General/Switch Droid[/Keyboard/q]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleModifierInput
         m_Mode: 0
@@ -4728,7 +4712,7 @@ MonoBehaviour:
     m_ActionName: 'General/Rotate Object[/Keyboard/r]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandlePlaceObject
         m_Mode: 0
@@ -4744,7 +4728,7 @@ MonoBehaviour:
     m_ActionName: General/New action
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleCamera
         m_Mode: 0
@@ -4760,7 +4744,7 @@ MonoBehaviour:
     m_ActionName: 'General/Camera View[/Mouse/position]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleSwitch
         m_Mode: 0
@@ -4776,7 +4760,7 @@ MonoBehaviour:
     m_ActionName: General/New action
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleInteractPrimary
         m_Mode: 0
@@ -4952,7 +4936,7 @@ MonoBehaviour:
     m_ActionName: 'Ship/Release Cursor[/Keyboard/f3]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleUIInput
         m_Mode: 0
@@ -4968,7 +4952,7 @@ MonoBehaviour:
     m_ActionName: 'General/ScrollBar[/Mouse/scroll]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleUIInput
         m_Mode: 0
@@ -4984,7 +4968,7 @@ MonoBehaviour:
     m_ActionName: 'General/HotBar1[/Keyboard/1]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleUIInput
         m_Mode: 0
@@ -5000,7 +4984,7 @@ MonoBehaviour:
     m_ActionName: 'General/HotBar2[/Keyboard/2]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleUIInput
         m_Mode: 0
@@ -5016,7 +5000,7 @@ MonoBehaviour:
     m_ActionName: 'General/HotBar3[/Keyboard/3]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleUIInput
         m_Mode: 0
@@ -5032,7 +5016,7 @@ MonoBehaviour:
     m_ActionName: 'General/HotBar4[/Keyboard/4]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleUIInput
         m_Mode: 0
@@ -5048,7 +5032,7 @@ MonoBehaviour:
     m_ActionName: 'General/HotBar5[/Keyboard/5]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleUIInput
         m_Mode: 0
@@ -5064,7 +5048,7 @@ MonoBehaviour:
     m_ActionName: 'General/HotBar6[/Keyboard/6]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleUIInput
         m_Mode: 0
@@ -5080,7 +5064,7 @@ MonoBehaviour:
     m_ActionName: 'General/HotBar7[/Keyboard/7]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleUIInput
         m_Mode: 0
@@ -5096,7 +5080,7 @@ MonoBehaviour:
     m_ActionName: 'General/HotBar8[/Keyboard/8]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleUIInput
         m_Mode: 0
@@ -5112,7 +5096,7 @@ MonoBehaviour:
     m_ActionName: 'General/HotBar9[/Keyboard/9]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleOpenInventory
         m_Mode: 0
@@ -5128,7 +5112,7 @@ MonoBehaviour:
     m_ActionName: 'General/Inventory[/Keyboard/tab]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: 
         m_Mode: 1
@@ -5144,7 +5128,7 @@ MonoBehaviour:
     m_ActionName: 'Droid/ToggleBuildingMode[/Keyboard/b]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleInteractSecondary
         m_Mode: 0
@@ -5160,7 +5144,7 @@ MonoBehaviour:
     m_ActionName: 'Droid/InteractSecondary[/Keyboard/f]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783198912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Repopulate.Player.DroidManager, Assembly-CSharp
         m_MethodName: HandleInteractTertiary
         m_Mode: 0
@@ -5178,7 +5162,23 @@ MonoBehaviour:
   m_DefaultControlScheme: 
   m_DefaultActionMap: Droid
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 499741509}
+--- !u!114 &1783198914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783198908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b342452997fe3e74586a9d5d4f9bbb1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Repopulate.Player.DroidManager
+  _previewConstruct: {fileID: 1348544929}
+  _currentDroid: {fileID: 1093185817}
+  _droidList:
+  - {fileID: 1093185817}
 --- !u!1 &1805998696
 GameObject:
   m_ObjectHideFlags: 0

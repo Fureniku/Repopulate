@@ -9,17 +9,20 @@ public class ModularCorridorSegmentController : MonoBehaviour {
     
     [Header("Gameplay")]
     [SerializeField] private GameObject _floorBasic;
-    [SerializeField] private GameObject _floorMidStairs;
-    [SerializeField] private GameObject _floorMidStairsHole;
     [SerializeField] private GameObject _floorWindow;
+    //[SerializeField] private GameObject _floorMidStairs;
+    //[SerializeField] private GameObject _floorMidStairsHole;
     [SerializeField] private GameObject _wallBasic;
     [SerializeField] private GameObject _wallWindow;
     [SerializeField] private GameObject _wallDoor;
     [SerializeField] private GameObject _wallStairsA;
     [SerializeField] private GameObject _wallStairsB;
+    [SerializeField] private GameObject _wallStairsInA;
+    [SerializeField] private GameObject _wallStairsInB;
     [SerializeField] private GameObject _ceilingBasic;
-    [SerializeField] private GameObject _ceilingStairsA;
-    [SerializeField] private GameObject _ceilingStairsB;
+    [SerializeField] private GameObject _ceilingWindow;
+    //[SerializeField] private GameObject _ceilingStairsA;
+    //[SerializeField] private GameObject _ceilingStairsB;
 
     [SerializeField] private ModuleSlotContents _leftSide;
     [SerializeField] private ModuleSlotContents _rightSide;
@@ -51,7 +54,7 @@ public class ModularCorridorSegmentController : MonoBehaviour {
     
     void BuildSegment() {
         if (_stairsBelow) {
-            _floor = Instantiate(_floorMidStairsHole, transform);
+            //_floor = Instantiate(_floorMidStairsHole, transform);
         }
         else {
             _floor = Instantiate(_floorBasic, transform);
